@@ -11,6 +11,6 @@ namespace PontiApp.Models.Entities
         public int PlacePicEntityId { get; set; }
         public string Uri { get; set; }
 
-        PlaceEntity PlaceEntity { get; set; }
+        public PlaceEntity PlaceEntity { get; set; }
     }
 }

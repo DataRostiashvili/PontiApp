@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Enums\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <None Remove="Enums\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DTOs\" />
-    <Folder Include="Enums\" />
     <Folder Include="Response\" />
     <Folder Include="Request\" />
   </ItemGroup>
