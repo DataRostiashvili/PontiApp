@@ -19,20 +19,19 @@ namespace PontiApp.Data.DbContexts
 
         public DbSet<UserHostEventEntity> UserHostEvents { get; set; }
 
-
-
-        public DbSet<PictureUriEntity> p { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB");
+            builder.UseNpgsql(@"User ID=postgres;Password=mysecretpassword;Host=localhost;Port=5432;Database=myDataBase;");
+            //builder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB,Database=PontiAppDB");
         }
 
         protected override void OnModelCreating(ModelBuilder options)
         {
             options.ApplyConfiguration(new UserHostEventEntityConfiguration());
             options.ApplyConfiguration(new UserGuestEventEntityConfiguration());
-
-
+            options.ApplyConfiguration(new EventEntityConfiguration());
+            options.ApplyConfiguration(new UserEntityConfiguration());
+            options.ApplyConfiguration(new PlaceEntityConfiguration());
         }
     }
 }

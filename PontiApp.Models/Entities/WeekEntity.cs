@@ -10,7 +10,7 @@ namespace PontiApp.Models.Entities
     public class WeekEntity
     {
 
-        public int WeekId { get; set; }
+        public int WeekEntityId { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public Daytype Day { get; set; }
