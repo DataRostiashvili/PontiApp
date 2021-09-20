@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Entities
 {
-    public class PictureUriEntity
+    public class EventPicEntity
     {
-        public int PictureUriId { get; set; }
+        public int EventPicEntityId { get; set; }
         public string Uri { get; set; }
 
-        // public string[] pictureUri { get; set; }
+        public EventEntity EventEntity { get; set; }   
     }
 }

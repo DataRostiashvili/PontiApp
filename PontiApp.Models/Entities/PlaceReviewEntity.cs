@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Entities
 {
-    public class EventReviewEntity
+    public class PlaceReviewEntity
     {
-        public int EventReviewEntityId { get; set; }
+        public int PlaceReviewEntityId { get; set; }
         public float ReviewRanking { get; set; }
 
-        public EventEntity EventEntity { get; set; }
+        public PlaceEntity Place { get; set; }
     }
 }
