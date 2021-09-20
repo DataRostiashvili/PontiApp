@@ -9,6 +9,11 @@ namespace PontiApp.Models.Entities.Enums
     public enum Daytype
     {
         Monday,
-        Tuesday
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday
     }
 }
