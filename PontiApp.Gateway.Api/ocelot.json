@@ -1,0 +1,35 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5021"
+  },
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/EventPlaceTest",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44329
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/EventPlaceTest",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/ImagesTest",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "host": "localhost",
+          "port": 44310
+        }
+      ],
+
+      "UpstreamPathTemplate": "/gateway/ImagesTest",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+
+    }
+  ]
+}

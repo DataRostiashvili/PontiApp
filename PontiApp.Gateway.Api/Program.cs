@@ -21,6 +21,11 @@ namespace PontiApp.Gateway.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                }).ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+                        .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
+                        .AddEnvironmentVariables();
                 });
     }
 }
