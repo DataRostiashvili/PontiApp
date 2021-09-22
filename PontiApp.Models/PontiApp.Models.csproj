@@ -16,4 +16,8 @@
     <Folder Include="Request\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Bson" Version="2.13.1" />
+  </ItemGroup>
+
 </Project>
