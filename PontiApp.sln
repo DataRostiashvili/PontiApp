@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31710.8
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{D90FF853-BC55-4808-B213-2FA4C8F28E2D}"
 EndProject
@@ -20,6 +20,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.EventPlace.Api", "PontiApp.EventPlace.Api\PontiApp.EventPlace.Api.csproj", "{CAF0304F-C33B-4BF8-92AE-54A14AA6721B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Gateway.Api", "PontiApp.Gateway.Api\PontiApp.Gateway.Api.csproj", "{E275CB6D-D8A8-47D7-82FB-B281D4B62C72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.Images.Repository", "PontiApp.Images.Repository\PontiApp.Images.Repository.csproj", "{774BFB39-FFC0-47AD-8DA0-710D84F21C22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.Images.Services", "PontiApp.Images.Services\PontiApp.Images.Services.csproj", "{18936E31-5604-447B-8644-C7D0DBA463C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +59,14 @@ Global
 		{E275CB6D-D8A8-47D7-82FB-B281D4B62C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E275CB6D-D8A8-47D7-82FB-B281D4B62C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E275CB6D-D8A8-47D7-82FB-B281D4B62C72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{774BFB39-FFC0-47AD-8DA0-710D84F21C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{774BFB39-FFC0-47AD-8DA0-710D84F21C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{774BFB39-FFC0-47AD-8DA0-710D84F21C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{774BFB39-FFC0-47AD-8DA0-710D84F21C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18936E31-5604-447B-8644-C7D0DBA463C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18936E31-5604-447B-8644-C7D0DBA463C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18936E31-5604-447B-8644-C7D0DBA463C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18936E31-5604-447B-8644-C7D0DBA463C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +79,8 @@ Global
 		{1B8D2145-C6F7-457B-A92D-81D0C758B78E} = {59278BAA-FC7D-4C5B-943D-645353F3DDAB}
 		{CAF0304F-C33B-4BF8-92AE-54A14AA6721B} = {59278BAA-FC7D-4C5B-943D-645353F3DDAB}
 		{E275CB6D-D8A8-47D7-82FB-B281D4B62C72} = {59278BAA-FC7D-4C5B-943D-645353F3DDAB}
+		{774BFB39-FFC0-47AD-8DA0-710D84F21C22} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
+		{18936E31-5604-447B-8644-C7D0DBA463C7} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {582527E1-7735-487F-A959-BB99FEF4FE80}
