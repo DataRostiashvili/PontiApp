@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Entities
 {
-    public class UserEntity
+    public class UserEntity : BaseEntity
     {
-        public int UserEntityId { get; set; }
         public string Name { get; set; }
         public string Surename { get; set; }
 

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>PontiApp.Validators</RootNamespace>
+    <AssemblyName>PontiApp.Validators</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PontiApp.Data\PontiApp.Data.csproj" />
+  </ItemGroup>
+
+</Project>

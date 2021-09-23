@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Data", "PontiApp.Data\PontiApp.Data.csproj", "{6647B32B-2663-47C7-B5E3-96ABCED7A86D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Repository", "PontiApp.Repository\PontiApp.Repository.csproj", "{CBDD3FBA-D5D8-4D70-9543-54E00EF11C92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Ponti.Repository", "PontiApp.Repository\PontiApp.Ponti.Repository.csproj", "{CBDD3FBA-D5D8-4D70-9543-54E00EF11C92}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Models", "PontiApp.Models\PontiApp.Models.csproj", "{D3912E36-93C8-4562-B10C-D7B062C87365}"
 EndProject
@@ -26,6 +26,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Images.Services", "PontiApp.Images.Services\PontiApp.Images.Services.csproj", "{18936E31-5604-447B-8644-C7D0DBA463C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{34A0481C-8E41-4D27-A3EB-18F1224A1D07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.Validators", "PontiApp.EntityValidators\PontiApp.Validators.csproj", "{1F009EC4-E35D-4E39-A0BC-0F7BDA227756}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.Mappings", "PontiApp.Mappings\PontiApp.Mappings.csproj", "{0690A693-A6E1-4C73-AAD0-965A3B052129}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,14 @@ Global
 		{18936E31-5604-447B-8644-C7D0DBA463C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18936E31-5604-447B-8644-C7D0DBA463C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18936E31-5604-447B-8644-C7D0DBA463C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F009EC4-E35D-4E39-A0BC-0F7BDA227756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F009EC4-E35D-4E39-A0BC-0F7BDA227756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F009EC4-E35D-4E39-A0BC-0F7BDA227756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F009EC4-E35D-4E39-A0BC-0F7BDA227756}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0690A693-A6E1-4C73-AAD0-965A3B052129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0690A693-A6E1-4C73-AAD0-965A3B052129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0690A693-A6E1-4C73-AAD0-965A3B052129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0690A693-A6E1-4C73-AAD0-965A3B052129}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +96,8 @@ Global
 		{774BFB39-FFC0-47AD-8DA0-710D84F21C22} = {34A0481C-8E41-4D27-A3EB-18F1224A1D07}
 		{18936E31-5604-447B-8644-C7D0DBA463C7} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
 		{34A0481C-8E41-4D27-A3EB-18F1224A1D07} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
+		{1F009EC4-E35D-4E39-A0BC-0F7BDA227756} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
+		{0690A693-A6E1-4C73-AAD0-965A3B052129} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {582527E1-7735-487F-A959-BB99FEF4FE80}
