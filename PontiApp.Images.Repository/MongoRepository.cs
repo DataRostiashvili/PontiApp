@@ -18,12 +18,12 @@ namespace PontiApp.Images.Repository
         public MongoRepository(MongoClient _client)
         {
             client = _client;
-            DB = client.GetDatabase("asda");
-            Coll = DB.GetCollection<BsonDocument>("");
+            DB = client.GetDatabase("PontiAppDB");
+            Coll = DB.GetCollection<BsonDocument>("Pictures");
         }
         public async Task<BsonDocument> GetImage(string schemaID)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq($"{typeof(T)}ID", schemaID);
+            var filter = Builders<BsonDocument>.Filter.Eq($"{typeof(T).FullName}ID", schemaID);
             var file = await Coll.FindAsync(filter);
             return file.ToBsonDocument();
         }
@@ -33,7 +33,7 @@ namespace PontiApp.Images.Repository
         }
         public async Task UpdateImage(string schemaID,BsonDocument doc)
         {
-            var builder = Builders<BsonDocument>.Filter.Eq($"{nameof(T)}ID", schemaID);
+            var builder = Builders<BsonDocument>.Filter.Eq($"{typeof(T).FullName}ID", schemaID);
             var res = await Coll.ReplaceOneAsync(builder, doc);
         }
         public async Task DeleteImage(string schemaID)
