@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using PontiApp.Images.Api.Attributes;
 using PontiApp.Images.Services;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PontiApp.Images.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [ApiKeyAuth]
     public class UserImageController : ControllerBase
     {
         private readonly IMongoUserService service;
