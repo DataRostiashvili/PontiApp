@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PontiApp.EntityValidators\PontiApp.Validators.csproj" />
     <ProjectReference Include="..\PontiApp.Repository\PontiApp.Ponti.Repository.csproj" />
   </ItemGroup>
 
