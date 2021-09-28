@@ -1,13 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using PontiApp.Images.Repository;
-using PontiApp.Images.Services;
-using PontiApp.Images.Services.EventService;
-using PontiApp.Models.MongoSchema;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Configuration;
+using PontiApp.Images.Services.Generic_Services;
 
 namespace PontiApp.Images.Api.Utils
 {
@@ -15,11 +11,13 @@ namespace PontiApp.Images.Api.Utils
     {
         public static IServiceCollection ConfigureImageServices(this IServiceCollection services)
         {
-            services.AddSingleton(_ => new MongoClient("mongodb://127.0.0.1:27017"));
-            services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
-            services.AddSingleton<IMongoEventService, MongoEventService>();
-            services.AddSingleton<IMongoUserService, MongoUserService>();
-            services.AddSingleton<IMongoUserService, MongoUserService>();
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(@"C:\Users\USER\source\repos\PontiApp\PontiApp.Images.Api")
+                .AddJsonFile("appsettings.json")
+                .Build(); 
+            services.AddSingleton(_ => new MongoClient(configuration.GetConnectionString("MongoDB")));
+            services.AddScoped<IMongoRepository, MongoRepository>();
+            services.AddScoped<IMongoService, MongoService>();
             return services;
         }
     }

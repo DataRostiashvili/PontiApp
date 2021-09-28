@@ -1,17 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PontiApp.Images.Api.RabbitBackgroundService;
 using PontiApp.Images.Api.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PontiApp.Images.Api
 {
@@ -27,7 +21,9 @@ namespace PontiApp.Images.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.ConfigureImageServices();
+            services.AddHostedService<ImageReceiverService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -1,45 +1,40 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using PontiApp.Models.Entities.Enums;
 using PontiApp.Models.MongoSchema;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
+ 
 namespace PontiApp.Images.Repository
 {
-    public class MongoRepository<T> : IMongoRepository<T> where T : BaseSchema
+    public class MongoRepository : IMongoRepository 
     {
-        private readonly IMongoDatabase DB;
-        private readonly IMongoCollection<BsonDocument> Coll;
-        private readonly MongoClient client;
-        public MongoRepository(MongoClient _client)
+        private readonly IMongoDatabase _db;
+        private readonly IMongoCollection<BsonDocument> _coll;
+        private readonly MongoClient _client;
+        public MongoRepository(MongoClient client)
         {
-            client = _client;
-            DB = client.GetDatabase("PontiAppDB");
-            Coll = DB.GetCollection<BsonDocument>("Pictures");
+            this._client = client;
+            _db = this._client.GetDatabase("PontiAppDB");
+            _coll = _db.GetCollection<BsonDocument>("ImageRepo");
         }
-        public async Task<BsonDocument> GetImage(string schemaID)
+        public async Task<BsonDocument> GetImage(string guid)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq($"{typeof(T).FullName}ID", schemaID);
-            var file = await Coll.FindAsync(filter);
+            var filter = Builders<BsonDocument>.Filter.Eq("Guid", guid);
+            var file =await _coll.FindAsync(filter).Result.FirstAsync();
             return file.ToBsonDocument();
         }
         public async Task PostImage(BsonDocument doc)
         {
-            await Coll.InsertOneAsync(doc);
+            await _coll.InsertOneAsync(doc);
         }
-        public async Task UpdateImage(string schemaID,BsonDocument doc)
+        public async Task UpdateImage(string guid,BsonDocument doc)
         {
-            var builder = Builders<BsonDocument>.Filter.Eq($"{typeof(T).FullName}ID", schemaID);
-            var res = await Coll.ReplaceOneAsync(builder, doc);
+            var builder = Builders<BsonDocument>.Filter.Eq("Guid", guid);
+            var res = await _coll.ReplaceOneAsync(builder, doc);
         }
-        public async Task DeleteImage(string schemaID)
+        public async Task DeleteImage(string guid)
         {
-            var builder = Builders<BsonDocument>.Filter.Eq($"{nameof(T)}ID", schemaID);
-            await Coll.DeleteOneAsync(builder);
+            var builder = Builders<BsonDocument>.Filter.Eq("Guid", guid);
+            await _coll.DeleteOneAsync(builder);
         }
 
     }
