@@ -57,9 +57,14 @@ namespace PontiApp.Images.Services.Generic_Services
             var doc = await _repo.GetImage(guid);
             var schema = BsonSerializer.Deserialize<ImageSchema>(doc);
             var list = schema.BytesList;
-            foreach (var i in indices)
+            List<byte[]> listToRemove = new List<byte[]>();
+            foreach(var item in indices)
             {
-                list.RemoveAt(i);
+                listToRemove.Add(list[item]);
+            }
+            foreach (var i in listToRemove)
+            {
+                list.Remove(i);
             }
             var dict = new Dictionary<string, object>
             {

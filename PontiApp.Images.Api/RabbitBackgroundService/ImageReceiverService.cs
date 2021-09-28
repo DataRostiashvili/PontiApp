@@ -63,13 +63,12 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonStr);
             switch (e.RoutingKey){
                 case "Update.Add":
-                    await mongoService.UpdateImage((string)dict["Guid"],(List<byte[]>)dict["BytesList"]);
+                    await mongoService.UpdateImage((string)dict["Guid"],JsonConvert.DeserializeObject<List<byte[]>>(Convert.ToString(dict["Indices"])));
                     break;
                 case "Update.Remove":
-                    await mongoService.UpdateImage((string)dict["Guid"], (int[])dict["indices"]);
+                    await mongoService.UpdateImage((string)dict["Guid"], JsonConvert.DeserializeObject<int[]>(Convert.ToString(dict["Indices"])));
                     break;
                 case "Add":
-
                     await mongoService.PostImage((string)dict["Guid"],JsonConvert.DeserializeObject<List<byte[]>>(Convert.ToString(dict["BytesList"])));
                     break;
                 case "Delete":
