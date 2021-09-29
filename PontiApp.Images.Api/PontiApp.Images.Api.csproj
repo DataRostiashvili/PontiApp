@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PontiApp.Images.Services\PontiApp.Images.Services.csproj" />
+    <ProjectReference Include="..\PontiApp.MessageSender\PontiApp.MessageSender.csproj" />
+    <ProjectReference Include="..\PontiApp.Utilities\PontiApp.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

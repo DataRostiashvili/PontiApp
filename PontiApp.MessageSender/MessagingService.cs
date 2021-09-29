@@ -16,10 +16,10 @@ namespace PontiApp.MessageSender
         {
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
-                UserName = "guest",
-                Password = "guest",
-                Port = 5672
+                HostName = RabbitMQConsts.HOSTNAME,
+                UserName = RabbitMQConsts.USERNAME,
+                Password = RabbitMQConsts.PASSWORD,
+                Port = RabbitMQConsts.PORT
             };
             Conn = factory.CreateConnection();
             Channel = Conn.CreateModel();
@@ -27,37 +27,38 @@ namespace PontiApp.MessageSender
         public void SendUpdateMessage(string guid,List<byte[]> BytesList)
         {
             var dict = new Dictionary<string, object>();
-            dict.Add("Guid",guid);
-            dict.Add("BytesList", BytesList);
+            dict.Add(RabbitMQConsts.GUID, guid);
+            dict.Add(RabbitMQConsts.LIST, BytesList);
             var json = JsonConvert.SerializeObject(dict);
             var body = Encoding.UTF8.GetBytes(json);
-            Channel.BasicPublish("PontiAppEx", "Update.Add", null, body);
+            Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.UPDATE_ADD_Q, null, body);
         }
+
         public void SendUpdateMessage(string guid,int[] indices)
         {
             var dict = new Dictionary<string, object>();
-            dict.Add("Guid", guid);
-            dict.Add("Indices", indices);
+            dict.Add(RabbitMQConsts.GUID, guid);
+            dict.Add(RabbitMQConsts.INDICES, indices);
             var json = JsonConvert.SerializeObject(dict);
             var body = Encoding.UTF8.GetBytes(json);
-            Channel.BasicPublish("PontiAppEx", "Update.Remove", null, body);
+            Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.UPDATE_REMOVE_Q, null, body);
         }
         public void SendAddMessage(string guid,List<byte[]> BytesList)
         {
             var dict = new Dictionary<string, object>();
-            dict.Add("Guid", guid);
-            dict.Add("BytesList", BytesList);
+            dict.Add(RabbitMQConsts.GUID, guid);
+            dict.Add(RabbitMQConsts.LIST, BytesList);
             var json = JsonConvert.SerializeObject(dict);
             var body = Encoding.UTF8.GetBytes(json);
-            Channel.BasicPublish("PontiAppEx", "Add", null, body);
+            Channel.BasicPublish(RabbitMQConsts.EXCHANGE,RabbitMQConsts.ADD_Q, null, body);
         }
         public void SendDeleteMessage(string guid)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("Guid", guid);
+            dict.Add(RabbitMQConsts.GUID, guid);
             var json = JsonConvert.SerializeObject(dict);
             var body = Encoding.UTF8.GetBytes(json);
-            Channel.BasicPublish("PontiAppEx", "Add", null, body);
+            Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.DELETE_Q,  null, body);
         }
     }
 }

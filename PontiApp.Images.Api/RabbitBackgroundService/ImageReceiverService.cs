@@ -11,6 +11,7 @@ using PontiApp.Models.MongoSchema;
 using System.Text;
 using PontiApp.Images.Services.Generic_Services;
 using Microsoft.Extensions.DependencyInjection;
+using PontiApp.MessageSender;
 
 namespace PontiApp.Images.Api.RabbitBackgroundService
 {
@@ -29,10 +30,10 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
                 mongoService = scope.ServiceProvider.GetRequiredService<IMongoService>();
             }
             _cFac = cFac;
-            _cFac.HostName = "localhost";
-            _cFac.UserName = "guest";
-            _cFac.Password = "guest";
-            _cFac.Port = 5672;
+            _cFac.HostName = RabbitMQConsts.HOSTNAME;
+            _cFac.UserName = RabbitMQConsts.USERNAME;
+            _cFac.Password = RabbitMQConsts.PASSWORD;
+            _cFac.Port = RabbitMQConsts.PORT;
             _conn = _cFac.CreateConnection();
             _channel = _conn.CreateModel();
         }
@@ -53,10 +54,10 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             updateRemoveBasicConsumer.Received += Consumer_Received;
 
             //Consume
-            _channel.BasicConsume("Update.Add", true, updateAddConsumer);
-            _channel.BasicConsume("Update.Remove", true, updateRemoveBasicConsumer);
-            _channel.BasicConsume("Add", true, addConsumer);
-            _channel.BasicConsume("Delete", true, addConsumer);
+            _channel.BasicConsume(RabbitMQConsts.UPDATE_ADD_Q, true, updateAddConsumer);
+            _channel.BasicConsume(RabbitMQConsts.UPDATE_REMOVE_Q, true, updateRemoveBasicConsumer);
+            _channel.BasicConsume(RabbitMQConsts.ADD_Q, true, addConsumer);
+            _channel.BasicConsume(RabbitMQConsts.DELETE_Q, true, delConsumer);
             return Task.CompletedTask;
         }
 
@@ -67,17 +68,17 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             var jsonStr = Encoding.UTF8.GetString(body);
             var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonStr);
             switch (e.RoutingKey){
-                case "Update.Add":
-                    await mongoService.UpdateImage((string)dict["Guid"],JsonConvert.DeserializeObject<List<byte[]>>(Convert.ToString(dict["Indices"])));
+                case RabbitMQConsts.UPDATE_ADD_Q:
+                    await mongoService.UpdateImage((string)dict[RabbitMQConsts.GUID],JsonConvert.DeserializeObject<List<byte[]>>(Convert.ToString(dict[RabbitMQConsts.LIST])));
                     break;
-                case "Update.Remove":
-                    await mongoService.UpdateImage((string)dict["Guid"], JsonConvert.DeserializeObject<int[]>(Convert.ToString(dict["Indices"])));
+                case RabbitMQConsts.UPDATE_REMOVE_Q:
+                    await mongoService.UpdateImage((string)dict[RabbitMQConsts.GUID], JsonConvert.DeserializeObject<int[]>(Convert.ToString(dict[RabbitMQConsts.INDICES])));
                     break;
-                case "Add":
-                    await mongoService.PostImage((string)dict["Guid"],JsonConvert.DeserializeObject<List<byte[]>>(Convert.ToString(dict["BytesList"])));
+                case RabbitMQConsts.ADD_Q:
+                    await mongoService.PostImage((string)dict[RabbitMQConsts.GUID],JsonConvert.DeserializeObject<List<byte[]>>(Convert.ToString(dict[RabbitMQConsts.LIST])));
                     break;
-                case "Delete":
-                    await mongoService.DeleteImage((string)dict["Guid"]);
+                case RabbitMQConsts.DELETE_Q:
+                    await mongoService.DeleteImage((string)dict[RabbitMQConsts.GUID]);
                     break;
             }
         }
