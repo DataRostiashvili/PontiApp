@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -58,7 +59,7 @@ namespace PontiApp.Images.Services.Generic_Services
             var schema = BsonSerializer.Deserialize<ImageSchema>(doc);
             var list = schema.BytesList;
             List<byte[]> listToRemove = new List<byte[]>();
-            foreach(var item in indices)
+            foreach(var item in indices.Distinct())
             {
                 listToRemove.Add(list[item]);
             }

@@ -20,39 +20,44 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
         private readonly IConnection _conn;
         private readonly IModel _channel;
         private readonly IMongoService mongoService;
-        public ImageReceiverService(IServiceProvider service)
+        private readonly ConnectionFactory _cFac;
+        public ImageReceiverService(IServiceProvider service,ConnectionFactory cFac)
         {
             _service = service;
             using(var scope = service.CreateScope())
             {
                 mongoService = scope.ServiceProvider.GetRequiredService<IMongoService>();
             }
-            var fac = new ConnectionFactory()
-            {
-                HostName = "localhost",
-                UserName = "guest",
-                Password = "guest",
-                Port = 5672
-            };
-            _conn = fac.CreateConnection();
+            _cFac = cFac;
+            _cFac.HostName = "localhost";
+            _cFac.UserName = "guest";
+            _cFac.Password = "guest";
+            _cFac.Port = 5672;
+            _conn = _cFac.CreateConnection();
             _channel = _conn.CreateModel();
         }
 
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            //Register events
             var delConsumer = new EventingBasicConsumer(_channel);
             var addConsumer = new EventingBasicConsumer(_channel);
             var updateAddConsumer = new EventingBasicConsumer(_channel);
             var updateRemoveBasicConsumer = new EventingBasicConsumer(_channel);
+
+            //Subscribe
             delConsumer.Received += Consumer_Received;
             addConsumer.Received += Consumer_Received;
             updateAddConsumer.Received += Consumer_Received;
             updateRemoveBasicConsumer.Received += Consumer_Received;
+
+            //Consume
             _channel.BasicConsume("Update.Add", true, updateAddConsumer);
             _channel.BasicConsume("Update.Remove", true, updateRemoveBasicConsumer);
             _channel.BasicConsume("Add", true, addConsumer);
             _channel.BasicConsume("Delete", true, addConsumer);
+            return Task.CompletedTask;
         }
 
 

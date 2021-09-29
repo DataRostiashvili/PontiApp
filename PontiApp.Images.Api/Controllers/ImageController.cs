@@ -32,30 +32,30 @@ namespace PontiApp.Images.Api.Controllers
             return obj.ByteList;
         }
         
-        [HttpPost]
-        public async Task Post(string guid,[FromBody]JsonObj lst)
-        {
-            await _service.PostImage(guid, lst.ByteList);
-        }
+        //[HttpPost]
+        //public async Task Post(string guid,[FromBody]JsonObj lst)
+        //{
+        //    await _service.PostImage(guid, lst.ByteList);
+        //}
 
-        [Route("Remove")]
-        [HttpPut]
-        public async Task Update(string guid, int[] indices) 
-        {
-            await _service.UpdateImage(guid, indices);
-        }
+        //[Route("Remove")]
+        //[HttpPut]
+        //public async Task Update(string guid, int[] indices) 
+        //{
+        //    await _service.UpdateImage(guid, indices);
+        //}
 
-        [Route("Add")]
-        [HttpPut]
-        public async Task Update(string guid, List<byte[]> imgData)
-        {
-            await _service.UpdateImage(guid, imgData);
-        }
+        //[Route("Add")]
+        //[HttpPut]
+        //public async Task Update(string guid, List<byte[]> imgData)
+        //{
+        //    await _service.UpdateImage(guid, imgData);
+        //}
         
-        [HttpDelete]
-        public async Task Delete(string guid)
-        {
-            await _service.DeleteImage(guid);
-        }
+        //[HttpDelete]
+        //public async Task Delete(string guid)
+        //{
+        //    await _service.DeleteImage(guid);
+        //}
     }
 }
