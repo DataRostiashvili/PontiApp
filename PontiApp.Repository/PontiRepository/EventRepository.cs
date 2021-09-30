@@ -34,14 +34,37 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async override Task InsertGuesting(EventEntity currEvent)
+        public override async Task DeleteHosting(EventEntity currEvent)
+        {
+            var currUser = await _applicationDbContext.Users
+                .Include(u => u.UserHostEvents)
+                .SingleAsync(u => u.QueueId == currEvent.HostUser.QueueId);
+
+            currUser.UserHostEvents.Remove(currEvent);
+
+            await Delete(currEvent);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async override Task InsertGuesting(EventEntity currEvent, int guestId)
         {
 
             var currUser = await _applicationDbContext.Users
                 .Include(u => u.UserGuestEvents)
-                .SingleAsync(u => u.QueueId == currEvent.HostUser.QueueId);
+                .SingleAsync(u => u.QueueId == guestId);
 
-            currUser.UserHostEvents.Add(currEvent);
+            currUser.UserGuestEvents.Add(currEvent);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public override async Task DeleteGuesting(EventEntity currEvent, int guestId)
+        {
+            var currUser = await _applicationDbContext.Users
+                .Include(u => u.UserGuestEvents)
+                .SingleAsync(u => u.QueueId == guestId);
+
+            currUser.UserGuestEvents.Remove(currEvent);
+
             await _applicationDbContext.SaveChangesAsync();
         }
 

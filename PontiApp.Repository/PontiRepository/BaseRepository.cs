@@ -38,7 +38,11 @@ namespace PontiApp.Ponti.Repository.BaseRepository
         //Abstract methods only for insertion Events and Places
         public abstract Task InsertHosting(T entity);
 
-        public abstract Task InsertGuesting(T entity);
+        public abstract Task InsertGuesting(T entity, int guestId);
+
+        public abstract Task DeleteHosting(T entity);
+
+        public abstract Task DeleteGuesting(T entity, int guestId);
 
         public async Task Insert(T entity)
         {
