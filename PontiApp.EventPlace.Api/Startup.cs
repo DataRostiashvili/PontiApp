@@ -34,7 +34,7 @@ namespace PontiApp.EventPlace.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.EventPlace.Api", Version = "v1" });
             });
 
-            services.AddScoped(typeof(IPontiRepository<>), typeof(PontiRepository<>));
+            services.AddScoped(typeof(IPontiRepository<>), typeof(BaseRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

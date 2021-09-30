@@ -16,15 +16,14 @@ namespace PontiApp.Models.Entities
         public string Mail { get; set; }
         public string TicketBuyUrl { get; set; }
 
-        public int EventRef { get; set; }
-        public EventEntity EventEntity { get; set; }
+        public UserEntity HostUser { get; set; }
 
+        public ICollection<EventEntity> PlaceEvents { get; set; }
         public ICollection<WeekEntity> WeekSchedule { get; set; }
-        public ICollection<PlacePicEntity> PictureUries { get; set; }
-        public ICollection<PlaceReviewEntity> PlaceReviews { get; set; }
+        public ICollection<PlacePicEntity> Pictures { get; set; }
+        public ICollection<PlaceReviewEntity> Reviews { get; set; }
 
-        public ICollection<UserGuestEventEntity> UserGuestEvents { get; set; }
-        public ICollection<UserHostEventEntity> UserHostEvents { get; set; }
+        public ICollection<UserEntity> UserGuest { get; set; }
 
     }
 }

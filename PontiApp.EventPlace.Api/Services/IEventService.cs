@@ -11,10 +11,11 @@ namespace PontiApp.EventPlace.Api.Services
         Task AddEvent(EventDTO newEventDTO);
         Task UpdateEvent(EventDTO currEventDTO);
         Task DeleteEvent(EventDTO currEventDTO);
-        Task<EventDTO> GetSingleEvent(EventDTO currEventDTO);
+        Task<EventDTO> GetSingleEvent(int QueueId);
         Task<IEnumerable<EventDTO>> GetAllEvent();
-        Task<IEnumerable<EventDTO>> GetAllHsotingEvent();
-        Task<IEnumerable<EventDTO>> GetAllGuestingEvent();
+        Task<IEnumerable<EventDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO);
+        Task<IEnumerable<EventDTO>> GetAllHsotingEvent(MyPontsFilterDTO HostingDTO);
+        Task<IEnumerable<EventDTO>> GetAllGuestingEvent(MyPontsFilterDTO GuestingDTO);
 
     }
 }

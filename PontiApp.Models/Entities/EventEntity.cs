@@ -20,13 +20,16 @@ namespace PontiApp.Models.Entities
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
+        //One to many references
+
         public PlaceEntity Place { get; set; }
+        public UserEntity HostUser { get; set; }
 
-        public ICollection<EventPicEntity> PictureUries { get; set; }
-        public ICollection<EventReviewEntity> EventReviews { get; set; }
+        public ICollection<EventPicEntity> Pictures { get; set; }
+        public ICollection<EventReviewEntity> Reviews { get; set; }
 
-        public ICollection<UserGuestEventEntity> UserGuestEvents { get; set; }
-        public ICollection<UserHostEventEntity> UserHostEvents { get; set; }
+        //Many to many
+        public ICollection<UserEntity> UserGuest { get; set; }
 
     }
 }

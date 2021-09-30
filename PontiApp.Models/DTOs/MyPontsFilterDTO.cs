@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class MyPontsFilter
+    public class MyPontsFilterDTO
     {
         public int QueueId { get; set; }
         PontiTypeEnum PontiType { get; set; }

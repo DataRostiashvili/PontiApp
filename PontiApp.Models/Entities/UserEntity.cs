@@ -19,10 +19,17 @@ namespace PontiApp.Models.Entities
         public int TotalReviewerCount { get; set; }
         public bool IsVerifiedUser { get; set; }
 
-        public ProfilePicEntity PictureUri { get; set; }
+        //For Profile pic one to one
+        public string MongoKey { get; set; }
 
-        public ICollection<UserGuestEventEntity> UserGuestEvents { get; set; }
-        public ICollection<UserHostEventEntity> UserHostEvents { get; set; }
+        //One to Many
+        public ICollection<EventEntity> UserHostEvents { get; set; }
+        public ICollection<PlaceEntity> UserHostPlaces { get; set; }
+
+        //Many to many
+        public ICollection<EventEntity> UserGuestEvents { get; set; }
+        public ICollection<PlaceEntity> UserGuestPlaces { get; set; }
+        
 
 
     }
