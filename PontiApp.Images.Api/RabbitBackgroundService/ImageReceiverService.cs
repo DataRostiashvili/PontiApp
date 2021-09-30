@@ -12,18 +12,21 @@ using System.Text;
 using PontiApp.Images.Services.Generic_Services;
 using Microsoft.Extensions.DependencyInjection;
 using PontiApp.MessageSender;
+using Microsoft.Extensions.Logging;
 
 namespace PontiApp.Images.Api.RabbitBackgroundService
 {
     public class ImageReceiverService : BackgroundService
     {
+        private readonly ILogger<ImageReceiverService> _logger;
         private readonly IServiceProvider _service;
         private readonly IConnection _conn;
         private readonly IModel _channel;
         private readonly IMongoService mongoService;
         private readonly ConnectionFactory _cFac;
-        public ImageReceiverService(IServiceProvider service,ConnectionFactory cFac)
+        public ImageReceiverService(IServiceProvider service,ConnectionFactory cFac,ILogger<ImageReceiverService> logger)
         {
+            _logger = logger;
             _service = service;
             using(var scope = service.CreateScope())
             {
@@ -70,15 +73,19 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             switch (e.RoutingKey){
                 case RabbitMQConsts.UPDATE_ADD_Q:
                     await mongoService.UpdateImage((string)dict[RabbitMQConsts.GUID],JsonConvert.DeserializeObject<List<byte[]>>(Convert.ToString(dict[RabbitMQConsts.LIST])));
+                    _logger.LogInformation($"Message consumder from {RabbitMQConsts.UPDATE_ADD_Q} queue at {DateTime.Now}");
                     break;
                 case RabbitMQConsts.UPDATE_REMOVE_Q:
                     await mongoService.UpdateImage((string)dict[RabbitMQConsts.GUID], JsonConvert.DeserializeObject<int[]>(Convert.ToString(dict[RabbitMQConsts.INDICES])));
+                    _logger.LogInformation($"Message consumder from {RabbitMQConsts.UPDATE_REMOVE_Q} queue at {DateTime.Now}");
                     break;
                 case RabbitMQConsts.ADD_Q:
                     await mongoService.PostImage((string)dict[RabbitMQConsts.GUID],JsonConvert.DeserializeObject<List<byte[]>>(Convert.ToString(dict[RabbitMQConsts.LIST])));
+                    _logger.LogInformation($"Message consumder from {RabbitMQConsts.ADD_Q} queue at {DateTime.Now}");
                     break;
                 case RabbitMQConsts.DELETE_Q:
                     await mongoService.DeleteImage((string)dict[RabbitMQConsts.GUID]);
+                    _logger.LogInformation($"Message consumder from {RabbitMQConsts.DELETE_Q} queue at {DateTime.Now}");
                     break;
             }
         }
