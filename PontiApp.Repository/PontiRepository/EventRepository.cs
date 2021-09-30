@@ -16,7 +16,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         
         }
 
-        public async override Task InsertHosting(EventEntity currEvent)
+        public async Task InsertHosting(EventEntity currEvent)
         {
             await Insert(currEvent);
 
@@ -26,7 +26,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
             var currPlace = await _applicationDbContext.Places
                 .Include(p => p.PlaceEvents)
-                .SingleAsync(p => p.QueueId == currEvent.Place.QueueId);
+                .SingleAsync(p => p.QueueId == currEvent.PlaceEntity.QueueId);
+
 
             currUser.UserHostEvents.Add(currEvent);
             currPlace.PlaceEvents.Add(currEvent);
@@ -34,7 +35,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public override async Task DeleteHosting(EventEntity currEvent)
+        public async Task DeleteHosting(EventEntity currEvent)
         {
             var currUser = await _applicationDbContext.Users
                 .Include(u => u.UserHostEvents)
@@ -46,7 +47,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async override Task InsertGuesting(EventEntity currEvent, int guestId)
+        public async Task InsertGuesting(EventEntity currEvent, int guestId)
         {
 
             var currUser = await _applicationDbContext.Users
@@ -57,7 +58,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public override async Task DeleteGuesting(EventEntity currEvent, int guestId)
+        public async Task DeleteGuesting(EventEntity currEvent, int guestId)
         {
             var currUser = await _applicationDbContext.Users
                 .Include(u => u.UserGuestEvents)
@@ -67,6 +68,5 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
             await _applicationDbContext.SaveChangesAsync();
         }
-
     }
 }

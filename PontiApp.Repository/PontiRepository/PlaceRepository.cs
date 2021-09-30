@@ -16,7 +16,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         {
 
         }
-        public async override Task InsertHosting(PlaceEntity currPlace)
+        public async Task InsertHosting(PlaceEntity currPlace)
         {
             await Insert(currPlace);
 
@@ -29,7 +29,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async override Task DeleteHosting(PlaceEntity currPlace)
+        public async Task DeleteHosting(PlaceEntity currPlace)
         {
             var currUser = await _applicationDbContext.Users
                 .Include(u => u.UserHostEvents)
@@ -42,7 +42,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         }
 
 
-        public async override Task InsertGuesting(PlaceEntity currPlace, int guestId)
+        public async Task InsertGuesting(PlaceEntity currPlace, int guestId)
         {
 
             var currUser = await _applicationDbContext.Users
@@ -53,7 +53,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async override Task DeleteGuesting(PlaceEntity currPlace, int guestId)
+        public async Task DeleteGuesting(PlaceEntity currPlace, int guestId)
         {
             var currUser = await _applicationDbContext.Users
                .Include(u => u.UserGuestPlaces)

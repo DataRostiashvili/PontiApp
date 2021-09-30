@@ -13,9 +13,13 @@ namespace PontiApp.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
-            builder.HasOne(u => u.PictureUri)
-                    .WithOne(p => p.UserEntity)
-                    .HasForeignKey<ProfilePicEntity>(p => p.UserRef);
+            builder.HasMany(u => u.UserHostEvents)
+                    .WithOne(e => e.HostUser)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.UserHostPlaces)
+                    .WithOne(p => p.HostUser)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

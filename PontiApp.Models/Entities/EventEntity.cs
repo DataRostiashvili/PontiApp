@@ -22,7 +22,7 @@ namespace PontiApp.Models.Entities
 
         //One to many references
 
-        public PlaceEntity Place { get; set; }
+        public PlaceEntity PlaceEntity { get; set; }
         public UserEntity HostUser { get; set; }
 
         public ICollection<EventPicEntity> Pictures { get; set; }

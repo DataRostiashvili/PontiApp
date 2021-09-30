@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Ponti.Repository.BaseRepository
 {
-    public abstract class BaseRepository<T> where T : BaseEntity
+    public class BaseRepository<T> where T : BaseEntity
     {
         
         protected readonly ApplicationDbContext _applicationDbContext;
@@ -34,15 +34,6 @@ namespace PontiApp.Ponti.Repository.BaseRepository
         {
             return await entities.Where(e => e.QueueId == Id).FirstAsync();
         }
-        
-        //Abstract methods only for insertion Events and Places
-        public abstract Task InsertHosting(T entity);
-
-        public abstract Task InsertGuesting(T entity, int guestId);
-
-        public abstract Task DeleteHosting(T entity);
-
-        public abstract Task DeleteGuesting(T entity, int guestId);
 
         public async Task Insert(T entity)
         {
@@ -63,8 +54,6 @@ namespace PontiApp.Ponti.Repository.BaseRepository
         public async Task<IEnumerable<T>> GetAll()
         {
             return await entities.ToListAsync();
-        }
-
-        
+        } 
     }
 }

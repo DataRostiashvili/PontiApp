@@ -25,6 +25,8 @@ namespace PontiApp.Models.Entities
         //One to Many
         public ICollection<EventEntity> UserHostEvents { get; set; }
         public ICollection<PlaceEntity> UserHostPlaces { get; set; }
+        public ICollection<PlaceReviewEntity> GuestingPlaceReviews { get; set; }
+        public ICollection<EventReviewEntity> GuestingEventReviews { get; set; }
 
         //Many to many
         public ICollection<EventEntity> UserGuestEvents { get; set; }

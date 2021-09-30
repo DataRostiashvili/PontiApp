@@ -14,8 +14,15 @@ namespace PontiApp.Data.DbContexts
     {
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<EventEntity> Events { get; set; }
-
         public DbSet<PlaceEntity> Places { get; set; }
+
+        public DbSet<EventReviewEntity> EventReviews { get; set; }
+        public DbSet<PlaceReviewEntity> PlaceReviews { get; set; }
+
+        public DbSet<EventPicEntity> EventPics { get; set; }
+        public DbSet<PlacePicEntity> PlacePics { get; set; }
+
+        public DbSet<WeekEntity> WeekDays { get; set; }
 
 
 
@@ -27,8 +34,6 @@ namespace PontiApp.Data.DbContexts
 
         protected override void OnModelCreating(ModelBuilder options)
         {
-            //options.ApplyConfiguration(new UserHostEventEntityConfiguration());
-            //options.ApplyConfiguration(new UserGuestEventEntityConfiguration());
             options.ApplyConfiguration(new EventEntityConfiguration());
             options.ApplyConfiguration(new UserEntityConfiguration());
             options.ApplyConfiguration(new PlaceEntityConfiguration());

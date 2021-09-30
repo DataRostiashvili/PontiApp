@@ -13,15 +13,15 @@ namespace PontiApp.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<EventEntity> builder)
         {
-            builder.HasOne(e => e.Place)
+
+
+            builder.HasMany(e => e.Pictures)
                     .WithOne(p => p.EventEntity)
-                    .HasForeignKey<PlaceEntity>(p => p.EventRef);
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(e => e.PictureUries)
-                    .WithOne(p => p.EventEntity);
-
-            builder.HasMany(e => e.EventReviews)
-                    .WithOne(r => r.EventEntity);
+            builder.HasMany(e => e.Reviews)
+                    .WithOne(r => r.EventEntity)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace PontiApp.Models.Entities
         public int PlaceReviewEntityId { get; set; }
         public float ReviewRanking { get; set; }
 
+        public UserEntity UserEntity { get; set; }
         public PlaceEntity PlaceEntity { get; set; }
     }
 }
