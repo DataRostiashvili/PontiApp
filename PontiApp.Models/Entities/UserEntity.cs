@@ -18,8 +18,6 @@ namespace PontiApp.Models.Entities
         public float AverageRanking { get; set; }
         public int TotalReviewerCount { get; set; }
         public bool IsVerifiedUser { get; set; }
-
-        //For Profile pic one to one
         public string MongoKey { get; set; }
 
         //One to Many

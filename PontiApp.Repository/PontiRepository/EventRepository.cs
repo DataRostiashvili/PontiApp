@@ -12,8 +12,9 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 {
     public class EventRepository : BaseRepository<EventEntity>
     {
-        public EventRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext){
-        
+        public EventRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+        {
+
         }
 
         public async Task InsertHosting(EventEntity currEvent)
@@ -34,6 +35,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
             await _applicationDbContext.SaveChangesAsync();
         }
+
+
 
         public async Task DeleteHosting(EventEntity currEvent)
         {
