@@ -5,6 +5,8 @@ using PontiApp.Images.Api.Attributes;
 using PontiApp.Images.Api.Utils;
 using PontiApp.Images.Services.Generic_Services;
 using PontiApp.Models.MongoSchema;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace PontiApp.Images.Api.Controllers
 {
@@ -25,11 +27,17 @@ namespace PontiApp.Images.Api.Controllers
         [HttpGet]
         public async Task<List<byte[]>> Get(string guid)
         {
-            JsonObj obj = new JsonObj
-            {
-                ByteList = await _service.GetImage(guid)
-            };
-            return obj.ByteList;
+            return await _service.GetImage(guid);
+        }
+        [HttpGet]
+        [Route("{guid}/{id}")]
+        public async Task<IActionResult> Get(string guid,int id)
+        {
+            var images = await _service.GetImage(guid);
+            var img = images[id];
+            var mStream = new MemoryStream(img);
+            return File(img, "image/jpeg");
+            
         }
         
         //[HttpPost]

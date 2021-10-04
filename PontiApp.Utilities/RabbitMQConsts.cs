@@ -8,10 +8,6 @@ namespace PontiApp.MessageSender
 {
     public static class RabbitMQConsts
     {
-        public const string HOSTNAME = "localhost";
-        public const string PASSWORD = "guest";
-        public const string USERNAME = "guest";
-        public const int PORT = 5672;
 
 
         public const string EXCHANGE = "PontiAppEx";

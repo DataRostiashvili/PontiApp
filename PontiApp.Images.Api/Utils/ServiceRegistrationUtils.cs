@@ -9,13 +9,9 @@ namespace PontiApp.Images.Api.Utils
 {
     public static class ServiceRegistrationUtils
     {
-        public static IServiceCollection ConfigureImageServices(this IServiceCollection services)
+        public static IServiceCollection ConfigureImageServices(this IServiceCollection services,IConfiguration config)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(@"C:\Users\USER\source\repos\PontiApp\PontiApp.Images.Api")
-                .AddJsonFile("appsettings.json")
-                .Build(); 
-            services.AddSingleton(_ => new MongoClient(configuration.GetConnectionString("MongoDB")));
+            services.AddSingleton(_ => new MongoClient(config.GetConnectionString("MongoDB")));
             services.AddScoped<IMongoRepository, MongoRepository>();
             services.AddScoped<IMongoService, MongoService>();
             return services;
