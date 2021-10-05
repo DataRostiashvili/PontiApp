@@ -13,8 +13,6 @@ namespace PontiApp.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<EventEntity> builder)
         {
-
-
             builder.HasMany(e => e.Pictures)
                     .WithOne(p => p.EventEntity)
                     .OnDelete(DeleteBehavior.Cascade);

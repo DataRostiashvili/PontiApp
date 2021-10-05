@@ -10,6 +10,7 @@ namespace PontiApp.Models.DTOs
     public class MyPontsFilterDTO
     {
         public int QueueId { get; set; }
+        public int UserId { get; set; }
         PontiTypeEnum PontiType { get; set; }
         MyRoleEnum MyRole { get; set; }
         

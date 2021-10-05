@@ -15,6 +15,9 @@ namespace PontiApp.Mappings
         {
             CreateMap<EventEntity, EventDTO>();
             CreateMap<EventDTO, EventEntity>();
+            CreateMap<IEnumerable<EventDTO>, IEnumerable<EventEntity>>();
+            CreateMap<IEnumerable<EventEntity>, IEnumerable<EventDTO>>();
+
         }
     }
 }

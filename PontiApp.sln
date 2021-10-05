@@ -27,9 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Images.Services", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{34A0481C-8E41-4D27-A3EB-18F1224A1D07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.Validators", "PontiApp.EntityValidators\PontiApp.Validators.csproj", "{1F009EC4-E35D-4E39-A0BC-0F7BDA227756}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Validators", "PontiApp.EntityValidators\PontiApp.Validators.csproj", "{1F009EC4-E35D-4E39-A0BC-0F7BDA227756}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.Mappings", "PontiApp.Mappings\PontiApp.Mappings.csproj", "{0690A693-A6E1-4C73-AAD0-965A3B052129}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Mappings", "PontiApp.Mappings\PontiApp.Mappings.csproj", "{0690A693-A6E1-4C73-AAD0-965A3B052129}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.EventPlace.Services", "PontiApp.EventPlace.Services\PontiApp.EventPlace.Services.csproj", "{B144C99A-5A76-4DB6-A157-77D518C000B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{0690A693-A6E1-4C73-AAD0-965A3B052129}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0690A693-A6E1-4C73-AAD0-965A3B052129}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0690A693-A6E1-4C73-AAD0-965A3B052129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B144C99A-5A76-4DB6-A157-77D518C000B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B144C99A-5A76-4DB6-A157-77D518C000B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B144C99A-5A76-4DB6-A157-77D518C000B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B144C99A-5A76-4DB6-A157-77D518C000B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{34A0481C-8E41-4D27-A3EB-18F1224A1D07} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
 		{1F009EC4-E35D-4E39-A0BC-0F7BDA227756} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
 		{0690A693-A6E1-4C73-AAD0-965A3B052129} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
+		{B144C99A-5A76-4DB6-A157-77D518C000B2} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {582527E1-7735-487F-A959-BB99FEF4FE80}

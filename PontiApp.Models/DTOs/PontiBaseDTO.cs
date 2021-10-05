@@ -9,7 +9,7 @@ namespace PontiApp.Models.DTOs
     public class PontiBaseDTO
     {
         public int QueueId { get; set; }
-        public int UserID { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 

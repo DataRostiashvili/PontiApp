@@ -71,5 +71,23 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
             await _applicationDbContext.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<EventEntity>> GetAllGuesting(int userId)
+        {
+            var currUser = await _applicationDbContext.Users
+                .Include(u => u.UserGuestEvents)
+                .SingleAsync(u => u.Id == userId);
+
+            return currUser.UserGuestEvents;
+        }
+
+        public async Task<IEnumerable<EventEntity>> GetAllHosting(int userId)
+        {
+            var currUser = await _applicationDbContext.Users
+                .Include(u => u.UserGuestEvents)
+                .SingleAsync(u => u.Id == userId);
+
+            return currUser.UserHostEvents;
+        }
     }
 }
