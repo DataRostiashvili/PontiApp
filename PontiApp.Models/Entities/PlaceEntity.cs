@@ -20,6 +20,7 @@ namespace PontiApp.Models.Entities
         public ICollection<PlaceReviewEntity> Reviews { get; set; }
 
         public ICollection<UserEntity> UserGuest { get; set; }
+        public ICollection<CategoryEntity> Categories { get; set; }
 
     }
 }

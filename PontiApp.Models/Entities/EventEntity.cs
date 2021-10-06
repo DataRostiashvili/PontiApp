@@ -27,6 +27,7 @@ namespace PontiApp.Models.Entities
 
         //Many to many
         public ICollection<UserEntity> UserGuest { get; set; }
+        public ICollection<CategoryEntity> Categories { get; set; }
 
     }
 }

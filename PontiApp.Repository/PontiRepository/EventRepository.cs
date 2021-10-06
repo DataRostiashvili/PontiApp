@@ -89,5 +89,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
             return currUser.UserHostEvents;
         }
+
+        public async Task<int> NextEventQueueId()
+        {
+            return await _applicationDbContext.Events.MaxAsync(e => e.QueueId) + 1;
+        }
     }
 }

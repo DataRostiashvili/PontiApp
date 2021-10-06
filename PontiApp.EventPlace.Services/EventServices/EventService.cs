@@ -34,12 +34,19 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task AddHostingEvent(EventDTO newEventDTO)
         {
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
+            
+            newEvent.HostUser.QueueId = await _eventRepo.NextEventQueueId();
+            newEvent.PlaceEntity.QueueId = newEventDTO.PlaceQueueId;
+
+            //AddCategories(newEvent);
+            //AddImagesInfo(newEvent);
             await _eventRepo.InsertHosting(newEvent);
         }
 
-        public Task DeleteGuestingEvent(EventDTO currEventDTO)
+        public async Task DeleteGuestingEvent(EventDTO currEventDTO)
         {
-            throw new NotImplementedException();
+            EventEntity currEvent = _mapper.Map<EventEntity>(currEventDTO);
+            await _eventRepo.DeleteGuesting(currEvent, 3);
         }
 
         public async Task DeleteHostingEvent(EventDTO currEventDTO)
@@ -83,7 +90,7 @@ namespace PontiApp.EventPlace.Services.EventServices
             return _mapper.Map<EventDTO>(currEvent);
         }
 
-        public Task UpdateGuestingEvent(EventDTO currEventDRO)
+        public Task UpdateGuestingEvent(EventDTO currEventDTO)
         {
             throw new NotImplementedException();
         }
