@@ -25,12 +25,21 @@ namespace PontiApp.EventPlace.Services.EventServices
             _eventRepo = eventRepo;
         }
 
+        public async Task AddGusestingEvent(EventDTO currEventDTO)
+        {
+            EventEntity currEvent = _mapper.Map<EventEntity>(currEventDTO);
+            await _eventRepo.InsertGuesting(currEvent, 3);
+        }
+
         public async Task AddHostingEvent(EventDTO newEventDTO)
         {
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
             await _eventRepo.InsertHosting(newEvent);
+        }
 
-            
+        public Task DeleteGuestingEvent(EventDTO currEventDTO)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task DeleteHostingEvent(EventDTO currEventDTO)
@@ -39,12 +48,12 @@ namespace PontiApp.EventPlace.Services.EventServices
             await _eventRepo.DeleteHosting(currEvent);
         }
 
-        public async  Task<IEnumerable<EventDTO>> GetAllEvent()
+        public async Task<IEnumerable<EventDTO>> GetAllEvent()
         {
             IEnumerable<EventEntity> allEvent = await _eventRepo.GetAll();
             IEnumerable<EventDTO> allEventDTOs = _mapper.Map<IEnumerable<EventDTO>>(allEvent);
-            
-            return allEventDTOs;     
+
+            return allEventDTOs;
         }
 
         public async Task<IEnumerable<EventDTO>> GetAllGuestingEvent(MyPontsFilterDTO GuestingDTO)
@@ -72,6 +81,11 @@ namespace PontiApp.EventPlace.Services.EventServices
         {
             EventEntity currEvent = await _eventRepo.GetByID(eventId);
             return _mapper.Map<EventDTO>(currEvent);
+        }
+
+        public Task UpdateGuestingEvent(EventDTO currEventDRO)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task UpdateHostingEvent(EventDTO currEventDTO)
