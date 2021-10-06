@@ -2,10 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>PontiApp.Validators</RootNamespace>
+    <AssemblyName>PontiApp.Validators</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PontiApp.Data\PontiApp.Data.csproj" />
   </ItemGroup>
 
 </Project>

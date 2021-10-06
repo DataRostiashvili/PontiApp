@@ -11,6 +11,7 @@ namespace PontiApp.Models.Entities
         public DateTime End { get; set; }
         public Daytype Day { get; set; }
 
+        public int PlaceEntityId { get; set; }
         public PlaceEntity Place { get; set; }
 
     }

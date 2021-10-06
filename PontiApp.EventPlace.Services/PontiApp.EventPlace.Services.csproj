@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PontiApp.Data\PontiApp.Data.csproj" />
+    <ProjectReference Include="..\PontiApp.EntityValidators\PontiApp.Validators.csproj" />
+    <ProjectReference Include="..\PontiApp.Models\PontiApp.Models.csproj" />
+    <ProjectReference Include="..\PontiApp.Repository\PontiApp.Ponti.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
