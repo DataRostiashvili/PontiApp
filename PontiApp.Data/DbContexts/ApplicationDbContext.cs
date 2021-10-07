@@ -19,6 +19,8 @@ namespace PontiApp.Data.DbContexts
 
         public DbSet<WeekEntity> WeekDays { get; set; }
 
+        public DbSet<CategoryEntity> Categories { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)

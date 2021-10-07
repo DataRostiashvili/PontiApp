@@ -25,33 +25,53 @@ namespace PontiApp.EventPlace.Services.EventServices
             _eventRepo = eventRepo;
         }
 
-        public async Task AddGusestingEvent(EventDTO currEventDTO)
-        {
-            EventEntity currEvent = _mapper.Map<EventEntity>(currEventDTO);
-            await _eventRepo.InsertGuesting(currEvent, 3);
-        }
-
         public async Task AddHostingEvent(EventDTO newEventDTO)
         {
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
+
+            newEvent.HostUser.QueueId = await _eventRepo.NextEventQueueId();
+            AddImagesInfo(ref newEvent, newEventDTO); //should be await
+
             await _eventRepo.InsertHosting(newEvent);
         }
 
-        public Task DeleteGuestingEvent(EventDTO currEventDTO)
+        private void AddImagesInfo(ref EventEntity newEvent, EventDTO newEventDTO)
         {
-            throw new NotImplementedException();
+            foreach (var p in newEventDTO.Pictures)
+            {
+                EventPicEntity eventPic = new()
+                {
+                    MongoKey = Guid.NewGuid().ToString()
+                };
+
+                newEvent.Pictures.Add(eventPic);
+                //awaitable Throw {bytes, guid} with rabbitMQ
+            }
         }
 
-        public async Task DeleteHostingEvent(EventDTO currEventDTO)
+        public async Task DeleteHostingEvent(EventHostDTO currEventHostDTO)
         {
-            EventEntity currEvent = _mapper.Map<EventEntity>(currEventDTO);
+            EventEntity currEvent = await _eventRepo.GetByID(currEventHostDTO.UserHostQueueId);
             await _eventRepo.DeleteHosting(currEvent);
+        }
+
+        public async Task AddGusestingEvent(EventGuestDTO currEventGuestDTO)
+        {
+            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventQueueId);
+            await _eventRepo.InsertGuesting(currEvent, currEventGuestDTO.UserHostQueueId);
+        }
+
+        public async Task DeleteGuestingEvent(EventGuestDTO currEventGuestDTO)
+        {
+            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventQueueId);
+            await _eventRepo.DeleteGuesting(currEvent, currEventGuestDTO.UserGuestQueueId);
         }
 
         public async Task<IEnumerable<EventDTO>> GetAllEvent()
         {
             IEnumerable<EventEntity> allEvent = await _eventRepo.GetAll();
             IEnumerable<EventDTO> allEventDTOs = _mapper.Map<IEnumerable<EventDTO>>(allEvent);
+
 
             return allEventDTOs;
         }
@@ -83,15 +103,17 @@ namespace PontiApp.EventPlace.Services.EventServices
             return _mapper.Map<EventDTO>(currEvent);
         }
 
-        public Task UpdateGuestingEvent(EventDTO currEventDRO)
+        public async Task UpdateGuestingEvent(EventGuestDTO currEventGuestDTO)
         {
-            throw new NotImplementedException();
+            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventQueueId);
+            await _eventRepo.UpdateGuestingEvent(currEvent, currEventGuestDTO);
         }
 
-        public async Task UpdateHostingEvent(EventDTO currEventDTO)
+        public async Task UpdateHostingEvent(EventHostDTO currEventDTO)
         {
-            EventEntity currEvent = _mapper.Map<EventEntity>(currEventDTO);
+            EventEntity currEvent = await _eventRepo.GetByID(currEventDTO.UserHostQueueId);
             await _eventRepo.Update(currEvent);
         }
     }
 }
+;

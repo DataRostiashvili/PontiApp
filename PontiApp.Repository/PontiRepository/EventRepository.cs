@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PontiApp.Data.DbContexts;
+using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Ponti.Repository.BaseRepository;
 using System;
@@ -19,45 +20,28 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task InsertHosting(EventEntity currEvent)
         {
-            await Insert(currEvent);
-
-            var currUser = await _applicationDbContext.Users
-                .Include(u => u.UserHostEvents)
+            currEvent.HostUser = await _applicationDbContext.Users
                 .SingleAsync(u => u.QueueId == currEvent.HostUser.QueueId);
 
-            var currPlace = await _applicationDbContext.Places
-                .Include(p => p.PlaceEvents)
+            currEvent.PlaceEntity = await _applicationDbContext.Places
                 .SingleAsync(p => p.QueueId == currEvent.PlaceEntity.QueueId);
 
-
-            currUser.UserHostEvents.Add(currEvent);
-            currPlace.PlaceEvents.Add(currEvent);
-
+            await Insert(currEvent);
             await _applicationDbContext.SaveChangesAsync();
         }
 
-
-
         public async Task DeleteHosting(EventEntity currEvent)
         {
-            var currUser = await _applicationDbContext.Users
-                .Include(u => u.UserHostEvents)
-                .SingleAsync(u => u.QueueId == currEvent.HostUser.QueueId);
-
-            currUser.UserHostEvents.Remove(currEvent);
-
             await Delete(currEvent);
             await _applicationDbContext.SaveChangesAsync();
         }
 
         public async Task InsertGuesting(EventEntity currEvent, int guestId)
         {
-
             var currUser = await _applicationDbContext.Users
-                .Include(u => u.UserGuestEvents)
                 .SingleAsync(u => u.QueueId == guestId);
 
-            currUser.UserGuestEvents.Add(currEvent);
+            currEvent.UserGuest.Add(currUser);
             await _applicationDbContext.SaveChangesAsync();
         }
 
@@ -88,6 +72,30 @@ namespace PontiApp.Ponti.Repository.PontiRepository
                 .SingleAsync(u => u.Id == userId);
 
             return currUser.UserHostEvents;
+        }
+
+        public async Task UpdateGuestingEvent(EventEntity currEvent, EventGuestDTO currEventGuestDTO)
+        {
+            
+
+            EventReviewEntity currReview = new()
+            {
+                ReviewRanking = currEventGuestDTO.ReviewRanking,
+                EventEntity = currEvent,
+                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == currEventGuestDTO.UserGuestQueueId)
+            };
+
+            if (currEvent.Reviews.Contains(currReview))
+            {
+                currEvent.Reviews.Remove(currReview);
+            }
+
+            currEvent.Reviews.Add(currReview);
+        }
+
+        public async Task<int> NextEventQueueId()
+        {
+            return await _applicationDbContext.Events.MaxAsync(e => e.QueueId) + 1;
         }
     }
 }

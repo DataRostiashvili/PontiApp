@@ -54,6 +54,8 @@ namespace PontiApp.Ponti.Repository.BaseRepository
         public async Task<IEnumerable<T>> GetAll()
         {
             return await entities.ToListAsync();
-        } 
+        }
+
+        
     }
 }
