@@ -15,7 +15,8 @@ namespace PontiApp.Mappings
         {
             CreateMap<EventEntity, EventDTO>();
             CreateMap<EventDTO, EventEntity>()
-                       .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)));
+                       .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)))
+                       .ForMember(dest => dest.PlaceEntity.QueueId, opt => opt.MapFrom(src => src.PlaceQueueId));
 
             CreateMap<IEnumerable<EventDTO>, IEnumerable<EventEntity>>();
             CreateMap<IEnumerable<EventEntity>, IEnumerable<EventDTO>>();
@@ -26,14 +27,14 @@ namespace PontiApp.Mappings
         {
             List<CategoryEntity> res = new List<CategoryEntity>();
 
-            foreach (var p in rawData)
+            foreach (var c in rawData)
             {
-                CategoryEntity eventPic = new()
+                CategoryEntity eventCat = new()
                 {
-                   Cetegory = p
+                    Cetegory = c
                 };
 
-                res.Add(eventPic);
+                res.Add(eventCat);
             }
             return res;
         }
