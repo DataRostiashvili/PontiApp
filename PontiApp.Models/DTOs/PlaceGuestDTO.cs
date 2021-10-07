@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class EventHostDTO
+    public class PlaceGuestDTO
     {
-        public int EventQueueId { get; set; }
+        public int PlaceQueueId { get; set; }
 
         public int UserHostQueueId { get; set; }
+
+        public int UserGuestQueueId { get; set; }
+
+        public float ReviewRanking { get; set; }
     }
 }

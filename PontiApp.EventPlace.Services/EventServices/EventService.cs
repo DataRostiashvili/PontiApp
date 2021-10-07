@@ -29,7 +29,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         {
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
 
-            newEvent.HostUser.QueueId = await _eventRepo.NextEventQueueId();
+            newEvent.HostUser.QueueId = await _eventRepo.NextQueueId();
             AddImagesInfo(ref newEvent, newEventDTO); //should be await
 
             await _eventRepo.InsertHosting(newEvent);
@@ -49,7 +49,7 @@ namespace PontiApp.EventPlace.Services.EventServices
             }
         }
 
-        public async Task DeleteHostingEvent(EventHostDTO currEventHostDTO)
+        public async Task DeleteHostingEvent(HostDTO currEventHostDTO)
         {
             EventEntity currEvent = await _eventRepo.GetByID(currEventHostDTO.UserHostQueueId);
             await _eventRepo.DeleteHosting(currEvent);
@@ -109,7 +109,7 @@ namespace PontiApp.EventPlace.Services.EventServices
             await _eventRepo.UpdateGuestingEvent(currEvent, currEventGuestDTO);
         }
 
-        public async Task UpdateHostingEvent(EventHostDTO currEventDTO)
+        public async Task UpdateHostingEvent(HostDTO currEventDTO)
         {
             EventEntity currEvent = await _eventRepo.GetByID(currEventDTO.UserHostQueueId);
             await _eventRepo.Update(currEvent);
