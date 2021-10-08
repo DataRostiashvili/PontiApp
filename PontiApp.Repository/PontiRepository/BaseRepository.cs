@@ -56,6 +56,9 @@ namespace PontiApp.Ponti.Repository.BaseRepository
             return await entities.ToListAsync();
         }
 
-        
+        public async Task<int> NextQueueId()
+        {
+            return await entities.MaxAsync(e => e.QueueId) + 1;
+        }
     }
 }

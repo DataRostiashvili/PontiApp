@@ -92,10 +92,5 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
             currEvent.Reviews.Add(currReview);
         }
-
-        public async Task<int> NextEventQueueId()
-        {
-            return await _applicationDbContext.Events.MaxAsync(e => e.QueueId) + 1;
-        }
     }
 }
