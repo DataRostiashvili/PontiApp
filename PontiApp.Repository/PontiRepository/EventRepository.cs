@@ -74,7 +74,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             return currUser.UserHostEvents;
         }
 
-        public async Task UpdateGuestingEvent(EventEntity currEvent, EventGuestDTO currEventGuestDTO)
+        public async Task UpdateGuestingEvent(EventEntity currEvent, GuestDTO currEventGuestDTO)
         {
             
 

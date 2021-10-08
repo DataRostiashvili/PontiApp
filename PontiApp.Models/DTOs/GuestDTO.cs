@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class EventGuestDTO
+    public class GuestDTO
     {
         public int EventQueueId { get; set; }
 

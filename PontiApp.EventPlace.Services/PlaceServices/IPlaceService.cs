@@ -18,7 +18,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         Task<PlaceDTO> GetSinglePlace(int PlaceId);
         Task<IEnumerable<PlaceDTO>> GetAllPlace();
         Task<IEnumerable<PlaceDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO);
-        Task<IEnumerable<PlaceDTO>> GetAllHsotingPlace(MyPontsFilterDTO HostingDTO);
-        Task<IEnumerable<PlaceDTO>> GetAllGuestingPlace(MyPontsFilterDTO GuestingDTO);
+        Task<IEnumerable<PlaceDTO>> GetAllHsotingPlace(HostDTO HostingDTO);
+        Task<IEnumerable<PlaceDTO>> GetAllGuestingPlace(GuestDTO GuestingDTO);
     }
 }
