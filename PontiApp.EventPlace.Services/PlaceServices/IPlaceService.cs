@@ -10,15 +10,15 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
     public interface IPlaceService
     {
         Task AddHostingPlace(PlaceDTO newPlaceDTO);
-        Task AddGusestingPlace(PlaceGuestDTO currPlaceGuestDTO);
+        Task AddGusestingPlace(GuestDTO currPlaceGuestDTO);
         Task UpdateHostingPlace(HostDTO currPlaceHostDTO);
-        Task UpdateGuestingPlace(PlaceGuestDTO currPlaceGuestDRO);
+        Task UpdateGuestingPlace(GuestDTO currPlaceGuestDRO);
         Task DeleteHostingPlace(HostDTO currPlaceHostDTO);
-        Task DeleteGuestingPlace(PlaceGuestDTO currPlaceGuestDTO);
+        Task DeleteGuestingPlace(GuestDTO currPlaceGuestDTO);
         Task<PlaceDTO> GetSinglePlace(int PlaceId);
         Task<IEnumerable<PlaceDTO>> GetAllPlace();
         Task<IEnumerable<PlaceDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO);
-        Task<IEnumerable<PlaceDTO>> GetAllHsotingPlace(HostDTO HostingDTO);
-        Task<IEnumerable<PlaceDTO>> GetAllGuestingPlace(GuestDTO GuestingDTO);
+        Task<IEnumerable<PlaceDTO>> GetAllHsotingPlace(int userHostQueueId);
+        Task<IEnumerable<PlaceDTO>> GetAllGuestingPlace(int userGuestQueueId);
     }
 }

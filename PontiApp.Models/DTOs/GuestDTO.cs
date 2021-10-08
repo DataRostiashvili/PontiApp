@@ -10,6 +10,8 @@ namespace PontiApp.Models.DTOs
     {
         public int EventQueueId { get; set; }
 
+        public int PlaceQueueId { get; set; }
+
         public int UserHostQueueId { get; set; }
 
         public int UserGuestQueueId { get; set; }

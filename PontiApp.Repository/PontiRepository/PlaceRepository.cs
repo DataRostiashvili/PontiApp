@@ -71,7 +71,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             return currUser.UserHostPlaces;
         }
 
-        public async Task UpdateGuestingPlace(PlaceEntity currPlace, PlaceGuestDTO currPlaceGuestDTO)
+        public async Task UpdateGuestingPlace(PlaceEntity currPlace, GuestDTO currPlaceGuestDTO)
         {
             PlaceReviewEntity currReview = new()
             {
