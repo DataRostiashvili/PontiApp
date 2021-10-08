@@ -69,17 +69,17 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.DeleteHosting(currPlace);
         }
 
-        public async Task<IEnumerable<PlaceDTO>> GetAllGuestingPlace(MyPontsFilterDTO GuestingDTO)
+        public async Task<IEnumerable<PlaceDTO>> GetAllGuestingPlace(GuestDTO GuestingDTO)
         {
-            IEnumerable<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(GuestingDTO.UserId);
+            IEnumerable<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(GuestingDTO.UserGuestQueueId);
             IEnumerable<PlaceDTO> guestingPlaceDTOs = _mapper.Map<IEnumerable<PlaceDTO>>(guestingPlaces);
 
             return guestingPlaceDTOs;
         }
 
-        public async Task<IEnumerable<PlaceDTO>> GetAllHsotingPlace(MyPontsFilterDTO HostingDTO)
+        public async Task<IEnumerable<PlaceDTO>> GetAllHsotingPlace(HostDTO HostingDTO)
         {
-            IEnumerable<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(HostingDTO.UserId);
+            IEnumerable<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(HostingDTO.UserHostQueueId);
             IEnumerable<PlaceDTO> hostingPlaceDTOs = _mapper.Map<IEnumerable<PlaceDTO>>(hostingPlaces);
 
             return hostingPlaceDTOs;

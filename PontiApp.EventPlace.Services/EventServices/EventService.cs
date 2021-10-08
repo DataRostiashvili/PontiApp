@@ -55,13 +55,13 @@ namespace PontiApp.EventPlace.Services.EventServices
             await _eventRepo.DeleteHosting(currEvent);
         }
 
-        public async Task AddGusestingEvent(EventGuestDTO currEventGuestDTO)
+        public async Task AddGusestingEvent(GuestDTO currEventGuestDTO)
         {
             EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventQueueId);
             await _eventRepo.InsertGuesting(currEvent, currEventGuestDTO.UserHostQueueId);
         }
 
-        public async Task DeleteGuestingEvent(EventGuestDTO currEventGuestDTO)
+        public async Task DeleteGuestingEvent(GuestDTO currEventGuestDTO)
         {
             EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventQueueId);
             await _eventRepo.DeleteGuesting(currEvent, currEventGuestDTO.UserGuestQueueId);
@@ -76,17 +76,17 @@ namespace PontiApp.EventPlace.Services.EventServices
             return allEventDTOs;
         }
 
-        public async Task<IEnumerable<EventDTO>> GetAllGuestingEvent(MyPontsFilterDTO GuestingDTO)
+        public async Task<IEnumerable<EventDTO>> GetAllGuestingEvent(int userGuestQueueId)
         {
-            IEnumerable<EventEntity> guestingEvents = await _eventRepo.GetAllGuesting(GuestingDTO.UserId);
+            IEnumerable<EventEntity> guestingEvents = await _eventRepo.GetAllGuesting(userGuestQueueId);
             IEnumerable<EventDTO> guestingEventDTOs = _mapper.Map<IEnumerable<EventDTO>>(guestingEvents);
 
             return guestingEventDTOs;
         }
 
-        public async Task<IEnumerable<EventDTO>> GetAllHsotingEvent(MyPontsFilterDTO HostingDTO)
+        public async Task<IEnumerable<EventDTO>> GetAllHsotingEvent(int userHostQueueId)
         {
-            IEnumerable<EventEntity> hostingEvents = await _eventRepo.GetAllHosting(HostingDTO.UserId);
+            IEnumerable<EventEntity> hostingEvents = await _eventRepo.GetAllHosting(userHostQueueId);
             IEnumerable<EventDTO> hostingEventDTOs = _mapper.Map<IEnumerable<EventDTO>>(hostingEvents);
 
             return hostingEventDTOs;
@@ -103,7 +103,7 @@ namespace PontiApp.EventPlace.Services.EventServices
             return _mapper.Map<EventDTO>(currEvent);
         }
 
-        public async Task UpdateGuestingEvent(EventGuestDTO currEventGuestDTO)
+        public async Task UpdateGuestingEvent(GuestDTO currEventGuestDTO)
         {
             EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventQueueId);
             await _eventRepo.UpdateGuestingEvent(currEvent, currEventGuestDTO);
