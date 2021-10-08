@@ -62,16 +62,16 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             return currUser.UserGuestPlaces;
         }
 
-        public async Task<IEnumerable<EventEntity>> GetAllHosting(int userId)
+        public async Task<IEnumerable<PlaceEntity>> GetAllHosting(int userId)
         {
             var currUser = await _applicationDbContext.Users
                 .Include(u => u.UserGuestEvents)
                 .SingleAsync(u => u.Id == userId);
 
-            return currUser.UserHostEvents;
+            return currUser.UserHostPlaces;
         }
 
-        public async Task UpdateGuestingEvent(PlaceEntity currPlace, PlaceGuestDTO currPlaceGuestDTO)
+        public async Task UpdateGuestingPlace(PlaceEntity currPlace, PlaceGuestDTO currPlaceGuestDTO)
         {
             PlaceReviewEntity currReview = new()
             {
