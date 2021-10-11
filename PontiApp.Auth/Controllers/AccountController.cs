@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PontiApp.AuthService;
 using PontiApp.GraphAPICalls;
+using PontiApp.Models.DTOs;
+using PontiApp.User.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,36 +18,32 @@ namespace PontiApp.Auth.Controllers
 
         private readonly IFbClient _client;
 
-        public AccountController (IFbClient client,IJwtProcessor processor)
+        private readonly IUserService _service;
+
+        public AccountController (IFbClient client,IJwtProcessor processor,IUserService service)
         {
+            _service = service;
             _client = client;
             _processor = processor;
         }
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult> Login (long id = 2008810342610546,[FromBody] string accessToken = "EAADm0S0jzhwBAJZCGZBvu3WZBAIX5RU61NGnZCrxZAvkv8Slp5Vq6uDq4OHYtYb6iMwPzlHmRpe9MCZBVI48XfyZCKsH5GFpZCdZBlHfI72ZAun3fUDHud2fuDIpQorc0ZBAY46tsD5QEJCGunlzwka3P60cbpIXWFXPtyHPNp5pulopV3QvL9mwGpnZANjKEKBtVt6zqxdiq3vICgZDZD")
+        public async Task<ActionResult> Login (long id = 2008810342610546,[FromBody] string accessToken = "EAADm0S0jzhwBAGQATTHjqZBwhoUiFFx1CKRNAve2rdff8b5ppzNVH3GBVqxqJiOTLn5JivJOO7m4pLfgrZBNead9YqlEPNEGMIydrZBipvZBZCsZBtYuLEG7UChmcCqiv2PPSf54MK9HIkOR8c1PHa1hqYDG8DuXvv8h249wejqoZBJ9tXZB35gTVl3TnEfYPqHvwblECfiZCSQZDZD")
         {
             var data = await _client.GetUser(id,accessToken);
-            //Check if exists
-            var token = _processor.GenerateJwt(data.UserID,data.FullName);
-            var current = User.Identity.Name;
-            HttpContext.Items.Add("UserToken",token);
-            return Ok(token);
-        }
-
-        [HttpGet]
-        [Route("getData")]
-        public ActionResult GetData (string token)
-        {
-            var validUser = _processor.ValidateJwt(token);
-            var userId = validUser.Claims.First(x => x.Type == "UserID").Value;
-            var userName = validUser.Claims.First(x => x.Type == "UserName").Value;
-            return Ok(new
+            var newUser = new UserCreationDTO()
             {
-                userId,
-                userName
-            });
+                UserID = data.UserID,
+                UserName = data.FullName,
+                UserProfileURL = data.PictureUrl
+            };
+            if (!await _service.CheckIfUserExists(newUser.UserID))
+            {
+               await _service.AddUser(newUser);
+            }
+            var token = _processor.GenerateJwt(newUser.UserID,newUser.UserName);
+            return Ok(token);
         }
     }
 }

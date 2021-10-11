@@ -30,6 +30,7 @@ namespace PontiApp.GraphAPICalls
             {
                 UserID = Convert.ToInt64(id),
                 FullName = name,
+                PictureUrl=pictureUrl
             };
         }
     }

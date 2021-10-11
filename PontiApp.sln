@@ -33,9 +33,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Utilities", "Ponti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Auth", "PontiApp.Auth\PontiApp.Auth.csproj", "{5DBBAD09-036F-4F82-9A16-8716273B0320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.AuthService", "PontiApp.AuthService\PontiApp.AuthService.csproj", "{57A67AAD-7B8C-4886-88D5-B4FE713AE337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.AuthService", "PontiApp.AuthService\PontiApp.AuthService.csproj", "{57A67AAD-7B8C-4886-88D5-B4FE713AE337}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.GraphAPICalls", "PontiApp.GraphAPICalls\PontiApp.GraphAPICalls.csproj", "{661B9B05-F928-4A12-A33A-3CBA8954C907}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.GraphAPICalls", "PontiApp.GraphAPICalls\PontiApp.GraphAPICalls.csproj", "{661B9B05-F928-4A12-A33A-3CBA8954C907}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.User.Service", "PontiApp.User.Service\PontiApp.User.Service.csproj", "{ED008DCA-CEAA-42B4-AFE6-5528CD4DFC06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.User.Repository", "PontiApp.User.Repository\PontiApp.User.Repository.csproj", "{2A2CBB76-E43D-4BDB-8564-84B29479DED0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +103,14 @@ Global
 		{661B9B05-F928-4A12-A33A-3CBA8954C907}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{661B9B05-F928-4A12-A33A-3CBA8954C907}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{661B9B05-F928-4A12-A33A-3CBA8954C907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED008DCA-CEAA-42B4-AFE6-5528CD4DFC06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED008DCA-CEAA-42B4-AFE6-5528CD4DFC06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED008DCA-CEAA-42B4-AFE6-5528CD4DFC06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED008DCA-CEAA-42B4-AFE6-5528CD4DFC06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A2CBB76-E43D-4BDB-8564-84B29479DED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A2CBB76-E43D-4BDB-8564-84B29479DED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A2CBB76-E43D-4BDB-8564-84B29479DED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A2CBB76-E43D-4BDB-8564-84B29479DED0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -119,6 +131,8 @@ Global
 		{5DBBAD09-036F-4F82-9A16-8716273B0320} = {59278BAA-FC7D-4C5B-943D-645353F3DDAB}
 		{57A67AAD-7B8C-4886-88D5-B4FE713AE337} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
 		{661B9B05-F928-4A12-A33A-3CBA8954C907} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
+		{ED008DCA-CEAA-42B4-AFE6-5528CD4DFC06} = {34A0481C-8E41-4D27-A3EB-18F1224A1D07}
+		{2A2CBB76-E43D-4BDB-8564-84B29479DED0} = {34A0481C-8E41-4D27-A3EB-18F1224A1D07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {582527E1-7735-487F-A959-BB99FEF4FE80}

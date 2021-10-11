@@ -22,11 +22,7 @@ namespace PontiApp.Gateway.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
-            });
+            
             services.AddOcelot();
 
         }
@@ -37,8 +33,7 @@ namespace PontiApp.Gateway.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PontiApp.Gateway.Api v1"));
+               
             }
 
             app.UseHttpsRedirection();
