@@ -15,7 +15,15 @@ namespace PontiApp.Gateway.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls("https://*:8081", "http://*:8080");
+
                     webBuilder.UseStartup<Startup>();
+
+                   // webBuilder.UseUrls("http://localhost:8050");
+                    // webBuilder.UseKestrel(options =>
+                    // {
+                    //     options.ListenLocalhost(8050);
+                    // });
                 }).ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Auth.Controllers
 {
-    public class AccountController:Controller
+    public class AccountController: ControllerBase
     {
         private readonly IJwtProcessor _processor;
         private readonly IFbClient _client;

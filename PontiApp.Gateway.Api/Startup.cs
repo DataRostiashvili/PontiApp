@@ -40,6 +40,8 @@ namespace PontiApp.Gateway.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PontiApp.Gateway.Api v1"));
             }
+            
+            
 
             app.UseHttpsRedirection();
 
