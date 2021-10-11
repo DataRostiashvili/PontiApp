@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using PontiApp.Images.Api.RabbitBackgroundService;
 using PontiApp.Images.Api.Utils;
+using PontiApp.Images.Repository;
+using PontiApp.Images.Services.Generic_Services;
 using RabbitMQ.Client;
 
 namespace PontiApp.Images.Api
@@ -23,6 +25,7 @@ namespace PontiApp.Images.Api
 
             services.ConfigureImageServices(Configuration);
             services.AddHostedService<ImageReceiverService>();
+            services.AddScoped<IMongoService,MongoService>();
             services.AddTransient<ConnectionFactory,ConnectionFactory>();
             services.AddControllers();
             services.AddSwaggerGen(c =>

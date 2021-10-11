@@ -7,6 +7,11 @@ using PontiApp.Images.Services.Generic_Services;
 using PontiApp.Models.MongoSchema;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using PontiApp.MessageSender;
+using PontiApp.Images.Repository;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using RabbitMQ.Client;
 
 namespace PontiApp.Images.Api.Controllers
 {
@@ -15,55 +20,31 @@ namespace PontiApp.Images.Api.Controllers
     [ApiKeyAuth]
     public class ImageController : ControllerBase
     {
-        
+
         [FromHeader(Name = "ApiKey")] public string ApiKey { get; set; }
-        
+
         private readonly IMongoService _service;
-        public ImageController(IMongoService service)
+
+        public ImageController (IMongoService service)
         {
             this._service = service;
         }
 
         [HttpGet]
-        public async Task<List<byte[]>> Get(string guid)
+        public async Task<byte[]> Get (string guid)
         {
-            return await _service.GetImage(guid);
+            var images = await _service.GetImage(guid);
+            return images[0];
         }
+
         [HttpGet]
         [Route("{guid}/{id}")]
-        public async Task<IActionResult> Get(string guid,int id)
+        public async Task<IActionResult> Get (string guid,int id)
         {
             var images = await _service.GetImage(guid);
             var img = images[id];
             var mStream = new MemoryStream(img);
-            return File(img, "image/jpeg");
-            
+            return File(img,"image/jpg");
         }
-        
-        //[HttpPost]
-        //public async Task Post(string guid,[FromBody]JsonObj lst)
-        //{
-        //    await _service.PostImage(guid, lst.ByteList);
-        //}
-
-        //[Route("Remove")]
-        //[HttpPut]
-        //public async Task Update(string guid, int[] indices) 
-        //{
-        //    await _service.UpdateImage(guid, indices);
-        //}
-
-        //[Route("Add")]
-        //[HttpPut]
-        //public async Task Update(string guid, List<byte[]> imgData)
-        //{
-        //    await _service.UpdateImage(guid, imgData);
-        //}
-        
-        //[HttpDelete]
-        //public async Task Delete(string guid)
-        //{
-        //    await _service.DeleteImage(guid);
-        //}
     }
 }

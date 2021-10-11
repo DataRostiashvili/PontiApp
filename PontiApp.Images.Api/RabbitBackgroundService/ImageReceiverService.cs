@@ -44,7 +44,6 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             _channel = _conn.CreateModel();
         }
 
-
         protected override Task ExecuteAsync (CancellationToken stoppingToken)
         {
             var consummer = new EventingBasicConsumer(_channel);
@@ -60,7 +59,6 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             _channel.BasicConsume(RabbitMQConsts.DELETE_Q,true,consummer);
             return Task.CompletedTask;
         }
-
 
         private async void Consumer_Received (object sender,BasicDeliverEventArgs e)
         {

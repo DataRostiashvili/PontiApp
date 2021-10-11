@@ -41,7 +41,7 @@ namespace PontiApp.Auth
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                
             }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = true;
@@ -76,13 +76,13 @@ namespace PontiApp.Auth
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","PontiApp.Auth v1"));
             }
 
+
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
             
+
 
             app.UseEndpoints(endpoints =>
             {
