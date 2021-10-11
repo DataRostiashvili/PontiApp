@@ -1,0 +1,27 @@
+﻿{
+    "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5021"
+},
+    "Routes": [
+    {
+        "DownstreamPathTemplate": "/api/Account",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 44341
+            }
+        ],
+        "UpstreamPathTemplate": "/gateway/Account",
+        "UpstreamHttpMethod": [ "GET", "POST" ],
+        "RateLimitOptions": {
+            "ClientWhitelist": [],
+            "EnableRateLimiting": true,
+            "Period": "1s",
+            "PeriodTimespan": 1,
+            "Limit": 1
+        }
+
+    }
+    ]
+}
