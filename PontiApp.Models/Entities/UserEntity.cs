@@ -23,8 +23,8 @@ namespace PontiApp.Models.Entities
         public ICollection<EventReviewEntity> GuestingEventReviews { get; set; }
 
         //Many to many
-        public ICollection<EventEntity> UserGuestEvents { get; set; }
-        public ICollection<PlaceEntity> UserGuestPlaces { get; set; }
+        public ICollection<UserGuestEvent> UserGuestEvents { get; set; }
+        public ICollection<UserGuestPlace> UserGuestPlaces { get; set; }
         
 
 

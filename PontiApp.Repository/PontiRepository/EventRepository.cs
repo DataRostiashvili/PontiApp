@@ -20,8 +20,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task InsertHosting(EventEntity currEvent)
         {
-            currEvent.HostUser = await _applicationDbContext.Users
-                .SingleAsync(u => u.QueueId == currEvent.HostUser.QueueId);
+            currEvent.UserEntity = await _applicationDbContext.Users
+                .SingleAsync(u => u.QueueId == currEvent.UserEntity.QueueId);
 
             currEvent.PlaceEntity = await _applicationDbContext.Places
                 .SingleAsync(p => p.QueueId == currEvent.PlaceEntity.QueueId);

@@ -21,12 +21,15 @@ namespace PontiApp.Data.DbContexts
 
         public DbSet<CategoryEntity> Categories { get; set; }
 
+        public DbSet<UserGuestEvent> UserGuestEvents { get; set; }
+        public DbSet<UserGuestPlace> UserGuestPlaces { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseNpgsql(@"User ID=postgres;Password=mysecretpassword;Host=localhost;Port=5432;Database=myDataBase;");
-            //builder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB,Database=PontiAppDB");
+            //builder.UseNpgsql(@"User ID=postgres;Password=mysecretpassword;Host=localhost;Port=5432;Database=myDataBase;");
+            builder.UseSqlServer("Server=(local)\\SQLEXPRESS;Database=PontiTest_DB;Trusted_Connection=True;MultipleActiveResultSets=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder options)

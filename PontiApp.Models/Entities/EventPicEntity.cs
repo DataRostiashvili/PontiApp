@@ -6,6 +6,7 @@
         public string MongoKey { get; set; }
 
         public int EventEntityId { get; set; }
-        public EventEntity EventEntity { get; set; }   
+        public EventEntity EventEntity { get; set; }
+        
     }
 }

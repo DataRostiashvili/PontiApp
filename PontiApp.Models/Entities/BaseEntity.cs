@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Entities
 {
-
     public class BaseEntity
     {
         public int Id { get; set; }

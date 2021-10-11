@@ -8,7 +8,7 @@ namespace PontiApp.Models.Entities
 {
     public class CategoryEntity
     {
-        public int Id { get; set; }
+        public int CategoryEntityId { get; set; }
 
         public string Cetegory { get; set; }
 

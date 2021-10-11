@@ -8,7 +8,6 @@ namespace PontiApp.Models.Entities
     {
         public string Name { get; set; }
         public string Description { get; set; }
-
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string Mail { get; set; }
@@ -20,13 +19,15 @@ namespace PontiApp.Models.Entities
         //One to many references
 
         public PlaceEntity PlaceEntity { get; set; }
-        public UserEntity HostUser { get; set; }
+        public int PlaceEntityId { get; set; }
+        public UserEntity UserEntity { get; set; }
+        public int UserEntityId { get; set; }
 
         public ICollection<EventPicEntity> Pictures { get; set; }
         public ICollection<EventReviewEntity> Reviews { get; set; }
 
         //Many to many
-        public ICollection<UserEntity> UserGuest { get; set; }
+        public ICollection<UserGuestEvent> UserGuest { get; set; }
         public ICollection<CategoryEntity> Categories { get; set; }
 
     }
