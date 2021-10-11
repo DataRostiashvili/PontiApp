@@ -4,15 +4,15 @@
 },
     "Routes": [
     {
-        "DownstreamPathTemplate": "/api/EventPlaceTest",
+        "DownstreamPathTemplate": "/api/Account",
         "DownstreamScheme": "https",
         "DownstreamHostAndPorts": [
             {
                 "Host": "localhost",
-                "Port": 44329
+                "Port": 44341
             }
         ],
-        "UpstreamPathTemplate": "/gateway/EventPlaceTest",
+        "UpstreamPathTemplate": "/gateway/Account",
         "UpstreamHttpMethod": [ "GET", "POST" ],
         "RateLimitOptions": {
             "ClientWhitelist": [],
@@ -22,27 +22,6 @@
             "Limit": 1
         }
 
-    },
-
-    {
-        "DownstreamPathTemplate": "/api/ImagesTest",
-        "DownstreamScheme": "https",
-        "DownstreamHostAndPorts": [
-            {
-                "host": "localhost",
-                "port": 44310
-            }
-        ],
-
-        "UpstreamPathTemplate": "/gateway/ImagesTest",
-        "UpstreamHttpMethod": [ "GET", "POST" ],
-        "RateLimitOptions": {
-            "ClientWhitelist": [],
-            "EnableRateLimiting": true,
-            "Period": "1s",
-            "PeriodTimespan": 1,
-            "Limit": 1
-        }
-
-    }]
+    }
+    ]
 }
