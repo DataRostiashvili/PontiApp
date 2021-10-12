@@ -29,7 +29,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         {
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
 
-            newEvent.HostUser.QueueId = await _eventRepo.NextQueueId();
+            newEvent.UserEntity.QueueId = await _eventRepo.NextQueueId();
             AddImagesInfo(ref newEvent, newEventDTO); //should be await
 
             await _eventRepo.InsertHosting(newEvent);

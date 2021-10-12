@@ -2,7 +2,7 @@
 
 namespace PontiApp.Data.Migrations
 {
-    public partial class sec : Migration
+    public partial class secMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -19,9 +19,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         }
         public async Task InsertHosting(PlaceEntity currPlace)
         {
-            var currUser = await _applicationDbContext.Users
-                .Include(u => u.UserHostPlaces)
-                .SingleAsync(u => u.QueueId == currPlace.HostUser.QueueId);
+            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == currPlace.HostUser.QueueId);
 
             await Insert(currPlace);
             await _applicationDbContext.SaveChangesAsync();
@@ -29,44 +27,46 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task DeleteHosting(PlaceEntity currPlace)
         {
+            _applicationDbContext.PlaceCategories.RemoveRange(_applicationDbContext.PlaceCategories.Where(ec => ec.PlaceEntityId == currPlace.Id));
+
             await Delete(currPlace);
             await _applicationDbContext.SaveChangesAsync();
         }
 
         public async Task InsertGuesting(PlaceEntity currPlace, int guestId)
         {
-            var currUser = await _applicationDbContext.Users
-                .Include(u => u.UserHostPlaces)
-                .SingleAsync(u => u.QueueId == guestId);
+            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == guestId);
 
-            currUser.UserGuestPlaces.Add(currPlace);
+            UserGuestPlace guestOnPlace = new UserGuestPlace()
+            {
+                PlaceEntity = currPlace,
+                UserEntity = currUser
+            };
+
+            _applicationDbContext.UserGuestPlaces.Add(guestOnPlace);
             await _applicationDbContext.SaveChangesAsync();
         }
 
         public async Task DeleteGuesting(PlaceEntity currPlace, int guestId)
         {
-            var currUser = await _applicationDbContext.Users
-               .Include(u => u.UserGuestPlaces)
-               .SingleAsync(u => u.QueueId == guestId);
+            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == guestId);
 
-            currUser.UserGuestPlaces.Remove(currPlace);
+            UserGuestPlace currBond = await _applicationDbContext.UserGuestPlaces.Where(o => o.PlaceEntityId == currPlace.Id && o.UserEntityId == currUser.Id).FirstAsync();
+            
+            _applicationDbContext.UserGuestPlaces.Remove(currBond);
             await _applicationDbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<PlaceEntity>> GetAllGuesting(int userId)
         {
-            var currUser = await _applicationDbContext.Users
-                .Include(u => u.UserGuestPlaces)
-                .SingleAsync(u => u.Id == userId);
+            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == userId);
 
-            return currUser.UserGuestPlaces;
+            return _applicationDbContext.UserGuestPlaces.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.PlaceEntity);
         }
 
         public async Task<IEnumerable<PlaceEntity>> GetAllHosting(int userId)
         {
-            var currUser = await _applicationDbContext.Users
-                .Include(u => u.UserGuestEvents)
-                .SingleAsync(u => u.Id == userId);
+            var currUser = await _applicationDbContext.Users.Include(u => u.UserGuestEvents).SingleAsync(u => u.Id == userId);
 
             return currUser.UserHostPlaces;
         }
@@ -86,6 +86,11 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             }
 
             currPlace.Reviews.Add(currReview);
+        }
+
+        public async Task UpdateHosting(PlaceEntity currPlace)
+        {
+            await Update(currPlace);
         }
     }
 }

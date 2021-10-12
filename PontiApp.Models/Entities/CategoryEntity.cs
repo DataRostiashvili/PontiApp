@@ -8,13 +8,15 @@ namespace PontiApp.Models.Entities
 {
     public class CategoryEntity
     {
-        public int Id { get; set; }
+        public int CategoryEntityId { get; set; }
 
         public string Cetegory { get; set; }
 
-        public ICollection<EventEntity> Events { get; set; }
+        public bool IsActive { get; set; }
 
-        public ICollection<PlaceEntity> Places { get; set; }
+        public ICollection<EventCategory> EventsCategories { get; set; }
+
+        public ICollection<PlaceCategory> PlaceCategories{ get; set; }
 
     }
 }

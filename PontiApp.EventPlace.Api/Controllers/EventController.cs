@@ -65,7 +65,7 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetEvent/{id}")]
         public async Task<ActionResult<EventDTO>> GetEvent(int id)
         {
             try
@@ -79,8 +79,7 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        [Route(nameof(GetHostingEvents))]
+        [HttpGet("GetHostingEvents/{id}")]
         public async Task<ActionResult<IEnumerable<EventDTO>>> GetHostingEvents(int userHostQueueId)
         {
             try
@@ -138,8 +137,7 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        [Route(nameof(GetGuestingEvents))]
+        [HttpGet("GetGuestingEvents/{id}")]
         public async Task<ActionResult<IEnumerable<EventDTO>>> GetGuestingEvents(int userGuestQueueId)
         {
             try

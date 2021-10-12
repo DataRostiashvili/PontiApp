@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PontiApp.Models.Entities
+namespace PontiApp.Models.DTOs
 {
-    public class BaseEntity
+    public class IdDTO
     {
         public int Id { get; set; }
-        public int QueueId { get; set; }
     }
 }
