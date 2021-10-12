@@ -16,6 +16,8 @@ namespace PontiApp.Models.Entities
         public bool IsVerifiedUser { get; set; }
         public string MongoKey { get; set; }
 
+        public bool IsActive { get; set; }
+
         //One to Many
         public ICollection<EventEntity> UserHostEvents { get; set; }
         public ICollection<PlaceEntity> UserHostPlaces { get; set; }

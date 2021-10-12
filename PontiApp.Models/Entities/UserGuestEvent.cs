@@ -12,5 +12,7 @@ namespace PontiApp.Models.Entities
         public EventEntity EventEntity { get; set; }
         public int UserEntityId { get; set; }
         public UserEntity UserEntity { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

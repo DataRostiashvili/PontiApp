@@ -16,6 +16,8 @@ namespace PontiApp.Models.Entities
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
+        public bool IsActive { get; set; }
+
         //One to many references
 
         public PlaceEntity PlaceEntity { get; set; }
@@ -27,8 +29,8 @@ namespace PontiApp.Models.Entities
         public ICollection<EventReviewEntity> Reviews { get; set; }
 
         //Many to many
-        public ICollection<UserGuestEvent> UserGuest { get; set; }
-        public ICollection<CategoryEntity> Categories { get; set; }
+        public ICollection<UserGuestEvent> UserGuests { get; set; }
+        public ICollection<EventCategory> EventCategories { get; set; }
 
     }
 }

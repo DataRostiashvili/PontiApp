@@ -2,6 +2,7 @@
 
 using PontiApp.Models.Entities;
 using PontiApp.Data.EntityConfiguration;
+using PontiApp.Models;
 
 namespace PontiApp.Data.DbContexts
 {
@@ -24,12 +25,15 @@ namespace PontiApp.Data.DbContexts
         public DbSet<UserGuestEvent> UserGuestEvents { get; set; }
         public DbSet<UserGuestPlace> UserGuestPlaces { get; set; }
 
+        public DbSet<EventCategory> EveventCategories { get; set; }
+        public DbSet<PlaceCategory> PlaceCategories { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            //builder.UseNpgsql(@"User ID=postgres;Password=mysecretpassword;Host=localhost;Port=5432;Database=myDataBase;");
-            builder.UseSqlServer("Server=(local)\\SQLEXPRESS;Database=PontiTest_DB;Trusted_Connection=True;MultipleActiveResultSets=True;");
+            builder.UseNpgsql(@"User ID=postgres;Password=mysecretpassword;Host=localhost;Port=5432;Database=myDataBase;");
+            //builder.UseSqlServer("Server=(local)\\SQLEXPRESS;Database=PontiTest_DB;Trusted_Connection=True;MultipleActiveResultSets=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder options)
@@ -37,6 +41,11 @@ namespace PontiApp.Data.DbContexts
             options.ApplyConfiguration(new EventEntityConfiguration());
             options.ApplyConfiguration(new UserEntityConfiguration());
             options.ApplyConfiguration(new PlaceEntityConfiguration());
+            options.ApplyConfiguration(new UserGuestEventConfiguration());
+            options.ApplyConfiguration(new UserGuestPlaceConfiguration());
+            options.ApplyConfiguration(new PlaceCategoryConfiguration());
+            options.ApplyConfiguration(new EventCategoryConfiguration());
         }
+
     }
 }

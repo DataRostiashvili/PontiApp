@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Entities
 {
-    public class UserGuestPlace
+    public class PlaceCategory
     {
         public int PlaceEntityId { get; set; }
-        public PlaceEntity PlaceEntity { get; set; }
-        public int UserEntityId { get; set; }
-        public UserEntity UserEntity { get; set; }
+
+        public PlaceEntity placeEntity { get; set; }
+
+        public int CategoryEntityId { get; set; }
+
+        public CategoryEntity categoryEntity { get; set; }
 
         public bool IsActive { get; set; }
     }
