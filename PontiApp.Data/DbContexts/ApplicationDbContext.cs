@@ -8,6 +8,9 @@ namespace PontiApp.Data.DbContexts
 {
     public class ApplicationDbContext : DbContext
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options) { }
+
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<EventEntity> Events { get; set; }
         public DbSet<PlaceEntity> Places { get; set; }
@@ -27,14 +30,6 @@ namespace PontiApp.Data.DbContexts
 
         public DbSet<EventCategory> EveventCategories { get; set; }
         public DbSet<PlaceCategory> PlaceCategories { get; set; }
-
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
-        {
-            builder.UseNpgsql(@"User ID=postgres;Password=mysecretpassword;Host=localhost;Port=5432;Database=myDataBase;");
-            //builder.UseSqlServer("Server=(local)\\SQLEXPRESS;Database=PontiTest_DB;Trusted_Connection=True;MultipleActiveResultSets=True;");
-        }
 
         protected override void OnModelCreating(ModelBuilder options)
         {

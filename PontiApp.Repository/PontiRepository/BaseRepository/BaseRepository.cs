@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PontiApp.Data.DbContexts;
 using PontiApp.Models.Entities;
+using PontiApp.Ponti.Repository.PontiRepository.BaseRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,12 +33,13 @@ namespace PontiApp.Ponti.Repository.BaseRepository
 
         public async Task<T> GetByID(int Id)
         {
-            return await entities.Where(e => e.QueueId == Id).FirstAsync();
+            return await entities.Where(e => e.Id == Id).FirstOrDefaultAsync();
         }
 
         public async Task Insert(T entity)
         {
             await entities.AddAsync(entity);
+            await _applicationDbContext.SaveChangesAsync();
         }
 
         public async Task Update(T entity)
@@ -51,14 +53,17 @@ namespace PontiApp.Ponti.Repository.BaseRepository
             return await entities.CountAsync();
         }
         
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<List<T>> GetAll()
         {
             return await entities.ToListAsync();
         }
 
-        public async Task<int> NextQueueId()
+        public async Task<int> NextId()
         {
-            return await entities.MaxAsync(e => e.QueueId) + 1;
+            int? r = await entities.MaxAsync(e => e.Id);
+            if (r != null)
+                return (int)(r + 1);
+            return 1;
         }
     }
 }

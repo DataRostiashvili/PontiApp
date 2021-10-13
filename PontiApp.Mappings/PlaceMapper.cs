@@ -1,21 +1,21 @@
-﻿using System;
+﻿using AutoMapper;
+using PontiApp.Models.DTOs;
+using PontiApp.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using PontiApp.Models.DTOs;
-using PontiApp.Models.Entities;
 
 namespace PontiApp.Mappings
 {
-    public class EventMapper : Profile
+    public class PlaceMapper : Profile
     {
-        public EventMapper()
+        public PlaceMapper()
         {
-            CreateMap<EventDTO, EventEntity>()
-                       .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)))
-                       .ReverseMap();
+            CreateMap<PlaceDTO, PlaceEntity>()
+                .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)))
+                .ReverseMap();
         }
 
         private static ICollection<CategoryEntity> Encapsulate(ICollection<string> rawData)
@@ -24,12 +24,12 @@ namespace PontiApp.Mappings
 
             foreach (var c in rawData)
             {
-                CategoryEntity eventCat = new()
+                CategoryEntity PlaceCat = new()
                 {
                     Cetegory = c
                 };
 
-                res.Add(eventCat);
+                res.Add(PlaceCat);
             }
             return res;
         }

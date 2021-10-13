@@ -10,8 +10,8 @@ using PontiApp.Data.DbContexts;
 namespace PontiApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211012134212_secMig")]
-    partial class secMig
+    [Migration("20211013171336_mig")]
+    partial class mig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,9 +68,6 @@ namespace PontiApp.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("PlaceEntityId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("QueueId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartTime")
@@ -179,9 +176,6 @@ namespace PontiApp.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<int>("QueueId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("TicketBuyUrl")
                         .HasColumnType("text");
 
@@ -270,9 +264,6 @@ namespace PontiApp.Data.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
-
-                    b.Property<int>("QueueId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Surename")
                         .HasColumnType("text");

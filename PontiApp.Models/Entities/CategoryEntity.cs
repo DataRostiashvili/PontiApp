@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Entities
 {
-    public class CategoryEntity
+    public class CategoryEntity : BaseEntity
     {
-        public int CategoryEntityId { get; set; }
-
         public string Cetegory { get; set; }
 
         public bool IsActive { get; set; }

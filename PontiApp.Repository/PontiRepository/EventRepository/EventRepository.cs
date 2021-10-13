@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PontiApp.Ponti.Repository.PontiRepository
+namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 {
     public class EventRepository : BaseRepository<EventEntity>
     {
@@ -20,8 +20,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task InsertHosting(EventEntity currEvent)
         {
-            currEvent.UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == currEvent.UserEntity.QueueId);
-            currEvent.PlaceEntity = await _applicationDbContext.Places.SingleAsync(p => p.QueueId == currEvent.PlaceEntity.QueueId);
+            currEvent.UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEvent.UserEntity.Id);
+            currEvent.PlaceEntity = await _applicationDbContext.Places.SingleAsync(p => p.Id == currEvent.PlaceEntity.Id);
 
             await Insert(currEvent);
             await _applicationDbContext.SaveChangesAsync();
@@ -37,7 +37,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task InsertGuesting(EventEntity currEvent, int guestId)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == guestId);
+            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == guestId);
 
             UserGuestEvent guestOnEvent = new UserGuestEvent()
             {
@@ -51,7 +51,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task DeleteGuesting(EventEntity currEvent, int guestId)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == guestId);
+            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == guestId);
 
             UserGuestEvent currBond = await _applicationDbContext.UserGuestEvents.Where(o => o.EventEntityId == currEvent.Id && o.UserEntityId == currUser.Id).FirstAsync();
 
@@ -59,18 +59,18 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<EventEntity>> GetAllGuesting(int userId)
+        public async Task<List<EventEntity>> GetAllGuesting(int userId)
         {
-            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == userId);
+            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == userId);
 
-            return _applicationDbContext.UserGuestEvents.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.EventEntity);
+            return (List<EventEntity>)_applicationDbContext.UserGuestEvents.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.EventEntity);
         }
 
-        public async Task<IEnumerable<EventEntity>> GetAllHosting(int userId)
+        public async Task<List<EventEntity>> GetAllHosting(int userId)
         {
             var currUser = await _applicationDbContext.Users.Include(u => u.UserGuestEvents).SingleAsync(u => u.Id == userId);
 
-            return currUser.UserHostEvents;
+            return (List<EventEntity>)currUser.UserHostEvents;
         }
 
         public async Task UpdateGuestingEvent(EventEntity currEvent, GuestDTO currEventGuestDTO)
@@ -79,7 +79,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             {
                 ReviewRanking = currEventGuestDTO.ReviewRanking,
                 EventEntity = currEvent,
-                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == currEventGuestDTO.UserGuestQueueId)
+                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEventGuestDTO.UserGuestId)
             };
 
             if (currEvent.Reviews.Contains(currReview))

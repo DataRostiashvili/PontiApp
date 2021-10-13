@@ -8,11 +8,11 @@ namespace PontiApp.Models.DTOs
 {
     public class HostDTO
     {
-        public int EventQueueId { get; set; }
+        public int EventId { get; set; }
 
-        public int PlaceQueueId { get; set; }
+        public int PlaceId { get; set; }
 
-        public int UserHostQueueId { get; set; }
+        public int UserHostId { get; set; }
 
         public int AverageRanking { get; set; }
     }
