@@ -4,6 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using PontiApp.EventPlace.Services.EventServices;
+using PontiApp.EventPlace.Services.UserServices;
+using PontiApp.Models.Entities;
+using PontiApp.PlacePlace.Services.PlaceServices;
+using PontiApp.Ponti.Repository.BaseRepository;
+using PontiApp.Ponti.Repository.PontiRepository;
 using System;
 
 namespace PontiApp.EventPlace.Api
@@ -28,6 +34,12 @@ namespace PontiApp.EventPlace.Api
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IPlaceService, PlaceService>();
+            services.AddScoped<EventRepository>();
+            services.AddScoped<PlaceRepository>();
+            services.AddScoped<BaseRepository<UserEntity>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
