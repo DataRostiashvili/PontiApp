@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Mappings
 {
-    public class UserMapper : Profile
+    public class CategoryMapper : Profile
     {
-        public UserMapper()
+        public CategoryMapper()
         {
-            CreateMap<UserEntity, UserDTO>().ReverseMap();
+            CreateMap<CategoryEntity, CategoryDTO>().ReverseMap();
         }
     }
 }

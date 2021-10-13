@@ -13,14 +13,9 @@ namespace PontiApp.Mappings
     {
         public EventMapper()
         {
-            CreateMap<EventEntity, EventDTO>();
             CreateMap<EventDTO, EventEntity>()
                        .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)))
-                       .ForMember(dest => dest.PlaceEntity.QueueId, opt => opt.MapFrom(src => src.PlaceQueueId));
-
-            CreateMap<IEnumerable<EventDTO>, IEnumerable<EventEntity>>();
-            CreateMap<IEnumerable<EventEntity>, IEnumerable<EventDTO>>();
-
+                       .ReverseMap();
         }
 
         private static ICollection<CategoryEntity> Encapsulate(ICollection<string> rawData)

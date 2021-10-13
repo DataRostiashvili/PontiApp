@@ -28,15 +28,15 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 
         public async Task AddGusestingPlace(GuestDTO currPlaceGuestDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceQueueId);
-            await _placeRepo.InsertGuesting(currPlace, currPlaceGuestDTO.UserGuestQueueId);
+            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceId);
+            await _placeRepo.InsertGuesting(currPlace, currPlaceGuestDTO.UserGuestId);
         }
 
         public async Task AddHostingPlace(PlaceDTO newPlaceDTO)
         {
             PlaceEntity newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
 
-            newPlace.HostUser.QueueId = await _placeRepo.NextQueueId();
+            //newPlace.HostUser.Id = await _placeRepo.NextId();
             
             AddImagesInfo(ref newPlace, newPlaceDTO); //should be await
 
@@ -59,27 +59,27 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 
         public async Task DeleteGuestingPlace(GuestDTO currPlaceGuestDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceQueueId);
-            await _placeRepo.DeleteGuesting(currPlace, currPlaceGuestDTO.UserGuestQueueId);
+            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceId);
+            await _placeRepo.DeleteGuesting(currPlace, currPlaceGuestDTO.UserGuestId);
         }
 
         public async Task DeleteHostingPlace(HostDTO currPlaceHostDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceHostDTO.PlaceQueueId);
+            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceHostDTO.PlaceId);
             await _placeRepo.DeleteHosting(currPlace);
         }
 
-        public async Task<IEnumerable<PlaceDTO>> GetAllGuestingPlace(int userGuestQueueId)
+        public async Task<IEnumerable<PlaceDTO>> GetAllGuestingPlace(int userGuestId)
         {
-            IEnumerable<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(userGuestQueueId);
+            IEnumerable<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(userGuestId);
             IEnumerable<PlaceDTO> guestingPlaceDTOs = _mapper.Map<IEnumerable<PlaceDTO>>(guestingPlaces);
 
             return guestingPlaceDTOs;
         }
 
-        public async Task<IEnumerable<PlaceDTO>> GetAllHsotingPlace(int userHostQueueId)
+        public async Task<IEnumerable<PlaceDTO>> GetAllHsotingPlace(int userHostId)
         {
-            IEnumerable<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(userHostQueueId);
+            IEnumerable<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(userHostId);
             IEnumerable<PlaceDTO> hostingPlaceDTOs = _mapper.Map<IEnumerable<PlaceDTO>>(hostingPlaces);
 
             return hostingPlaceDTOs;
@@ -106,13 +106,13 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 
         public async Task UpdateGuestingPlace(GuestDTO currPlaceGuestDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceQueueId);
+            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceId);
             await _placeRepo.UpdateGuestingPlace(currPlace, currPlaceGuestDTO);
         }
 
         public async Task UpdateHostingPlace(HostDTO currPlaceDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceDTO.UserHostQueueId);
+            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceDTO.UserHostId);
             await _placeRepo.Update(currPlace);
         }
     }

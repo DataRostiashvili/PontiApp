@@ -3,6 +3,7 @@ using PontiApp.Data.DbContexts;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Ponti.Repository.PontiRepository;
+using PontiApp.Ponti.Repository.PontiRepository.EventRepository;
 using PontiApp.Validators.EntityValidators;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         {
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
 
-            newEvent.UserEntity.QueueId = await _eventRepo.NextQueueId();
+            //newEvent.UserEntity.Id = await _eventRepo.NextId();
             AddImagesInfo(ref newEvent, newEventDTO); //should be await
 
             await _eventRepo.InsertHosting(newEvent);
@@ -51,20 +52,20 @@ namespace PontiApp.EventPlace.Services.EventServices
 
         public async Task DeleteHostingEvent(HostDTO currEventHostDTO)
         {
-            EventEntity currEvent = await _eventRepo.GetByID(currEventHostDTO.EventQueueId);
+            EventEntity currEvent = await _eventRepo.GetByID(currEventHostDTO.EventId);
             await _eventRepo.DeleteHosting(currEvent);
         }
 
         public async Task AddGusestingEvent(GuestDTO currEventGuestDTO)
         {
-            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventQueueId);
-            await _eventRepo.InsertGuesting(currEvent, currEventGuestDTO.UserGuestQueueId);
+            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventId);
+            await _eventRepo.InsertGuesting(currEvent, currEventGuestDTO.UserGuestId);
         }
 
         public async Task DeleteGuestingEvent(GuestDTO currEventGuestDTO)
         {
-            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventQueueId);
-            await _eventRepo.DeleteGuesting(currEvent, currEventGuestDTO.UserGuestQueueId);
+            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventId);
+            await _eventRepo.DeleteGuesting(currEvent, currEventGuestDTO.UserGuestId);
         }
 
         public async Task<IEnumerable<EventDTO>> GetAllEvent()
@@ -76,17 +77,17 @@ namespace PontiApp.EventPlace.Services.EventServices
             return allEventDTOs;
         }
 
-        public async Task<IEnumerable<EventDTO>> GetAllGuestingEvent(int userGuestQueueId)
+        public async Task<IEnumerable<EventDTO>> GetAllGuestingEvent(int userGuestId)
         {
-            IEnumerable<EventEntity> guestingEvents = await _eventRepo.GetAllGuesting(userGuestQueueId);
+            IEnumerable<EventEntity> guestingEvents = await _eventRepo.GetAllGuesting(userGuestId);
             IEnumerable<EventDTO> guestingEventDTOs = _mapper.Map<IEnumerable<EventDTO>>(guestingEvents);
 
             return guestingEventDTOs;
         }
 
-        public async Task<IEnumerable<EventDTO>> GetAllHsotingEvent(int userHostQueueId)
+        public async Task<IEnumerable<EventDTO>> GetAllHsotingEvent(int userHostId)
         {
-            IEnumerable<EventEntity> hostingEvents = await _eventRepo.GetAllHosting(userHostQueueId);
+            IEnumerable<EventEntity> hostingEvents = await _eventRepo.GetAllHosting(userHostId);
             IEnumerable<EventDTO> hostingEventDTOs = _mapper.Map<IEnumerable<EventDTO>>(hostingEvents);
 
             return hostingEventDTOs;
@@ -105,13 +106,13 @@ namespace PontiApp.EventPlace.Services.EventServices
 
         public async Task UpdateGuestingEvent(GuestDTO currEventGuestDTO)
         {
-            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventQueueId);
+            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventId);
             await _eventRepo.UpdateGuestingEvent(currEvent, currEventGuestDTO);
         }
 
         public async Task UpdateHostingEvent(HostDTO currEventDTO)
         {
-            EventEntity currEvent = await _eventRepo.GetByID(currEventDTO.UserHostQueueId);
+            EventEntity currEvent = await _eventRepo.GetByID(currEventDTO.UserHostId);
             await _eventRepo.Update(currEvent);
         }
     }

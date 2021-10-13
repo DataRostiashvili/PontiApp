@@ -19,7 +19,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         }
         public async Task InsertHosting(PlaceEntity currPlace)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == currPlace.HostUser.QueueId);
+            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlace.HostUser.Id);
 
             await Insert(currPlace);
             await _applicationDbContext.SaveChangesAsync();
@@ -35,7 +35,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task InsertGuesting(PlaceEntity currPlace, int guestId)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == guestId);
+            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == guestId);
 
             UserGuestPlace guestOnPlace = new UserGuestPlace()
             {
@@ -49,7 +49,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task DeleteGuesting(PlaceEntity currPlace, int guestId)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == guestId);
+            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == guestId);
 
             UserGuestPlace currBond = await _applicationDbContext.UserGuestPlaces.Where(o => o.PlaceEntityId == currPlace.Id && o.UserEntityId == currUser.Id).FirstAsync();
             
@@ -57,18 +57,18 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<PlaceEntity>> GetAllGuesting(int userId)
+        public async Task<List<PlaceEntity>> GetAllGuesting(int userId)
         {
-            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == userId);
+            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == userId);
 
-            return _applicationDbContext.UserGuestPlaces.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.PlaceEntity);
+            return (List<PlaceEntity>)_applicationDbContext.UserGuestPlaces.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.PlaceEntity);
         }
 
-        public async Task<IEnumerable<PlaceEntity>> GetAllHosting(int userId)
+        public async Task<List<PlaceEntity>> GetAllHosting(int userId)
         {
             var currUser = await _applicationDbContext.Users.Include(u => u.UserGuestEvents).SingleAsync(u => u.Id == userId);
 
-            return currUser.UserHostPlaces;
+            return (List<PlaceEntity>)currUser.UserHostPlaces;
         }
 
         public async Task UpdateGuestingPlace(PlaceEntity currPlace, GuestDTO currPlaceGuestDTO)
@@ -77,7 +77,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             {
                 ReviewRanking = currPlaceGuestDTO.ReviewRanking,
                 PlaceEntity = currPlace,
-                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.QueueId == currPlaceGuestDTO.UserGuestQueueId)
+                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlaceGuestDTO.UserGuestId)
             };
 
             if (currPlace.Reviews.Contains(currReview))

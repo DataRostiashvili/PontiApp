@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class UserDTO
+    public class UserDTO : IdDTO
     {
-        public int QueueId { get; set; }
         public string Name { get; set; }
         public string Surename { get; set; }
 

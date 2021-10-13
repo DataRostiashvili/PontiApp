@@ -10,8 +10,8 @@ using PontiApp.Data.DbContexts;
 namespace PontiApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211012133602_firstMig")]
-    partial class firstMig
+    [Migration("20211013173555_migTwo")]
+    partial class migTwo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace PontiApp.Data.Migrations
 
             modelBuilder.Entity("PontiApp.Models.Entities.CategoryEntity", b =>
                 {
-                    b.Property<int>("CategoryEntityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -34,7 +34,7 @@ namespace PontiApp.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.HasKey("CategoryEntityId");
+                    b.HasKey("Id");
 
                     b.ToTable("Categories");
                 });
@@ -68,9 +68,6 @@ namespace PontiApp.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("PlaceEntityId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("QueueId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartTime")
@@ -179,9 +176,6 @@ namespace PontiApp.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<int>("QueueId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("TicketBuyUrl")
                         .HasColumnType("text");
 
@@ -270,9 +264,6 @@ namespace PontiApp.Data.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
-
-                    b.Property<int>("QueueId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Surename")
                         .HasColumnType("text");

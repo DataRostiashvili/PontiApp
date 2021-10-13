@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace PontiApp.Data.Migrations
 {
-    public partial class firstMig : Migration
+    public partial class mig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,8 +37,7 @@ namespace PontiApp.Data.Migrations
                     TotalReviewerCount = table.Column<int>(type: "integer", nullable: false),
                     IsVerifiedUser = table.Column<bool>(type: "boolean", nullable: false),
                     MongoKey = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    QueueId = table.Column<int>(type: "integer", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,8 +57,7 @@ namespace PontiApp.Data.Migrations
                     Mail = table.Column<string>(type: "text", nullable: true),
                     TicketBuyUrl = table.Column<string>(type: "text", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    UserEntityId = table.Column<int>(type: "integer", nullable: false),
-                    QueueId = table.Column<int>(type: "integer", nullable: false)
+                    UserEntityId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,8 +85,7 @@ namespace PontiApp.Data.Migrations
                     EndTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     PlaceEntityId = table.Column<int>(type: "integer", nullable: false),
-                    UserEntityId = table.Column<int>(type: "integer", nullable: false),
-                    QueueId = table.Column<int>(type: "integer", nullable: false)
+                    UserEntityId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

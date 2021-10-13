@@ -13,9 +13,9 @@ namespace PontiApp.EventPlace.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public UserController(UserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
@@ -66,12 +66,11 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<EventDTO>> GetEvent(int id)
+        public async Task<ActionResult<UserDTO>> GetEvent(int id)
         {
             try
             {
-                await _userService.Get(id);
-                return Ok();
+                return Ok(await _userService.Get(id));
             }
             catch (Exception e)
             {

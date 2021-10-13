@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PontiApp.Mappings;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Ponti.Repository.BaseRepository;
@@ -22,7 +23,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         }
         public async Task Add(UserDTO newUserDTO)
         {
-            UserEntity user = _mapper.Map<UserEntity>(newUserDTO);
+            UserEntity user = _mapper.Map<UserDTO, UserEntity>(newUserDTO);
             await _userRepository.Insert(user);
         }
 
@@ -32,15 +33,15 @@ namespace PontiApp.EventPlace.Services.UserServices
             await _userRepository.Delete(user);
         }
 
-        public Task<UserDTO> Get(int id)
+        public async Task<UserDTO> Get(int id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<UserDTO>(await _userRepository.GetByID(id)); ;
         }
 
         public async Task Update(UserDTO currUserDTO)
         {
             UserEntity user = _mapper.Map<UserEntity>(currUserDTO);
-            await _userRepository.Insert(user);
+            await _userRepository.Update(user);
         }
     }
 }

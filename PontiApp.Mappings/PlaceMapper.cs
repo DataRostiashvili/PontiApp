@@ -13,13 +13,9 @@ namespace PontiApp.Mappings
     {
         public PlaceMapper()
         {
-            CreateMap<PlaceEntity, PlaceDTO>();
             CreateMap<PlaceDTO, PlaceEntity>()
-                       .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)));
-
-            CreateMap<IEnumerable<PlaceDTO>, IEnumerable<PlaceEntity>>();
-            CreateMap<IEnumerable<PlaceEntity>, IEnumerable<PlaceDTO>>();
-
+                .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)))
+                .ReverseMap();
         }
 
         private static ICollection<CategoryEntity> Encapsulate(ICollection<string> rawData)
