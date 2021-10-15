@@ -9,7 +9,7 @@ namespace PontiApp.AuthService
 {
     public interface IJwtProcessor
     {
-        public string GenerateJwt (long userID,string userName);
+    public string GenerateJwt (long userID,string userName);
         public JwtSecurityToken ValidateJwt (string token);
     }
 }

@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PontiApp.Auth.Models.Request;
+using PontiApp.Auth.Models.Response;
 
 namespace PontiApp.Auth.Controllers
 {
+    [ApiController]
     public class AccountController: ControllerBase
     {
         private readonly IJwtProcessor _processor;
@@ -21,17 +24,17 @@ namespace PontiApp.Auth.Controllers
         }
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult> Login(long id=2008810342610546,[FromBody]string accessToken= "EAADm0S0jzhwBAMTApKgwf2S1qSgDCKl7vNe4ChZBvD7i1KqyZBKkDv0ZAZBrEkJk8G1DIl353GfxJlKLsnsZCtxIfW8GH70fZAQAU7ZCE0kvVV2Ex5wMdR0Ta5FWeROQV3M6NMplEDALPGQmw9EIt6ZCwPnVbJF8qIXg3zVEomcHkZBn0kbhIlbSaNpAaHTepLj3JmUflvesElgZDZD")
+        public async Task<ActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            var data = await _client.GetUser(id,accessToken);
+           
+            var data = await _client.GetUser(loginRequest.UserId,loginRequest.FacebookAccessToken);
             var token = _processor.GenerateJwt(data.UserID,data.FullName);
             var current = User.Identity.Name;
-            return Ok(new
-            {
-                Token = token,
-                Current = current
-            });
+            
+            return Ok(new LoginResponse{ jwtToken = token});
         }
+        
+        
         [HttpGet]
         [Route("getData")]
         public async Task<ActionResult> GetData (string JwtToken)
@@ -47,5 +50,15 @@ namespace PontiApp.Auth.Controllers
             });
             
         }
+        
+        [HttpGet]
+        [Route(nameof(Echo))]
+        public IActionResult Echo(string text)
+        {
+            return Ok(new
+            {
+                Text = text
+            });
+        }
     }
-}
+}   

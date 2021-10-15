@@ -16,7 +16,7 @@ namespace PontiApp.GraphAPICalls
         {
             _clientFactory = clientFactory;
         }
-        public async Task<LoginResponse> GetUser (long userID,string accessToken)
+        public async Task<LoginResponse> GetUser (string userID,string accessToken)
         {
             var client = _clientFactory.CreateClient("Facebook");
             var requestUrl = $"https://graph.facebook.com/v12.0/me?fields=id%2Cname&access_token={accessToken}";

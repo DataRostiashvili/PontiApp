@@ -9,6 +9,6 @@ namespace PontiApp.GraphAPICalls
 {
     public interface IFbClient
     {
-        Task<LoginResponse> GetUser (long userID,string accessToken);
+        Task<LoginResponse> GetUser (string userID,string accessToken);
     }
 }
