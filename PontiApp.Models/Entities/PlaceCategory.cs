@@ -16,6 +16,8 @@ namespace PontiApp.Models.Entities
 
         public CategoryEntity categoryEntity { get; set; }
 
+        public string Category { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace PontiApp.Models.DTOs
 {
     public class PontiBaseDTO : IdDTO
     {
-        public int UserHostQueueId { get; set; }
+        public int UserEntityId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -20,9 +20,7 @@ namespace PontiApp.Models.DTOs
         public float ReviewRanking { get; set; }
         public float CurrentRanking { get; set; }
 
-        public ICollection<string> Categories { get; set; }
-
-        public ICollection<byte[]> Pictures { get; set; }
+        //public ICollection<byte[]> Pictures { get; set; }
 
     }
 }

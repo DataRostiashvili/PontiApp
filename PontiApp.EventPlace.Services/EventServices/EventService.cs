@@ -26,29 +26,29 @@ namespace PontiApp.EventPlace.Services.EventServices
             _eventRepo = eventRepo;
         }
 
-        public async Task AddHostingEvent(EventDTO newEventDTO)
+        public async Task AddHostingEvent(EventInsertDTO newEventDTO)
         {
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
 
             //newEvent.UserEntity.Id = await _eventRepo.NextId();
-            AddImagesInfo(ref newEvent, newEventDTO); //should be await
+            //AddImagesInfo(ref newEvent, newEventDTO); //should be await
 
             await _eventRepo.InsertHosting(newEvent);
         }
 
-        private void AddImagesInfo(ref EventEntity newEvent, EventDTO newEventDTO)
-        {
-            foreach (var p in newEventDTO.Pictures)
-            {
-                EventPicEntity eventPic = new()
-                {
-                    MongoKey = Guid.NewGuid().ToString()
-                };
+        //private void AddImagesInfo(ref EventEntity newEvent, EventDTO newEventDTO)
+        //{
+        //    foreach (var p in newEventDTO.Pictures)
+        //    {
+        //        EventPicEntity eventPic = new()
+        //        {
+        //            MongoKey = Guid.NewGuid().ToString()
+        //        };
 
-                newEvent.Pictures.Add(eventPic);
-                //awaitable Throw {bytes, guid} with rabbitMQ
-            }
-        }
+        //        newEvent.Pictures.Add(eventPic);
+        //        //awaitable Throw {bytes, guid} with rabbitMQ
+        //    }
+        //}
 
         public async Task DeleteHostingEvent(HostDTO currEventHostDTO)
         {

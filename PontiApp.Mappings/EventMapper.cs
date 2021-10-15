@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using PontiApp.Models;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 
@@ -13,23 +14,39 @@ namespace PontiApp.Mappings
     {
         public EventMapper()
         {
-            CreateMap<EventDTO, EventEntity>()
-                       .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)))
-                       .ReverseMap();
+            CreateMap<EventDTO, EventEntity>().ReverseMap();
+            CreateMap<EventInsertDTO, EventEntity>().ReverseMap();
+            //.ForMember(dest => dest.EventCategories, opt => opt.MapFrom(src => EncapsulateDTOToEntity(src.Categories, src.Id)));
+
+            //CreateMap<EventEntity, EventDTO>()
+            //.ForMember(dest => dest.Categories, opt => opt.MapFrom(src => EncapsulateEntityToDTO(src.EventCategories)));
+
         }
 
-        private static ICollection<CategoryEntity> Encapsulate(ICollection<string> rawData)
+        private static List<EventCategory> EncapsulateDTOToEntity(ICollection<int> rawData, int Id)
         {
-            List<CategoryEntity> res = new List<CategoryEntity>();
+            List<EventCategory> res = new List<EventCategory>();
 
             foreach (var c in rawData)
             {
-                CategoryEntity eventCat = new()
+                EventCategory eventCat = new()
                 {
-                    Cetegory = c
+                    CategoryEntityId = c,
+                    EventEntityId = Id
                 };
 
                 res.Add(eventCat);
+            }
+            return res;
+        }
+
+        private static List<int> EncapsulateEntityToDTO(List<EventCategory> rawData)
+        {
+            List<int> res = new List<int>();
+
+            foreach (var c in rawData)
+            {
+                res.Add(c.CategoryEntityId);
             }
             return res;
         }

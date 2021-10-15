@@ -5,7 +5,7 @@ using PontiApp.Models.Entities;
 namespace PontiApp.Data.EntityConfiguration
 {
     public class PlaceEntityConfiguration : IEntityTypeConfiguration<PlaceEntity>
-    { 
+    {
 
         public void Configure(EntityTypeBuilder<PlaceEntity> builder)
         {
@@ -24,6 +24,11 @@ namespace PontiApp.Data.EntityConfiguration
             builder.HasMany(pl => pl.Reviews)
                     .WithOne(r => r.PlaceEntity)
                     .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Navigation(x => x.PlaceCategories).AutoInclude();
+            builder.Navigation(x => x.WeekSchedule).AutoInclude();
+            builder.Navigation(x => x.Reviews).AutoInclude();
+
         }
     }
 }

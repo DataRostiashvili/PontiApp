@@ -15,6 +15,9 @@ namespace PontiApp.Data.EntityConfiguration
             builder.HasMany(e => e.Reviews)
                     .WithOne(r => r.EventEntity)
                     .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Navigation(x => x.EventCategories).AutoInclude();
+            builder.Navigation(x => x.Reviews).AutoInclude();
         }
     }
 }

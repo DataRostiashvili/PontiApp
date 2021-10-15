@@ -18,12 +18,12 @@ namespace PontiApp.Models.Entities
         public int UserEntityId { get; set; }
 
         public ICollection<EventEntity> PlaceEvents { get; set; }
-        public ICollection<WeekEntity> WeekSchedule { get; set; }
-        public ICollection<PlacePicEntity> Pictures { get; set; }
+        public List<WeekEntity> WeekSchedule { get; set; }
+        public List<PlacePicEntity> Pictures { get; set; }
         public ICollection<PlaceReviewEntity> Reviews { get; set; }
 
         public ICollection<UserGuestPlace> UserGuests { get; set; }
-        public ICollection<PlaceCategory> PlaceCategories { get; set; }
+        public List<PlaceCategory> PlaceCategories { get; set; }
 
     }
 }

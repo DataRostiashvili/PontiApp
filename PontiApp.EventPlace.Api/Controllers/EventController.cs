@@ -13,16 +13,16 @@ namespace PontiApp.EventPlace.Api.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private readonly EventService _eventService;
+        private readonly IEventService _eventService;
 
-        public EventController(EventService eventService)
+        public EventController(IEventService eventService)
         {
             _eventService = eventService;
         }
 
         [HttpPost]
         [Route(nameof(CreateEvent))]
-        public async Task<ActionResult> CreateEvent([FromBody] EventDTO eventDTO)
+        public async Task<ActionResult> CreateEvent([FromBody] EventInsertDTO eventDTO)
         {
             try
             {
@@ -79,12 +79,12 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("GetHostingEvents/{id}")]
-        public async Task<ActionResult<IEnumerable<EventDTO>>> GetHostingEvents(int userHostQueueId)
+        [HttpGet("GetHostingEvents/{userHostId}")]
+        public async Task<ActionResult<IEnumerable<EventDTO>>> GetHostingEvents(int userHostId)
         {
             try
             {
-                return Ok(await _eventService.GetAllHsotingEvent(userHostQueueId));
+                return Ok(await _eventService.GetAllHsotingEvent(userHostId));
             }
             catch (Exception e)
             {
@@ -143,6 +143,19 @@ namespace PontiApp.EventPlace.Api.Controllers
             try
             {
                 return Ok(await _eventService.GetAllGuestingEvent(userGuestQueueId));
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("GetAllEvent")]
+        public async Task<ActionResult<IEnumerable<EventDTO>>> GetAllEvent()
+        {
+            try
+            {
+                return Ok(await _eventService.GetAllEvent());
             }
             catch (Exception e)
             {

@@ -13,9 +13,9 @@ namespace PontiApp.PlacePlace.Api.Controllers
     [ApiController]
     public class PlaceController : ControllerBase
     {
-        private readonly PlaceService _placeService;
+        private readonly IPlaceService _placeService;
 
-        public PlaceController(PlaceService placeService)
+        public PlaceController(IPlaceService placeService)
         {
             _placeService = placeService;
         }
@@ -143,6 +143,19 @@ namespace PontiApp.PlacePlace.Api.Controllers
             try
             {
                 return Ok(await _placeService.GetAllGuestingPlace(userGuestQueueId));
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("GetAllPlace")]
+        public async Task<ActionResult<IEnumerable<EventDTO>>> GetAllPlace()
+        {
+            try
+            {
+                return Ok(await _placeService.GetAllPlace());
             }
             catch (Exception e)
             {

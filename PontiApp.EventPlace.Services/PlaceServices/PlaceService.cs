@@ -35,27 +35,25 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         public async Task AddHostingPlace(PlaceDTO newPlaceDTO)
         {
             PlaceEntity newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
-
-            //newPlace.HostUser.Id = await _placeRepo.NextId();
             
-            AddImagesInfo(ref newPlace, newPlaceDTO); //should be await
+            //AddImagesInfo(ref newPlace, newPlaceDTO); //should be await
 
             await _placeRepo.InsertHosting(newPlace);
         }
 
-        private void AddImagesInfo(ref PlaceEntity newPlace, PlaceDTO newPlaceDTO)
-        {
-            foreach (var p in newPlaceDTO.Pictures)
-            {
-                PlacePicEntity PlacePic = new()
-                {
-                    MongoKey = Guid.NewGuid().ToString()
-                };
+        //private void AddImagesInfo(ref PlaceEntity newPlace, PlaceDTO newPlaceDTO)
+        //{
+        //    foreach (var p in newPlaceDTO.Pictures)
+        //    {
+        //        PlacePicEntity PlacePic = new()
+        //        {
+        //            MongoKey = Guid.NewGuid().ToString()
+        //        };
 
-                newPlace.Pictures.Add(PlacePic);
-                //awaitable Throw {bytes, guid} with rabbitMQ
-            }
-        }
+        //        newPlace.Pictures.Add(PlacePic);
+        //        //awaitable Throw {bytes, guid} with rabbitMQ
+        //    }
+        //}
 
         public async Task DeleteGuestingPlace(GuestDTO currPlaceGuestDTO)
         {

@@ -66,12 +66,8 @@ namespace PontiApp.EventPlace.Api
             services.AddAutoMapper(typeof(EventMapper));
             services.AddAutoMapper(typeof(PlaceMapper));
             services.AddAutoMapper(typeof(CategoryMapper));
-
-
-
-
-
-
+            services.AddAutoMapper(typeof(WeekDayMapper));
+            services.AddAutoMapper(typeof(ReviewMapper));
         }
 
 

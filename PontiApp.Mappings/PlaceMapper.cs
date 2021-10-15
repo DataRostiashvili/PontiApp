@@ -13,23 +13,38 @@ namespace PontiApp.Mappings
     {
         public PlaceMapper()
         {
-            CreateMap<PlaceDTO, PlaceEntity>()
-                .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)))
-                .ReverseMap();
+            CreateMap<PlaceDTO, PlaceEntity>().ReverseMap();
+                //.ForMember(dest => dest.PlaceCategories, opt => opt.MapFrom(src => EncapsulateDTOToEntity(src.Categories, src.Id)));
+
+            //CreateMap<PlaceEntity, PlaceDTO>()
+            //    .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => EncapsulateEntityToDTO(src.PlaceCategories)));
+
         }
 
-        private static ICollection<CategoryEntity> Encapsulate(ICollection<string> rawData)
+        private static List<PlaceCategory> EncapsulateDTOToEntity(ICollection<int> rawData, int Id)
         {
-            List<CategoryEntity> res = new List<CategoryEntity>();
+            List<PlaceCategory> res = new List<PlaceCategory>();
 
             foreach (var c in rawData)
             {
-                CategoryEntity PlaceCat = new()
+                PlaceCategory PlaceCat = new()
                 {
-                    Cetegory = c
+                    CategoryEntityId = c,
+                    PlaceEntityId = Id
                 };
 
                 res.Add(PlaceCat);
+            }
+            return res;
+        }
+
+        private static List<int> EncapsulateEntityToDTO(List<PlaceCategory> rawData)
+        {
+            List<int> res = new List<int>();
+
+            foreach (var c in rawData)
+            {
+                res.Add(c.CategoryEntityId);
             }
             return res;
         }

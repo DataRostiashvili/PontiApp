@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using PontiApp.Models;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using System;
@@ -10,14 +9,11 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Mappings
 {
-    public class CategoryMapper : Profile
+    public class WeekDayMapper : Profile
     {
-        public CategoryMapper()
+        public WeekDayMapper()
         {
-            CreateMap<EventCategoryDTO, EventCategory>().ReverseMap();
-
-
-            CreateMap<PlaceCategoryDTO, PlaceCategory>().ReverseMap();
+            CreateMap<WeekScheduleDTO, WeekEntity>().ReverseMap();
         }
     }
 }

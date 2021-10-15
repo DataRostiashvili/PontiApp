@@ -19,7 +19,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         }
         public async Task InsertHosting(PlaceEntity currPlace)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlace.HostUser.Id);
+            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlace.UserEntityId);
 
             await Insert(currPlace);
             await _applicationDbContext.SaveChangesAsync();
