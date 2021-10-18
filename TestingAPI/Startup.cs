@@ -11,7 +11,9 @@ using PontiApp.MessageSender;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace TestingAPI
@@ -33,6 +35,9 @@ namespace TestingAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",new OpenApiInfo { Title = "TestingAPI",Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory,xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
             services.AddScoped<ConnectionFactory,ConnectionFactory>();
             services.AddScoped<MessagingService,MessagingService>();
