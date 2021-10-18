@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class WeekScheduleDTO
+    public class WeekScheduleDTO : IdDTO
     {
-        public int WeekEntityId { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public Daytype Day { get; set; }
+
+        public bool IsWorking { get; set; }
 
         public int PlaceEntityId { get; set; }
     }

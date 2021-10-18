@@ -31,6 +31,12 @@ namespace PontiApp.Ponti.Repository.BaseRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteRange(List<T> entityList)
+        {
+            entities.RemoveRange(entityList);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
         public async Task<T> GetByID(int Id)
         {
             return await entities.Where(e => e.Id == Id).FirstOrDefaultAsync();
@@ -42,9 +48,21 @@ namespace PontiApp.Ponti.Repository.BaseRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
+        public async Task InsertRange(List<T> entityList)
+        {
+            await entities.AddRangeAsync(entityList);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
         public async Task Update(T entity)
         {
             entities.Update(entity);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateRange(List<T> entityList)
+        {
+            entities.UpdateRange(entityList);
             await _applicationDbContext.SaveChangesAsync();
         }
 
@@ -56,14 +74,6 @@ namespace PontiApp.Ponti.Repository.BaseRepository
         public async Task<List<T>> GetAll()
         {
             return await entities.ToListAsync();
-        }
-
-        public async Task<int> NextId()
-        {
-            int? r = await entities.MaxAsync(e => e.Id);
-            if (r != null)
-                return (int)(r + 1);
-            return 1;
         }
     }
 }

@@ -35,7 +35,12 @@ namespace PontiApp.EventPlace.Services.UserServices
 
         public async Task<UserDTO> Get(int id)
         {
-            return _mapper.Map<UserDTO>(await _userRepository.GetByID(id)); ;
+            return _mapper.Map<UserDTO>(await _userRepository.GetByID(id));
+        }
+
+        public async Task<List<UserDTO>> GetAllUser()
+        {
+            return _mapper.Map<List<UserDTO>>(await _userRepository.GetAll());
         }
 
         public async Task Update(UserDTO currUserDTO)

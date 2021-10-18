@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class PlaceCategoryDTO
+    public class PlaceCategoryDTO : IdDTO
     {
         public int CategoryEntityId { get; set; }
         public string Category { get; set; }

@@ -22,7 +22,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreateEvent))]
-        public async Task<ActionResult> CreateEvent([FromBody] EventInsertDTO eventDTO)
+        public async Task<ActionResult> CreateEvent([FromBody] EventRequestDTO eventDTO)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateEvent))]
-        public async Task<ActionResult> UpdateEvent([FromBody] HostDTO hostEventDTO)
+        public async Task<ActionResult> UpdateEvent([FromBody] EventRequestDTO hostEventDTO)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetEvent/{id}")]
-        public async Task<ActionResult<EventDTO>> GetEvent(int id)
+        public async Task<ActionResult<EventRequestDTO>> GetEvent(int id)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetHostingEvents/{userHostId}")]
-        public async Task<ActionResult<IEnumerable<EventDTO>>> GetHostingEvents(int userHostId)
+        public async Task<ActionResult<IEnumerable<EventRequestDTO>>> GetHostingEvents(int userHostId)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetGuestingEvents/{id}")]
-        public async Task<ActionResult<IEnumerable<EventDTO>>> GetGuestingEvents(int userGuestQueueId)
+        public async Task<ActionResult<IEnumerable<EventRequestDTO>>> GetGuestingEvents(int userGuestQueueId)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetAllEvent")]
-        public async Task<ActionResult<IEnumerable<EventDTO>>> GetAllEvent()
+        public async Task<ActionResult<IEnumerable<EventRequestDTO>>> GetAllEvent()
         {
             try
             {

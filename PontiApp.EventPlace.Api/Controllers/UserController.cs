@@ -77,5 +77,18 @@ namespace PontiApp.EventPlace.Api.Controllers
                 throw;
             }
         }
+
+        [HttpGet("GetAllUser")]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUser()
+        {
+            try
+            {
+                return Ok(await _userService.GetAllUser());
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
     }
 }

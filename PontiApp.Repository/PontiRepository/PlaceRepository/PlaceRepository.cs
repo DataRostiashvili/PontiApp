@@ -17,18 +17,13 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         {
 
         }
-        public async Task InsertHosting(PlaceEntity currPlace)
-        {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlace.UserEntityId);
-
-            await Insert(currPlace);
-            await _applicationDbContext.SaveChangesAsync();
-        }
-
+        
         public async Task DeleteHosting(PlaceEntity currPlace)
         {
             _applicationDbContext.PlaceCategories.RemoveRange(_applicationDbContext.PlaceCategories.Where(ec => ec.PlaceEntityId == currPlace.Id));
-
+            _applicationDbContext.WeekDays.RemoveRange(_applicationDbContext.WeekDays.Where(wd => wd.PlaceEntityId == currPlace.Id));
+            //_applicationDbContext.PlacePics.RemoveRange(_applicationDbContext.PlacePics.Where(pp => pp.PlaceEntityId == currPlace.Id));
+            
             await Delete(currPlace);
             await _applicationDbContext.SaveChangesAsync();
         }
@@ -61,14 +56,14 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         {
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == userId);
 
-            return (List<PlaceEntity>)_applicationDbContext.UserGuestPlaces.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.PlaceEntity);
+            return await _applicationDbContext.UserGuestPlaces.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.PlaceEntity).ToListAsync();
         }
 
         public async Task<List<PlaceEntity>> GetAllHosting(int userId)
         {
-            var currUser = await _applicationDbContext.Users.Include(u => u.UserGuestEvents).SingleAsync(u => u.Id == userId);
+            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostPlaces).SingleAsync(u => u.Id == userId);
 
-            return (List<PlaceEntity>)currUser.UserHostPlaces;
+            return currUser.UserHostPlaces;
         }
 
         public async Task UpdateGuestingPlace(PlaceEntity currPlace, GuestDTO currPlaceGuestDTO)
@@ -86,11 +81,6 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             }
 
             currPlace.Reviews.Add(currReview);
-        }
-
-        public async Task UpdateHosting(PlaceEntity currPlace)
-        {
-            await Update(currPlace);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
         public async Task DeleteHosting(EventEntity currEvent)
         {
-            _applicationDbContext.EveventCategories.RemoveRange(_applicationDbContext.EveventCategories.Where(ec => ec.EventEntityId == currEvent.Id));
+            _applicationDbContext.EventCategories.RemoveRange(_applicationDbContext.EventCategories.Where(ec => ec.EventEntityId == currEvent.Id));
             
             await Delete(currEvent);
             await _applicationDbContext.SaveChangesAsync();

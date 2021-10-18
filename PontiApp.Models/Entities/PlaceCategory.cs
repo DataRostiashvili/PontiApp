@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Entities
 {
-    public class PlaceCategory
+    public class PlaceCategory : BaseEntity
     {
         public int PlaceEntityId { get; set; }
 

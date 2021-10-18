@@ -32,13 +32,10 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.InsertGuesting(currPlace, currPlaceGuestDTO.UserGuestId);
         }
 
-        public async Task AddHostingPlace(PlaceDTO newPlaceDTO)
+        public async Task AddHostingPlace(PlaceRequestDTO newPlaceDTO)
         {
             PlaceEntity newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
-            
-            //AddImagesInfo(ref newPlace, newPlaceDTO); //should be await
-
-            await _placeRepo.InsertHosting(newPlace);
+            await _placeRepo.Insert(newPlace);
         }
 
         //private void AddImagesInfo(ref PlaceEntity newPlace, PlaceDTO newPlaceDTO)
@@ -67,39 +64,39 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.DeleteHosting(currPlace);
         }
 
-        public async Task<IEnumerable<PlaceDTO>> GetAllGuestingPlace(int userGuestId)
+        public async Task<List<PlaceResponseDTO>> GetAllGuestingPlace(int userGuestId)
         {
-            IEnumerable<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(userGuestId);
-            IEnumerable<PlaceDTO> guestingPlaceDTOs = _mapper.Map<IEnumerable<PlaceDTO>>(guestingPlaces);
+            List<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(userGuestId);
+            List<PlaceResponseDTO> guestingPlaceDTOs = _mapper.Map<List<PlaceResponseDTO>>(guestingPlaces);
 
             return guestingPlaceDTOs;
         }
 
-        public async Task<IEnumerable<PlaceDTO>> GetAllHsotingPlace(int userHostId)
+        public async Task<List<PlaceResponseDTO>> GetAllHsotingPlace(int userHostId)
         {
-            IEnumerable<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(userHostId);
-            IEnumerable<PlaceDTO> hostingPlaceDTOs = _mapper.Map<IEnumerable<PlaceDTO>>(hostingPlaces);
+            List<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(userHostId);
+            List<PlaceResponseDTO> hostingPlaceDTOs = _mapper.Map<List<PlaceResponseDTO>>(hostingPlaces);
 
             return hostingPlaceDTOs;
         }
 
-        public async Task<IEnumerable<PlaceDTO>> GetAllPlace()
+        public async Task<List<PlaceResponseDTO>> GetAllPlace()
         {
-            IEnumerable<PlaceEntity> allPlace = await _placeRepo.GetAll();
-            IEnumerable<PlaceDTO> allPlaceDTOs = _mapper.Map<IEnumerable<PlaceDTO>>(allPlace);
+            List<PlaceEntity> allPlace = await _placeRepo.GetAll();
+            List<PlaceResponseDTO> allPlaceDTOs = _mapper.Map<List<PlaceResponseDTO>>(allPlace);
 
             return allPlaceDTOs;
         }
 
-        public Task<IEnumerable<PlaceDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
+        public Task<List<PlaceResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<PlaceDTO> GetSinglePlace(int PlaceId)
+        public async Task<PlaceResponseDTO> GetSinglePlace(int PlaceId)
         {
             PlaceEntity currPlace = await _placeRepo.GetByID(PlaceId);
-            return _mapper.Map<PlaceDTO>(currPlace);
+            return _mapper.Map<PlaceResponseDTO>(currPlace);
         }
 
         public async Task UpdateGuestingPlace(GuestDTO currPlaceGuestDTO)
@@ -108,9 +105,9 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.UpdateGuestingPlace(currPlace, currPlaceGuestDTO);
         }
 
-        public async Task UpdateHostingPlace(HostDTO currPlaceDTO)
+        public async Task UpdateHostingPlace(PlaceRequestDTO currPlaceDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceDTO.UserHostId);
+            PlaceEntity currPlace =  _mapper.Map<PlaceEntity>(currPlaceDTO);
             await _placeRepo.Update(currPlace);
         }
     }

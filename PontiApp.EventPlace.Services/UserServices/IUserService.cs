@@ -13,6 +13,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         Task Update(UserDTO currUserDTO);
         Task<UserDTO> Get(int id);
         Task Delete(UserDTO currUserDTO);
+        Task<List<UserDTO>> GetAllUser();
 
     }
 }

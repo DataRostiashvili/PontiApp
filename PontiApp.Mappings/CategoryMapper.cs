@@ -16,8 +16,9 @@ namespace PontiApp.Mappings
         {
             CreateMap<EventCategoryDTO, EventCategory>().ReverseMap();
 
-
             CreateMap<PlaceCategoryDTO, PlaceCategory>().ReverseMap();
+
+            CreateMap<CategoryDTO, CategoryEntity>().ReverseMap();
         }
     }
 }

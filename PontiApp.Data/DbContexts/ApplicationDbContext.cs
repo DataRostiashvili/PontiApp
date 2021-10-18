@@ -28,7 +28,7 @@ namespace PontiApp.Data.DbContexts
         public DbSet<UserGuestEvent> UserGuestEvents { get; set; }
         public DbSet<UserGuestPlace> UserGuestPlaces { get; set; }
 
-        public DbSet<EventCategory> EveventCategories { get; set; }
+        public DbSet<EventCategory> EventCategories { get; set; }
         public DbSet<PlaceCategory> PlaceCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder options)

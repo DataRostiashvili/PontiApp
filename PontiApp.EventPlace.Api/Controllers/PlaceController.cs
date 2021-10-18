@@ -22,7 +22,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreatePlace))]
-        public async Task<ActionResult> CreatePlace([FromBody] PlaceDTO PlaceDTO)
+        public async Task<ActionResult> CreatePlace([FromBody] PlaceRequestDTO PlaceDTO)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdatePlace))]
-        public async Task<ActionResult> UpdatePlace([FromBody] HostDTO hostPlaceDTO)
+        public async Task<ActionResult> UpdatePlace([FromBody] PlaceRequestDTO hostPlaceDTO)
         {
             try
             {
@@ -66,12 +66,12 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetPlace/{id}")]
-        public async Task<ActionResult<PlaceDTO>> GetPlace(int id)
+        public async Task<ActionResult<PlaceResponseDTO>> GetPlace(int id)
         {
             try
             {
-                await _placeService.GetSinglePlace(id);
-                return Ok();
+                
+                return Ok(await _placeService.GetSinglePlace(id));
             }
             catch (Exception e)
             {
@@ -79,12 +79,12 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpGet("GetHostingPlaces/{id}")]
-        public async Task<ActionResult<IEnumerable<PlaceDTO>>> GetHostingPlaces(int id)
+        [HttpGet("GetHostingPlaces/{userId}")]
+        public async Task<ActionResult<IEnumerable<PlaceResponseDTO>>> GetHostingPlaces(int userId)
         {
             try
             {
-                return Ok(await _placeService.GetAllHsotingPlace(id));
+                return Ok(await _placeService.GetAllHsotingPlace(userId));
             }
             catch (Exception e)
             {
@@ -137,12 +137,12 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpGet("GuestingPlaces/{id}")]
-        public async Task<ActionResult<IEnumerable<PlaceDTO>>> GetGuestingPlaces(int userGuestQueueId)
+        [HttpGet("GuestingPlaces/{userId}")]
+        public async Task<ActionResult<IEnumerable<PlaceRequestDTO>>> GetGuestingPlaces(int userId)
         {
             try
             {
-                return Ok(await _placeService.GetAllGuestingPlace(userGuestQueueId));
+                return Ok(await _placeService.GetAllGuestingPlace(userId));
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetAllPlace")]
-        public async Task<ActionResult<IEnumerable<EventDTO>>> GetAllPlace()
+        public async Task<ActionResult<IEnumerable<EventRequestDTO>>> GetAllPlace()
         {
             try
             {

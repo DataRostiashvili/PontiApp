@@ -19,14 +19,14 @@ namespace PontiApp.Models.Entities
         public bool IsActive { get; set; }
 
         //One to Many
-        public ICollection<EventEntity> UserHostEvents { get; set; }
-        public ICollection<PlaceEntity> UserHostPlaces { get; set; }
-        public ICollection<PlaceReviewEntity> GuestingPlaceReviews { get; set; }
-        public ICollection<EventReviewEntity> GuestingEventReviews { get; set; }
+        public List<EventEntity> UserHostEvents { get; set; }
+        public List<PlaceEntity> UserHostPlaces { get; set; }
+        public List<PlaceReviewEntity> GuestingPlaceReviews { get; set; }
+        public List<EventReviewEntity> GuestingEventReviews { get; set; }
 
         //Many to many
-        public ICollection<UserGuestEvent> UserGuestEvents { get; set; }
-        public ICollection<UserGuestPlace> UserGuestPlaces { get; set; }
+        public List<UserGuestEvent> UserGuestEvents { get; set; }
+        public List<UserGuestPlace> UserGuestPlaces { get; set; }
         
 
 
