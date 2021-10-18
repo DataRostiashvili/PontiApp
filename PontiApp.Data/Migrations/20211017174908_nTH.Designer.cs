@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PontiApp.Data.DbContexts;
@@ -9,9 +10,10 @@ using PontiApp.Data.DbContexts;
 namespace PontiApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211017174908_nTH")]
+    partial class nTH
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,28 +135,21 @@ namespace PontiApp.Data.Migrations
 
             modelBuilder.Entity("PontiApp.Models.Entities.PlaceCategory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Category")
-                        .HasColumnType("text");
+                    b.Property<int>("PlaceEntityId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("CategoryEntityId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Category")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("PlaceEntityId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
+                    b.HasKey("PlaceEntityId", "CategoryEntityId");
 
                     b.HasIndex("CategoryEntityId");
-
-                    b.HasIndex("PlaceEntityId");
 
                     b.ToTable("PlaceCategories");
                 });
@@ -322,7 +317,7 @@ namespace PontiApp.Data.Migrations
 
             modelBuilder.Entity("PontiApp.Models.Entities.WeekEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("WeekEntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -333,16 +328,13 @@ namespace PontiApp.Data.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<bool>("IsWorking")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("PlaceEntityId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("timestamp without time zone");
 
-                    b.HasKey("Id");
+                    b.HasKey("WeekEntityId");
 
                     b.HasIndex("PlaceEntityId");
 
@@ -351,28 +343,21 @@ namespace PontiApp.Data.Migrations
 
             modelBuilder.Entity("PontiApp.Models.EventCategory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Category")
-                        .HasColumnType("text");
+                    b.Property<int>("EventEntityId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("CategoryEntityId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("EventEntityId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Category")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventEntityId", "CategoryEntityId");
 
                     b.HasIndex("CategoryEntityId");
-
-                    b.HasIndex("EventEntityId");
 
                     b.ToTable("EventCategories");
                 });

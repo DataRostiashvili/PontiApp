@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models
 {
-    public class EventCategory
+    public class EventCategory : BaseEntity
     {
         public int EventEntityId { get; set; }
         
@@ -16,6 +16,8 @@ namespace PontiApp.Models
         public int CategoryEntityId { get; set; }
 
         public CategoryEntity categoryEntity { get; set; }
+
+        public string Category { get; set; }
 
         public bool IsActive { get; set; }
     }

@@ -9,7 +9,9 @@ using Microsoft.OpenApi.Models;
 using PontiApp.Data.DbContexts;
 using PontiApp.EventPlace.Services.CategoryServices;
 using PontiApp.EventPlace.Services.EventServices;
+using PontiApp.EventPlace.Services.PlaceCategoryServices;
 using PontiApp.EventPlace.Services.UserServices;
+using PontiApp.EventPlace.Services.WeekDayServices;
 using PontiApp.Mappings;
 using PontiApp.Models.Entities;
 using PontiApp.PlacePlace.Services.PlaceServices;
@@ -48,8 +50,12 @@ namespace PontiApp.EventPlace.Api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IPlaceService, PlaceService>();
+            services.AddScoped<IPlaceCategoryService, PlaceCategoryService>();
+            services.AddScoped<IWeekDayService, WeekDayService>();
             services.AddScoped<BaseRepository<UserEntity>>();
             services.AddScoped<BaseRepository<CategoryEntity>>();
+            services.AddScoped<BaseRepository<PlaceCategory>>();
+            services.AddScoped<BaseRepository<WeekEntity>>();
             services.AddScoped<EventRepository>();
             services.AddScoped<PlaceRepository>();
             services.AddScoped<EventDTOValidator>();
@@ -66,12 +72,8 @@ namespace PontiApp.EventPlace.Api
             services.AddAutoMapper(typeof(EventMapper));
             services.AddAutoMapper(typeof(PlaceMapper));
             services.AddAutoMapper(typeof(CategoryMapper));
-
-
-
-
-
-
+            services.AddAutoMapper(typeof(WeekDayMapper));
+            services.AddAutoMapper(typeof(ReviewMapper));
         }
 
 

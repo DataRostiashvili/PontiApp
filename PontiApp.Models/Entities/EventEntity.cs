@@ -25,12 +25,12 @@ namespace PontiApp.Models.Entities
 
         public UserEntity UserEntity { get; set; }
         public int UserEntityId { get; set; }
-        public ICollection<EventPicEntity> Pictures { get; set; }
-        public ICollection<EventReviewEntity> Reviews { get; set; }
+        public List<EventPicEntity> Pictures { get; set; }
+        public List<EventReviewEntity> Reviews { get; set; }
 
         //Many to many
-        public ICollection<UserGuestEvent> UserGuests { get; set; }
-        public ICollection<EventCategory> EventCategories { get; set; }
+        public List<UserGuestEvent> UserGuests { get; set; }
+        public List<EventCategory> EventCategories { get; set; }
 
     }
 }

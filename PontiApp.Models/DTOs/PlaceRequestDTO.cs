@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PontiApp.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class PlaceDTO : PontiBaseDTO
+    public class PlaceRequestDTO : PontiBaseDTO
     {
-        public List<WeekScheduleDTO> WeekSchedule { get; set; }
+
     }
 }

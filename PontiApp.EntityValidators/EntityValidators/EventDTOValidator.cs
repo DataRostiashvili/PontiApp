@@ -18,7 +18,7 @@ namespace PontiApp.Validators.EntityValidators
             _context = context;
         }
 
-        public bool Exists(EventDTO eventDTO) {
+        public bool Exists(EventRequestDTO eventDTO) {
             if (eventDTO != null && _context.Users.Any(u => u.Id == eventDTO.Id))
             {
                 return _context.Events.Any(ev => ev.Id == eventDTO.Id);

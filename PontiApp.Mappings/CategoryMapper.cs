@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PontiApp.Models;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using System;
@@ -13,7 +14,11 @@ namespace PontiApp.Mappings
     {
         public CategoryMapper()
         {
-            CreateMap<CategoryEntity, CategoryDTO>().ReverseMap();
+            CreateMap<EventCategoryDTO, EventCategory>().ReverseMap();
+
+            CreateMap<PlaceCategoryDTO, PlaceCategory>().ReverseMap();
+
+            CreateMap<CategoryDTO, CategoryEntity>().ReverseMap();
         }
     }
 }

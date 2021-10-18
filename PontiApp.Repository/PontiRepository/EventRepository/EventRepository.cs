@@ -20,8 +20,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
         public async Task InsertHosting(EventEntity currEvent)
         {
-            currEvent.UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEvent.UserEntity.Id);
-            currEvent.PlaceEntity = await _applicationDbContext.Places.SingleAsync(p => p.Id == currEvent.PlaceEntity.Id);
+            currEvent.UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEvent.UserEntityId);
+            currEvent.PlaceEntity = await _applicationDbContext.Places.SingleAsync(p => p.Id == currEvent.PlaceEntityId);
 
             await Insert(currEvent);
             await _applicationDbContext.SaveChangesAsync();
@@ -29,7 +29,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
         public async Task DeleteHosting(EventEntity currEvent)
         {
-            _applicationDbContext.EveventCategories.RemoveRange(_applicationDbContext.EveventCategories.Where(ec => ec.EventEntityId == currEvent.Id));
+            _applicationDbContext.EventCategories.RemoveRange(_applicationDbContext.EventCategories.Where(ec => ec.EventEntityId == currEvent.Id));
             
             await Delete(currEvent);
             await _applicationDbContext.SaveChangesAsync();

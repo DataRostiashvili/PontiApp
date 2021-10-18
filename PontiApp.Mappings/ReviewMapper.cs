@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Mappings
 {
-    public class PlaceMapper : Profile
+    public class ReviewMapper : Profile
     {
-        public PlaceMapper()
+        public ReviewMapper()
         {
-            CreateMap<PlaceRequestDTO, PlaceEntity>().ReverseMap();
-            CreateMap<PlaceResponseDTO, PlaceEntity>().ReverseMap();
+            CreateMap<EventReviewDTO, EventReviewEntity>().ReverseMap();
+            CreateMap<PlaceReviewDTO, PlaceReviewEntity>().ReverseMap();
         }
     }
 }

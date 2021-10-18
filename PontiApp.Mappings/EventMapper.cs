@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using PontiApp.Models;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 
@@ -13,25 +14,7 @@ namespace PontiApp.Mappings
     {
         public EventMapper()
         {
-            CreateMap<EventDTO, EventEntity>()
-                       .ForMember(dest => dest.Pictures, opt => opt.MapFrom(src => Encapsulate(src.Categories)))
-                       .ReverseMap();
-        }
-
-        private static ICollection<CategoryEntity> Encapsulate(ICollection<string> rawData)
-        {
-            List<CategoryEntity> res = new List<CategoryEntity>();
-
-            foreach (var c in rawData)
-            {
-                CategoryEntity eventCat = new()
-                {
-                    Cetegory = c
-                };
-
-                res.Add(eventCat);
-            }
-            return res;
+            CreateMap<EventRequestDTO, EventEntity>().ReverseMap();
         }
     }
 }

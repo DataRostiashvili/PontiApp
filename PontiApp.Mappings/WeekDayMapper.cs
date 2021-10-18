@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Mappings
 {
-    public class PlaceMapper : Profile
+    public class WeekDayMapper : Profile
     {
-        public PlaceMapper()
+        public WeekDayMapper()
         {
-            CreateMap<PlaceRequestDTO, PlaceEntity>().ReverseMap();
-            CreateMap<PlaceResponseDTO, PlaceEntity>().ReverseMap();
+            CreateMap<WeekScheduleDTO, WeekEntity>().ReverseMap();
         }
     }
 }

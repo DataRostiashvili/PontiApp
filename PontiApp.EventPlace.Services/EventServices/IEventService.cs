@@ -9,17 +9,17 @@ namespace PontiApp.EventPlace.Services.EventServices
 {
     public interface IEventService
     {
-        Task AddHostingEvent(EventDTO newEventDTO);
+        Task AddHostingEvent(EventRequestDTO newEventDTO);
         Task AddGusestingEvent(GuestDTO currEventGuestDTO);
-        Task UpdateHostingEvent(HostDTO currEventHostDTO);
+        Task UpdateHostingEvent(EventRequestDTO currEventHostDTO);
         Task UpdateGuestingEvent(GuestDTO currEventGuestDRO);
         Task DeleteHostingEvent(HostDTO currEventHostDTO);
         Task DeleteGuestingEvent(GuestDTO currEventGuestDTO);
-        Task<EventDTO> GetSingleEvent(int eventId);
-        Task<IEnumerable<EventDTO>> GetAllEvent();
-        Task<IEnumerable<EventDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO);
-        Task<IEnumerable<EventDTO>> GetAllHsotingEvent(int userHostQueueId);
-        Task<IEnumerable<EventDTO>> GetAllGuestingEvent(int userGuestQueueId);
+        Task<EventRequestDTO> GetSingleEvent(int eventId);
+        Task<IEnumerable<EventRequestDTO>> GetAllEvent();
+        Task<IEnumerable<EventRequestDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO);
+        Task<IEnumerable<EventRequestDTO>> GetAllHsotingEvent(int userHostQueueId);
+        Task<IEnumerable<EventRequestDTO>> GetAllGuestingEvent(int userGuestQueueId);
 
     }
 }
