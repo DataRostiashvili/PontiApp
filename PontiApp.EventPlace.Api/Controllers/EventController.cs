@@ -137,12 +137,12 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("GetGuestingEvents/{id}")]
-        public async Task<ActionResult<IEnumerable<EventRequestDTO>>> GetGuestingEvents(int userGuestQueueId)
+        [HttpGet("GetGuestingEvents/{userGuestId}")]
+        public async Task<ActionResult<IEnumerable<EventRequestDTO>>> GetGuestingEvents(int userGuestId)
         {
             try
             {
-                return Ok(await _eventService.GetAllGuestingEvent(userGuestQueueId));
+                return Ok(await _eventService.GetAllGuestingEvent(userGuestId));
             }
             catch (Exception e)
             {

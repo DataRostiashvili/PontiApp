@@ -29,11 +29,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task AddHostingEvent(EventRequestDTO newEventDTO)
         {
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
-
-            //newEvent.UserEntity.Id = await _eventRepo.NextId();
-            //AddImagesInfo(ref newEvent, newEventDTO); //should be await
-
-            await _eventRepo.InsertHosting(newEvent);
+            await _eventRepo.Insert(newEvent);
         }
 
         //private void AddImagesInfo(ref EventEntity newEvent, EventDTO newEventDTO)
@@ -68,32 +64,32 @@ namespace PontiApp.EventPlace.Services.EventServices
             await _eventRepo.DeleteGuesting(currEvent, currEventGuestDTO.UserGuestId);
         }
 
-        public async Task<IEnumerable<EventRequestDTO>> GetAllEvent()
+        public async Task<List<EventRequestDTO>> GetAllEvent()
         {
-            IEnumerable<EventEntity> allEvent = await _eventRepo.GetAll();
-            IEnumerable<EventRequestDTO> allEventDTOs = _mapper.Map<IEnumerable<EventRequestDTO>>(allEvent);
+            List<EventEntity> allEvent = await _eventRepo.GetAll();
+            List<EventRequestDTO> allEventDTOs = _mapper.Map<List<EventRequestDTO>>(allEvent);
 
 
             return allEventDTOs;
         }
 
-        public async Task<IEnumerable<EventRequestDTO>> GetAllGuestingEvent(int userGuestId)
+        public async Task<List<EventRequestDTO>> GetAllGuestingEvent(int userGuestId)
         {
-            IEnumerable<EventEntity> guestingEvents = await _eventRepo.GetAllGuesting(userGuestId);
-            IEnumerable<EventRequestDTO> guestingEventDTOs = _mapper.Map<IEnumerable<EventRequestDTO>>(guestingEvents);
+            List<EventEntity> guestingEvents = await _eventRepo.GetAllGuesting(userGuestId);
+            List<EventRequestDTO> guestingEventDTOs = _mapper.Map<List<EventRequestDTO>>(guestingEvents);
 
             return guestingEventDTOs;
         }
 
-        public async Task<IEnumerable<EventRequestDTO>> GetAllHsotingEvent(int userHostId)
+        public async Task<List<EventRequestDTO>> GetAllHsotingEvent(int userHostId)
         {
-            IEnumerable<EventEntity> hostingEvents = await _eventRepo.GetAllHosting(userHostId);
-            IEnumerable<EventRequestDTO> hostingEventDTOs = _mapper.Map<IEnumerable<EventRequestDTO>>(hostingEvents);
+            List<EventEntity> hostingEvents = await _eventRepo.GetAllHosting(userHostId);
+            List<EventRequestDTO> hostingEventDTOs = _mapper.Map<List<EventRequestDTO>>(hostingEvents);
 
             return hostingEventDTOs;
         }
 
-        public Task<IEnumerable<EventRequestDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO)
+        public Task<List<EventRequestDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO)
         {
             throw new NotImplementedException();
         }
@@ -106,8 +102,7 @@ namespace PontiApp.EventPlace.Services.EventServices
 
         public async Task UpdateGuestingEvent(GuestDTO currEventGuestDTO)
         {
-            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventId);
-            await _eventRepo.UpdateGuestingEvent(currEvent, currEventGuestDTO);
+            await _eventRepo.UpdateGuestingEvent(currEventGuestDTO);
         }
 
         public async Task UpdateHostingEvent(EventRequestDTO currEventDTO)

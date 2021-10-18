@@ -18,15 +18,6 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
         }
 
-        public async Task InsertHosting(EventEntity currEvent)
-        {
-            currEvent.UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEvent.UserEntityId);
-            currEvent.PlaceEntity = await _applicationDbContext.Places.SingleAsync(p => p.Id == currEvent.PlaceEntityId);
-
-            await Insert(currEvent);
-            await _applicationDbContext.SaveChangesAsync();
-        }
-
         public async Task DeleteHosting(EventEntity currEvent)
         {
             _applicationDbContext.EventCategories.RemoveRange(_applicationDbContext.EventCategories.Where(ec => ec.EventEntityId == currEvent.Id));
@@ -70,15 +61,18 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
         {
             var currUser = await _applicationDbContext.Users.Include(u => u.UserGuestEvents).SingleAsync(u => u.Id == userId);
 
-            return (List<EventEntity>)currUser.UserHostEvents;
+            return currUser.UserHostEvents;
         }
 
-        public async Task UpdateGuestingEvent(EventEntity currEvent, GuestDTO currEventGuestDTO)
+        public async Task UpdateGuestingEvent(GuestDTO currEventGuestDTO)
         {
+            EventEntity currEvent = await entities.Include(p => p.Reviews).SingleAsync(p => p.Id == currEventGuestDTO.EventId);
             EventReviewEntity currReview = new()
             {
                 ReviewRanking = currEventGuestDTO.ReviewRanking,
                 EventEntity = currEvent,
+                EventEntityId = currEventGuestDTO.EventId,
+                UserEntityId = currEventGuestDTO.UserGuestId,
                 UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEventGuestDTO.UserGuestId)
             };
 
@@ -88,11 +82,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             }
 
             currEvent.Reviews.Add(currReview);
-        }
-
-        public async Task UpdateHosting(EventEntity currEvent)
-        {
-            await Update(currEvent);
+            await _applicationDbContext.SaveChangesAsync();
         }
     }
 }

@@ -13,6 +13,7 @@ using PontiApp.EventPlace.Services.PlaceCategoryServices;
 using PontiApp.EventPlace.Services.UserServices;
 using PontiApp.EventPlace.Services.WeekDayServices;
 using PontiApp.Mappings;
+using PontiApp.Models;
 using PontiApp.Models.Entities;
 using PontiApp.PlacePlace.Services.PlaceServices;
 using PontiApp.Ponti.Repository.BaseRepository;
@@ -55,6 +56,7 @@ namespace PontiApp.EventPlace.Api
             services.AddScoped<BaseRepository<UserEntity>>();
             services.AddScoped<BaseRepository<CategoryEntity>>();
             services.AddScoped<BaseRepository<PlaceCategory>>();
+            services.AddScoped<BaseRepository<EventCategory>>();
             services.AddScoped<BaseRepository<WeekEntity>>();
             services.AddScoped<EventRepository>();
             services.AddScoped<PlaceRepository>();
