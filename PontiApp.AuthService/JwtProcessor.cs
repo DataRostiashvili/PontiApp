@@ -22,34 +22,6 @@ namespace PontiApp.AuthService
             _jwtconfig = jwtConfig;
         }
 
-        public JwtSecurityToken ValidateJwt (string token)
-        {
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            tokenHandler.ValidateToken(token,new TokenValidationParameters
-            {
-
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtconfig.Secret)),
-
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.FromMinutes(1)
-
-            },out SecurityToken validatedToken);
-            var jwtToken = (JwtSecurityToken) validatedToken;
-            var userID = jwtToken.Claims.FirstOrDefault(s => s.Type == "UserID").Value;
-            var fullName = jwtToken.Claims.FirstOrDefault(s => s.Type == "UserName").Value;
-            var loginResponse = new LoginResponse
-            {
-                UserID = Convert.ToInt64(userID),
-                FullName = fullName
-            };
-            return (JwtSecurityToken) validatedToken;
-            //
-        }
-
-
-
         public string GenerateJwt (long userID,string userName)
         {
             var claims = new List<Claim> {
@@ -57,7 +29,6 @@ namespace PontiApp.AuthService
                 new Claim("UserName",userName),
                 new Claim("UserID",userID.ToString())
             };
-
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtconfig.Secret));
             var credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(

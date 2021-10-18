@@ -25,7 +25,6 @@ namespace PontiApp.Images.Api.Controllers
 
         private readonly IMongoService _service;
 
-
         public ImageController (IMongoService service)
         {
             this._service = service;

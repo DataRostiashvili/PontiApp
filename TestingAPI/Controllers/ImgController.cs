@@ -23,5 +23,12 @@ namespace TestingAPI.Controllers
             await _service.SendAddMessage(guid,files);
             return Ok(new { success = "true" });
         }
+
+        public async Task<ActionResult> Delete(string guid)
+        {
+            _service.SendDeleteMessage(guid);
+            return Ok();
+        }
+
     }
 }
