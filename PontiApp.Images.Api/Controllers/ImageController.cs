@@ -17,11 +17,11 @@ namespace PontiApp.Images.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [ApiKeyAuth]
+    //[ApiKeyAuth]
     public class ImageController : ControllerBase
     {
 
-        [FromHeader(Name = "ApiKey")] public string ApiKey { get; set; }
+        //[FromHeader(Name = "ApiKey")] public string ApiKey { get; set; }
 
         private readonly IMongoService _service;
 
@@ -46,8 +46,8 @@ namespace PontiApp.Images.Api.Controllers
             var images = await _service.GetImage(guid);
             var img = images[id];
             var mStream = new MemoryStream(img);
-            return File(img,"image/jpg");
+            return File(img,"image/jpeg");
         }
-        
+
     }
 }

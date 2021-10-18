@@ -40,14 +40,11 @@ namespace PontiApp.Auth.Controllers
                 UserName = userData.FullName,
                 UserProfileURL = userData.PictureUrl
             };
-            //if (!await _service.CheckIfUserExists(newUser.UserID))
-            //{
-            //    await _service.AddUser(newUser);
-            //}
+            
             var data = _processor.GenerateJwt(newUser.UserID,newUser.UserName);
             return Ok(new { Bearer=data });
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet("get-data")]
         public ActionResult getdata ()
         {

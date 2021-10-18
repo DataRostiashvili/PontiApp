@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.User.Service", "Po
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.User.Repository", "PontiApp.User.Repository\PontiApp.User.Repository.csproj", "{2A2CBB76-E43D-4BDB-8564-84B29479DED0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingAPI", "TestingAPI\TestingAPI.csproj", "{32789804-E246-4F60-BDDA-49E3A1C40A6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{2A2CBB76-E43D-4BDB-8564-84B29479DED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A2CBB76-E43D-4BDB-8564-84B29479DED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A2CBB76-E43D-4BDB-8564-84B29479DED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32789804-E246-4F60-BDDA-49E3A1C40A6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32789804-E246-4F60-BDDA-49E3A1C40A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32789804-E246-4F60-BDDA-49E3A1C40A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32789804-E246-4F60-BDDA-49E3A1C40A6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,6 +139,7 @@ Global
 		{661B9B05-F928-4A12-A33A-3CBA8954C907} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
 		{ED008DCA-CEAA-42B4-AFE6-5528CD4DFC06} = {34A0481C-8E41-4D27-A3EB-18F1224A1D07}
 		{2A2CBB76-E43D-4BDB-8564-84B29479DED0} = {34A0481C-8E41-4D27-A3EB-18F1224A1D07}
+		{32789804-E246-4F60-BDDA-49E3A1C40A6E} = {59278BAA-FC7D-4C5B-943D-645353F3DDAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {582527E1-7735-487F-A959-BB99FEF4FE80}
