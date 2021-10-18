@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,8 +11,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PontiApp.AuthService;
+using PontiApp.Data.DbContexts;
 using PontiApp.GraphAPICalls;
 using PontiApp.Models.Entities.AuthEntities;
+using PontiApp.User.Repository;
+using PontiApp.User.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,21 +45,20 @@ namespace PontiApp.Auth
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
             }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = true;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidIssuer = jwtConfig.Issuer,
-                    ValidateIssuerSigningKey = true,
+                    ValidIssuer=jwtConfig.Issuer,
+                    ValidAudience=jwtConfig.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Secret)),
-                    ValidAudience = jwtConfig.Audience,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromMinutes(1)
+                    ValidateIssuer=true,
+                    ValidateAudience=true,
+                    ValidateIssuerSigningKey=true
 
                 };
             });
@@ -75,15 +78,12 @@ namespace PontiApp.Auth
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","PontiApp.Auth v1"));
             }
-
-
             app.UseHttpsRedirection();
             app.UseRouting();
+
             app.UseAuthentication();
+
             app.UseAuthorization();
-            
-
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

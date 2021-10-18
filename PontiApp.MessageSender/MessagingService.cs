@@ -30,6 +30,7 @@ namespace PontiApp.MessageSender
             _factory.Port = Convert.ToInt16(_config.GetSection("RabbitMQ").GetSection("Port").Value);
             Conn = factory.CreateConnection();
             Channel = Conn.CreateModel();
+            InitRabbit();
         }
         public async Task SendUpdateMessage (string guid,IFormFileCollection files)
         {
@@ -68,6 +69,18 @@ namespace PontiApp.MessageSender
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE,RabbitMQConsts.DELETE_Q,null,body);
             _logger.LogInformation($"Message sent to {RabbitMQConsts.DELETE_Q} at {DateTime.Now}");
+        }
+        private void InitRabbit ()
+        {
+            Channel.ExchangeDeclare("PontiApp",ExchangeType.Direct,true,true);
+            Channel.QueueDeclare("Add",true,autoDelete: true);
+            Channel.QueueDeclare("Delete",true,autoDelete: true);
+            Channel.QueueDeclare("Update.Add",true,autoDelete: true);
+            Channel.QueueDeclare("Update.Remove",true,autoDelete: true);
+            Channel.QueueBind("Add","PontiApp","Add");
+            Channel.QueueBind("Delete","PontiApp","Delete");
+            Channel.QueueBind("Update.Add","PontiApp","Update.Add");
+            Channel.QueueBind("Update.Remove","PontiApp","Update.Remove");
         }
         
     }

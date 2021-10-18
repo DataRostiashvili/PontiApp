@@ -13,6 +13,7 @@ namespace PontiApp.AuthService
 {
     public class JwtProcessor : IJwtProcessor
     {
+
         private readonly IConfiguration _config;
         private readonly JwtConfig _jwtconfig;
         public JwtProcessor (IConfiguration config,JwtConfig jwtConfig)
@@ -27,16 +28,14 @@ namespace PontiApp.AuthService
             var tokenHandler = new JwtSecurityTokenHandler();
             tokenHandler.ValidateToken(token,new TokenValidationParameters
             {
-                ValidateIssuer = true,
-                ValidIssuer = _jwtconfig.Issuer,
+
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtconfig.Secret)),
-                ValidAudience = _jwtconfig.Audience,
-                ValidateAudience = true,
+
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.FromMinutes(1)
 
-            },out SecurityToken validatedToken) ;
+            },out SecurityToken validatedToken);
             var jwtToken = (JwtSecurityToken) validatedToken;
             var userID = jwtToken.Claims.FirstOrDefault(s => s.Type == "UserID").Value;
             var fullName = jwtToken.Claims.FirstOrDefault(s => s.Type == "UserName").Value;
@@ -45,7 +44,7 @@ namespace PontiApp.AuthService
                 UserID = Convert.ToInt64(userID),
                 FullName = fullName
             };
-            return (JwtSecurityToken)validatedToken;
+            return (JwtSecurityToken) validatedToken;
             //
         }
 
@@ -53,25 +52,22 @@ namespace PontiApp.AuthService
 
         public string GenerateJwt (long userID,string userName)
         {
-            var handler = new JwtSecurityTokenHandler();
+            var claims = new List<Claim> {
+                new Claim(ClaimTypes.Role,"Admin"),
+                new Claim("UserName",userName),
+                new Claim("UserID",userID.ToString())
+            };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtconfig.Secret));
             var credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
-            ClaimsIdentity claims = new ClaimsIdentity(new[]
-            {
-                new Claim("UserID",userID.ToString()),
-                new Claim("UserName",userName),
-            });
-            var token = handler.CreateJwtSecurityToken(
+            var token = new JwtSecurityToken(
                 _jwtconfig.Issuer,
                 _jwtconfig.Audience,
-                new ClaimsIdentity(claims),
-                DateTime.Now,
-                DateTime.Now.AddMinutes(15),
-                DateTime.Now,
-                credentials);
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-            return tokenString;
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(15),
+                signingCredentials: credentials);
+            var data = new JwtSecurityTokenHandler().WriteToken(token);
+            return data;
         }
     }
 }

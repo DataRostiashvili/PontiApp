@@ -37,9 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.AuthService", "Pon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.GraphAPICalls", "PontiApp.GraphAPICalls\PontiApp.GraphAPICalls.csproj", "{661B9B05-F928-4A12-A33A-3CBA8954C907}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.User.Service", "PontiApp.User.Service\PontiApp.User.Service.csproj", "{ED008DCA-CEAA-42B4-AFE6-5528CD4DFC06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.User.Service", "PontiApp.User.Service\PontiApp.User.Service.csproj", "{ED008DCA-CEAA-42B4-AFE6-5528CD4DFC06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.User.Repository", "PontiApp.User.Repository\PontiApp.User.Repository.csproj", "{2A2CBB76-E43D-4BDB-8564-84B29479DED0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.User.Repository", "PontiApp.User.Repository\PontiApp.User.Repository.csproj", "{2A2CBB76-E43D-4BDB-8564-84B29479DED0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
