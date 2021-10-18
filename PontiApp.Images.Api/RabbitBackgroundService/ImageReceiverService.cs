@@ -42,16 +42,15 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             ;
             _conn = _cFac.CreateConnection();
             _channel = _conn.CreateModel();
-            InitRabbit();
         }
 
         protected override Task ExecuteAsync (CancellationToken stoppingToken)
         {
-            //Register events
             var consummer = new EventingBasicConsumer(_channel);
-
-            //Subscribe
+            //Register events
+            
             consummer.Received += Consumer_Received;
+            //Subscribe
             
             //Consume
             _channel.BasicConsume(RabbitMQConsts.UPDATE_ADD_Q,true,consummer);
@@ -85,19 +84,6 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
                     _logger.LogInformation($"Message consumder from {RabbitMQConsts.DELETE_Q} queue at {DateTime.Now}");
                     break;
             }
-        }
-
-        private void InitRabbit ()
-        {
-            _channel.ExchangeDeclare(RabbitMQConsts.EXCHANGE,ExchangeType.Direct,true,true);
-            _channel.QueueDeclare(RabbitMQConsts.ADD_Q,true,autoDelete: true);
-            _channel.QueueDeclare(RabbitMQConsts.DELETE_Q,true,autoDelete: true);
-            _channel.QueueDeclare(RabbitMQConsts.UPDATE_ADD_Q,true,autoDelete: true);
-            _channel.QueueDeclare(RabbitMQConsts.UPDATE_REMOVE_Q,true,autoDelete: true);
-            _channel.QueueBind(RabbitMQConsts.ADD_Q,RabbitMQConsts.EXCHANGE,RabbitMQConsts.ADD_Q);
-            _channel.QueueBind(RabbitMQConsts.DELETE_Q,RabbitMQConsts.EXCHANGE,RabbitMQConsts.DELETE_Q);
-            _channel.QueueBind(RabbitMQConsts.UPDATE_ADD_Q,RabbitMQConsts.EXCHANGE,RabbitMQConsts.UPDATE_ADD_Q);
-            _channel.QueueBind(RabbitMQConsts.UPDATE_REMOVE_Q,RabbitMQConsts.EXCHANGE,RabbitMQConsts.UPDATE_REMOVE_Q);
         }
     }
 }

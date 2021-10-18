@@ -25,18 +25,16 @@ namespace PontiApp.Images.Api.Controllers
 
         private readonly IMongoService _service;
 
-
         public ImageController (IMongoService service)
         {
             this._service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get (string guid)
+        public async Task<byte[]> Get (string guid)
         {
-            var image = (await _service.GetImage(guid))[0];
-            var stream = new MemoryStream(image);
-            return File(image,"image/jpeg");
+            var images = await _service.GetImage(guid);
+            return images[0];
         }
 
         [HttpGet]
@@ -48,6 +46,5 @@ namespace PontiApp.Images.Api.Controllers
             var mStream = new MemoryStream(img);
             return File(img,"image/jpg");
         }
-        
     }
 }
