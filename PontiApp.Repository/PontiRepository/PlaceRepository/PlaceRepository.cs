@@ -66,12 +66,15 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             return currUser.UserHostPlaces;
         }
 
-        public async Task UpdateGuestingPlace(PlaceEntity currPlace, GuestDTO currPlaceGuestDTO)
+        public async Task UpdateGuestingPlace(GuestDTO currPlaceGuestDTO)
         {
+            PlaceEntity currPlace = await entities.Include(p => p.Reviews).SingleAsync(p => p.Id == currPlaceGuestDTO.PlaceId);
             PlaceReviewEntity currReview = new()
             {
                 ReviewRanking = currPlaceGuestDTO.ReviewRanking,
                 PlaceEntity = currPlace,
+                PlaceEntityId = currPlaceGuestDTO.PlaceId,
+                UserEntityId = currPlaceGuestDTO.UserGuestId,
                 UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlaceGuestDTO.UserGuestId)
             };
 
@@ -81,6 +84,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             }
 
             currPlace.Reviews.Add(currReview);
+            await _applicationDbContext.SaveChangesAsync();
         }
     }
 }

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PontiApp.Models.DTOs;
 using PontiApp.PlacePlace.Services.PlaceServices;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PontiApp.PlacePlace.Api.Controllers
@@ -79,12 +77,12 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpGet("GetHostingPlaces/{userId}")]
-        public async Task<ActionResult<IEnumerable<PlaceResponseDTO>>> GetHostingPlaces(int userId)
+        [HttpGet("GetHostingPlaces/{userHostId}")]
+        public async Task<ActionResult<IEnumerable<PlaceResponseDTO>>> GetHostingPlaces(int userHostId)
         {
             try
             {
-                return Ok(await _placeService.GetAllHsotingPlace(userId));
+                return Ok(await _placeService.GetAllHsotingPlace(userHostId));
             }
             catch (Exception e)
             {
@@ -137,12 +135,12 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpGet("GuestingPlaces/{userId}")]
-        public async Task<ActionResult<IEnumerable<PlaceRequestDTO>>> GetGuestingPlaces(int userId)
+        [HttpGet("GuestingPlaces/{userGuestId}")]
+        public async Task<ActionResult<IEnumerable<PlaceRequestDTO>>> GetGuestingPlaces(int userGuestId)
         {
             try
             {
-                return Ok(await _placeService.GetAllGuestingPlace(userId));
+                return Ok(await _placeService.GetAllGuestingPlace(userGuestId));
             }
             catch (Exception e)
             {
@@ -151,7 +149,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetAllPlace")]
-        public async Task<ActionResult<IEnumerable<EventRequestDTO>>> GetAllPlace()
+        public async Task<ActionResult<IEnumerable<PlaceRequestDTO>>> GetAllPlace()
         {
             try
             {

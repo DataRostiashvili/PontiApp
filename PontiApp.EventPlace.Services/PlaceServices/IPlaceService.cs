@@ -15,10 +15,10 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         Task UpdateGuestingPlace(GuestDTO currPlaceGuestDRO);
         Task DeleteHostingPlace(HostDTO currPlaceHostDTO);
         Task DeleteGuestingPlace(GuestDTO currPlaceGuestDTO);
-        Task<PlaceResponseDTO> GetSinglePlace(int PlaceId);
+        Task<PlaceResponseDTO> GetSinglePlace(int placeId);
         Task<List<PlaceResponseDTO>> GetAllPlace();
         Task<List<PlaceResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO);
-        Task<List<PlaceResponseDTO>> GetAllHsotingPlace(int userHostQueueId);
-        Task<List<PlaceResponseDTO>> GetAllGuestingPlace(int userGuestQueueId);
+        Task<List<PlaceResponseDTO>> GetAllHsotingPlace(int userHostId);
+        Task<List<PlaceResponseDTO>> GetAllGuestingPlace(int userGuestId);
     }
 }

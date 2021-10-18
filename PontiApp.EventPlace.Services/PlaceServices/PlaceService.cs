@@ -101,8 +101,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 
         public async Task UpdateGuestingPlace(GuestDTO currPlaceGuestDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceId);
-            await _placeRepo.UpdateGuestingPlace(currPlace, currPlaceGuestDTO);
+            await _placeRepo.UpdateGuestingPlace(currPlaceGuestDTO);
         }
 
         public async Task UpdateHostingPlace(PlaceRequestDTO currPlaceDTO)
