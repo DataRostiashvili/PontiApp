@@ -10,11 +10,11 @@ namespace PontiApp.Data.EntityConfiguration
         {
             builder.HasMany(u => u.UserHostEvents)
                     .WithOne(e => e.UserEntity)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(u => u.UserHostPlaces)
                     .WithOne(p => p.HostUser)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

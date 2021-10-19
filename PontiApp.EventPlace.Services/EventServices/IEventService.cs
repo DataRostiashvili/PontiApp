@@ -15,11 +15,11 @@ namespace PontiApp.EventPlace.Services.EventServices
         Task UpdateGuestingEvent(GuestDTO currEventGuestDRO);
         Task DeleteHostingEvent(HostDTO currEventHostDTO);
         Task DeleteGuestingEvent(GuestDTO currEventGuestDTO);
-        Task<EventRequestDTO> GetSingleEvent(int eventId);
-        Task<List<EventRequestDTO>> GetAllEvent();
-        Task<List<EventRequestDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO);
-        Task<List<EventRequestDTO>> GetAllHsotingEvent(int userHostId);
-        Task<List<EventRequestDTO>> GetAllGuestingEvent(int userGuestId);
+        Task<EventResponseDTO> GetSingleEvent(int eventId);
+        Task<List<EventResponseDTO>> GetAllEvent();
+        Task<List<EventResponseDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO);
+        Task<List<EventResponseDTO>> GetAllHsotingEvent(int userHostId);
+        Task<List<EventResponseDTO>> GetAllGuestingEvent(int userGuestId);
 
     }
 }

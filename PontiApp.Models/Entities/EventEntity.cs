@@ -21,7 +21,7 @@ namespace PontiApp.Models.Entities
         //One to many references
 
         public PlaceEntity PlaceEntity { get; set; }
-        public int PlaceEntityId { get; set; }
+        public int? PlaceEntityId { get; set; }
 
         public UserEntity UserEntity { get; set; }
         public int UserEntityId { get; set; }

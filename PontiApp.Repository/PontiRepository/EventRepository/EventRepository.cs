@@ -21,6 +21,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
         public async Task DeleteHosting(EventEntity currEvent)
         {
             _applicationDbContext.EventCategories.RemoveRange(_applicationDbContext.EventCategories.Where(ec => ec.EventEntityId == currEvent.Id));
+            _applicationDbContext.EventReviews.RemoveRange(_applicationDbContext.EventReviews.Where(er => er.EventEntityId == currEvent.Id));
             
             await Delete(currEvent);
             await _applicationDbContext.SaveChangesAsync();
@@ -54,12 +55,12 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
         {
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == userId);
 
-            return (List<EventEntity>)_applicationDbContext.UserGuestEvents.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.EventEntity);
+            return await _applicationDbContext.UserGuestEvents.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.EventEntity).ToListAsync();
         }
 
         public async Task<List<EventEntity>> GetAllHosting(int userId)
         {
-            var currUser = await _applicationDbContext.Users.Include(u => u.UserGuestEvents).SingleAsync(u => u.Id == userId);
+            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostEvents).SingleAsync(u => u.Id == userId);
 
             return currUser.UserHostEvents;
         }

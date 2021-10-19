@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using PontiApp.Data.DbContexts;
+using PontiApp.EventEvent.Services.EventCategoryServices;
 using PontiApp.EventPlace.Services.CategoryServices;
 using PontiApp.EventPlace.Services.EventServices;
 using PontiApp.EventPlace.Services.PlaceCategoryServices;
@@ -52,6 +53,7 @@ namespace PontiApp.EventPlace.Api
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IPlaceService, PlaceService>();
             services.AddScoped<IPlaceCategoryService, PlaceCategoryService>();
+            services.AddScoped<IEventCategoryService, EventCategoryService>();
             services.AddScoped<IWeekDayService, WeekDayService>();
             services.AddScoped<BaseRepository<UserEntity>>();
             services.AddScoped<BaseRepository<CategoryEntity>>();

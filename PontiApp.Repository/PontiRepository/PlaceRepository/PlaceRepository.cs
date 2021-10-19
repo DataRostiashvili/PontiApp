@@ -22,6 +22,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         {
             _applicationDbContext.PlaceCategories.RemoveRange(_applicationDbContext.PlaceCategories.Where(ec => ec.PlaceEntityId == currPlace.Id));
             _applicationDbContext.WeekDays.RemoveRange(_applicationDbContext.WeekDays.Where(wd => wd.PlaceEntityId == currPlace.Id));
+            _applicationDbContext.PlaceReviews.RemoveRange(_applicationDbContext.PlaceReviews.Where(pr => pr.PlaceEntityId == currPlace.Id));
+            _applicationDbContext.UserGuestPlaces.RemoveRange(_applicationDbContext.UserGuestPlaces.Where(ug => ug.PlaceEntityId == currPlace.Id));
             //_applicationDbContext.PlacePics.RemoveRange(_applicationDbContext.PlacePics.Where(pp => pp.PlaceEntityId == currPlace.Id));
             
             await Delete(currPlace);

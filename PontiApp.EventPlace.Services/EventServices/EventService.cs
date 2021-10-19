@@ -64,40 +64,40 @@ namespace PontiApp.EventPlace.Services.EventServices
             await _eventRepo.DeleteGuesting(currEvent, currEventGuestDTO.UserGuestId);
         }
 
-        public async Task<List<EventRequestDTO>> GetAllEvent()
+        public async Task<List<EventResponseDTO>> GetAllEvent()
         {
             List<EventEntity> allEvent = await _eventRepo.GetAll();
-            List<EventRequestDTO> allEventDTOs = _mapper.Map<List<EventRequestDTO>>(allEvent);
+            List<EventResponseDTO> allEventDTOs = _mapper.Map<List<EventResponseDTO>>(allEvent);
 
 
             return allEventDTOs;
         }
 
-        public async Task<List<EventRequestDTO>> GetAllGuestingEvent(int userGuestId)
+        public async Task<List<EventResponseDTO>> GetAllGuestingEvent(int userGuestId)
         {
             List<EventEntity> guestingEvents = await _eventRepo.GetAllGuesting(userGuestId);
-            List<EventRequestDTO> guestingEventDTOs = _mapper.Map<List<EventRequestDTO>>(guestingEvents);
+            List<EventResponseDTO> guestingEventDTOs = _mapper.Map<List<EventResponseDTO>>(guestingEvents);
 
             return guestingEventDTOs;
         }
 
-        public async Task<List<EventRequestDTO>> GetAllHsotingEvent(int userHostId)
+        public async Task<List<EventResponseDTO>> GetAllHsotingEvent(int userHostId)
         {
             List<EventEntity> hostingEvents = await _eventRepo.GetAllHosting(userHostId);
-            List<EventRequestDTO> hostingEventDTOs = _mapper.Map<List<EventRequestDTO>>(hostingEvents);
+            List<EventResponseDTO> hostingEventDTOs = _mapper.Map<List<EventResponseDTO>>(hostingEvents);
 
             return hostingEventDTOs;
         }
 
-        public Task<List<EventRequestDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO)
+        public Task<List<EventResponseDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<EventRequestDTO> GetSingleEvent(int eventId)
+        public async Task<EventResponseDTO> GetSingleEvent(int eventId)
         {
             EventEntity currEvent = await _eventRepo.GetByID(eventId);
-            return _mapper.Map<EventRequestDTO>(currEvent);
+            return _mapper.Map<EventResponseDTO>(currEvent);
         }
 
         public async Task UpdateGuestingEvent(GuestDTO currEventGuestDTO)

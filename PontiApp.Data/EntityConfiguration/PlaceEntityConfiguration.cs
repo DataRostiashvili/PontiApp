@@ -11,15 +11,11 @@ namespace PontiApp.Data.EntityConfiguration
         {
             builder.HasMany(pl => pl.WeekSchedule)
                     .WithOne(w => w.Place)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(pl => pl.Pictures)
                     .WithOne(pic => pic.PlaceEntity)
-                    .OnDelete(DeleteBehavior.NoAction);
-
-            builder.HasMany(pl => pl.PlaceEvents)
-                    .WithOne(ev => ev.PlaceEntity)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(pl => pl.Reviews)
                     .WithOne(r => r.PlaceEntity)

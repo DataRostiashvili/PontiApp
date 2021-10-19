@@ -18,12 +18,12 @@ namespace PontiApp.Data.EntityConfiguration
             builder.HasOne(o => o.eventEntity)
                     .WithMany(e => e.EventCategories)
                     .HasForeignKey(o => o.EventEntityId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(o => o.categoryEntity)
                     .WithMany(c => c.EventsCategories)
                     .HasForeignKey(o => o.CategoryEntityId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

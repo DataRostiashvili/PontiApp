@@ -20,12 +20,12 @@ namespace PontiApp.Data.EntityConfiguration
             builder.HasOne(o => o.UserEntity)
                     .WithMany(u => u.UserGuestPlaces)
                     .HasForeignKey(o => o.UserEntityId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(o => o.PlaceEntity)
                     .WithMany(e => e.UserGuests)
                     .HasForeignKey(o => o.PlaceEntityId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
