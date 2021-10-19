@@ -10,11 +10,16 @@ namespace PontiApp.Data.EntityConfiguration
         {
             builder.HasMany(e => e.Pictures)
                     .WithOne(p => p.EventEntity)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(e => e.Reviews)
                     .WithOne(r => r.EventEntity)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(e => e.PlaceEntity)
+                    .WithMany(p => p.PlaceEvents)
+                    .HasForeignKey(e => e.PlaceEntityId)
+                    .OnDelete(DeleteBehavior.SetNull);
 
             builder.Navigation(x => x.EventCategories).AutoInclude();
             builder.Navigation(x => x.Reviews).AutoInclude();

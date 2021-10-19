@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PontiApp.Data.DbContexts;
@@ -9,9 +10,10 @@ using PontiApp.Data.DbContexts;
 namespace PontiApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211019094110_zaza")]
+    partial class zaza
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,7 +67,7 @@ namespace PontiApp.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<int?>("PlaceEntityId")
+                    b.Property<int>("PlaceEntityId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartTime")
@@ -382,7 +384,8 @@ namespace PontiApp.Data.Migrations
                     b.HasOne("PontiApp.Models.Entities.PlaceEntity", "PlaceEntity")
                         .WithMany("PlaceEvents")
                         .HasForeignKey("PlaceEntityId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PontiApp.Models.Entities.UserEntity", "UserEntity")
                         .WithMany("UserHostEvents")
