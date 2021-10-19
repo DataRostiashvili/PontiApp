@@ -1,6 +1,6 @@
 ﻿namespace PontiApp.Models.Entities
 {
-    public class PlacePicEntity
+    public class PlacePicEntity : BaseEntity
     {
         public int PlacePicEntityId { get; set; }
         public string MongoKey { get; set; }

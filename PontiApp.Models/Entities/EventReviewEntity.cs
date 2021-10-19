@@ -1,6 +1,6 @@
 ﻿namespace PontiApp.Models.Entities
 {
-    public class EventReviewEntity
+    public class EventReviewEntity : BaseEntity
     {
         public int EventReviewEntityId { get; set; }
         public float ReviewRanking { get; set; }

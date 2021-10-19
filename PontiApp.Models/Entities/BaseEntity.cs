@@ -11,5 +11,7 @@ namespace PontiApp.Models.Entities
     {
         [Key]
         public int Id { get; set; }
+        
+        public bool IsDeleted { get; set; }
     }
 }

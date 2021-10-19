@@ -16,8 +16,6 @@ namespace PontiApp.Models.Entities
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
-        public bool IsActive { get; set; }
-
         //One to many references
 
         public PlaceEntity PlaceEntity { get; set; }
