@@ -18,9 +18,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         }
         
-        public async Task InsertGuesting(PlaceEntity currPlace, int guestId)
+        public async Task InsertGuesting(PlaceGuestDTO currPlaceGuestDTO)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == guestId);
+            PlaceEntity currPlace = await GetByID(currPlaceGuestDTO.PlaceId);
+            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlaceGuestDTO.UserGuestId);
 
             UserGuestPlace guestOnPlace = new UserGuestPlace()
             {

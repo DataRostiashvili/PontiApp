@@ -18,9 +18,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
         }
 
-        public async Task InsertGuesting(EventEntity currEvent, int guestId)
+        public async Task InsertGuesting(EventGuestDTO currEventGuestDTO)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == guestId);
+            EventEntity currEvent = await GetByID(currEventGuestDTO.EventId);
+            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEventGuestDTO.UserGuestId);
 
             UserGuestEvent guestOnEvent = new UserGuestEvent()
             {

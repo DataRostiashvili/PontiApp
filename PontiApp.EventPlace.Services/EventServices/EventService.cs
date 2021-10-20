@@ -46,16 +46,15 @@ namespace PontiApp.EventPlace.Services.EventServices
         //    }
         //}
 
-        public async Task DeleteHostingEvent(HostDTO currEventHostDTO)
+        public async Task DeleteHostingEvent(int hostEventId)
         {
-            EventEntity currEvent = await _eventRepo.GetByID(currEventHostDTO.EventId);
+            EventEntity currEvent = await _eventRepo.GetByID(hostEventId);
             await _eventRepo.Delete(currEvent);
         }
 
-        public async Task AddGusestingEvent(GuestDTO currEventGuestDTO)
-        {
-            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventId);
-            await _eventRepo.InsertGuesting(currEvent, currEventGuestDTO.UserGuestId);
+        public async Task AddGusestingEvent(EventGuestDTO currEventGuestDTO)
+        { 
+            await _eventRepo.InsertGuesting(currEventGuestDTO);
         }
 
         public async Task DeleteGuestingEvent(GuestDTO currEventGuestDTO)

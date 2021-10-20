@@ -50,11 +50,11 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpDelete]
         [Route(nameof(DeletePlace))]
-        public async Task<ActionResult> DeletePlace([FromBody] HostDTO hostPlaceDTO)
+        public async Task<ActionResult> DeletePlace(int hostPlaceId)
         {
             try
             {
-                await _placeService.DeleteHostingPlace(hostPlaceDTO);
+                await _placeService.DeleteHostingPlace(hostPlaceId);
                 return Ok();
             }
             catch (Exception e)
@@ -90,9 +90,9 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route(nameof(AddInGuestingPlaces))]
-        public async Task<ActionResult> AddInGuestingPlaces([FromBody] GuestDTO guestPlaceDTO)
+        public async Task<ActionResult> AddInGuestingPlaces([FromBody] PlaceGuestDTO guestPlaceDTO)
         {
             try
             {

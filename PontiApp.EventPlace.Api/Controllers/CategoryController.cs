@@ -50,8 +50,8 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("GetAllCategory")]
-        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAllEvent()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAllCategory()
         {
             try
             {

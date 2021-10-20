@@ -26,10 +26,9 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             _placeRepo = placeRepo;
         }
 
-        public async Task AddGusestingPlace(GuestDTO currPlaceGuestDTO)
+        public async Task AddGusestingPlace(PlaceGuestDTO currPlaceGuestDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceId);
-            await _placeRepo.InsertGuesting(currPlace, currPlaceGuestDTO.UserGuestId);
+            await _placeRepo.InsertGuesting(currPlaceGuestDTO);
         }
 
         public async Task AddHostingPlace(PlaceRequestDTO newPlaceDTO)
@@ -58,9 +57,9 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.DeleteGuesting(currPlace, currPlaceGuestDTO.UserGuestId);
         }
 
-        public async Task DeleteHostingPlace(HostDTO currPlaceHostDTO)
+        public async Task DeleteHostingPlace(int hostPlaceId)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceHostDTO.PlaceId);
+            PlaceEntity currPlace = await _placeRepo.GetByID(hostPlaceId);
             await _placeRepo.Delete(currPlace);
         }
 

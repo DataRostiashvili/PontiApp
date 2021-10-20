@@ -10,10 +10,10 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
     public interface IPlaceService
     {
         Task AddHostingPlace(PlaceRequestDTO newPlaceDTO);
-        Task AddGusestingPlace(GuestDTO currPlaceGuestDTO);
+        Task AddGusestingPlace(PlaceGuestDTO currPlaceGuestDTO);
         Task UpdateHostingPlace(PlaceRequestDTO currPlaceHostDTO);
         Task UpdateGuestingPlace(GuestDTO currPlaceGuestDRO);
-        Task DeleteHostingPlace(HostDTO currPlaceHostDTO);
+        Task DeleteHostingPlace(int hostPlaceId);
         Task DeleteGuestingPlace(GuestDTO currPlaceGuestDTO);
         Task<PlaceResponseDTO> GetSinglePlace(int placeId);
         Task<List<PlaceResponseDTO>> GetAllPlace();

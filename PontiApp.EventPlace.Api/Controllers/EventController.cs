@@ -52,11 +52,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpDelete]
         [Route(nameof(DeleteEvent))]
-        public async Task<ActionResult> DeleteEvent([FromBody] HostDTO hostEventDTO)
+        public async Task<ActionResult> DeleteEvent(int hostEventId)
         {
             try
             {
-                await _eventService.DeleteHostingEvent(hostEventDTO);
+                await _eventService.DeleteHostingEvent(hostEventId);
                 return Ok();
             }
             catch (Exception e)
@@ -91,9 +91,9 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route(nameof(AddInGuestingEvents))]
-        public async Task<ActionResult> AddInGuestingEvents([FromBody] GuestDTO guestEventDTO)
+        public async Task<ActionResult> AddInGuestingEvents([FromBody] EventGuestDTO guestEventDTO)
         {
             try
             {
