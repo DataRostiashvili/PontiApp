@@ -13,7 +13,7 @@ namespace PontiApp.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<PlaceCategory> builder)
         {
-            builder.HasKey(o => o.Id);
+            builder.HasKey(o => new { o.PlaceEntityId, o.CategoryEntityId });
 
             builder.HasOne(o => o.placeEntity)
                     .WithMany(p => p.PlaceCategories)

@@ -61,7 +61,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         public async Task DeleteHostingPlace(HostDTO currPlaceHostDTO)
         {
             PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceHostDTO.PlaceId);
-            await _placeRepo.DeleteHosting(currPlace);
+            await _placeRepo.Delete(currPlace);
         }
 
         public async Task<List<PlaceResponseDTO>> GetAllGuestingPlace(int userGuestId)
