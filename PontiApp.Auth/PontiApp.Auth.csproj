@@ -12,7 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PontiApp.AuthService\PontiApp.AuthService.csproj" />
     <ProjectReference Include="..\PontiApp.GraphAPICalls\PontiApp.GraphAPICalls.csproj" />
-    <ProjectReference Include="..\PontiApp.User.Service\PontiApp.User.Service.csproj" />
+    <ProjectReference Include="..\PontiApp.Utilities\PontiApp.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

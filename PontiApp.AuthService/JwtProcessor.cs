@@ -16,26 +16,26 @@ namespace PontiApp.AuthService
 
         private readonly IConfiguration _config;
         private readonly JwtConfig _jwtconfig;
-        public JwtProcessor (IConfiguration config,JwtConfig jwtConfig)
+
+        public JwtProcessor(IConfiguration config, JwtConfig jwtConfig)
         {
             _config = config;
             _jwtconfig = jwtConfig;
         }
-
-        public string GenerateJwt (long userID,string userName)
+        public string GenerateJwt(long userID, string userName)
         {
             var claims = new List<Claim> {
-                new Claim(ClaimTypes.Role,"Admin"),
                 new Claim("UserName",userName),
                 new Claim("UserID",userID.ToString())
             };
+
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtconfig.Secret));
-            var credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 _jwtconfig.Issuer,
                 _jwtconfig.Audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(15),
+                expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: credentials);
             var data = new JwtSecurityTokenHandler().WriteToken(token);
             return data;

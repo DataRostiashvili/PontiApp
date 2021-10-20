@@ -12,40 +12,57 @@ using PontiApp.Images.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Distributed;
+using PontiApp.Images.Cache;
+using System;
 
 namespace PontiApp.Images.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     //[ApiKeyAuth]
     public class ImageController : ControllerBase
     {
 
         //[FromHeader(Name = "ApiKey")] public string ApiKey { get; set; }
-
+        private readonly IDistributedCache _cache;
         private readonly IMongoService _service;
 
-        public ImageController (IMongoService service)
+        public ImageController(IMongoService service, IDistributedCache cache)
         {
-            this._service = service;
+            _cache = cache;
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get (string guid)
+        [Route("[action]")]
+        [Route("get-profile-picture")]
+
+        public async Task<ActionResult> Get(string guid)
         {
-            var image = (await _service.GetImage(guid))[0];
-            var stream = new MemoryStream(image);
-            return File(image,"image/jpeg");
+            var cacheKey = "Get_Profile_Pic";
+            var image = await _cache.GetRecordAsync<List<byte[]>>(cacheKey);
+            if (image is null)
+            {
+                image = await _service.GetImage(guid);
+                await _cache.SetRecordAsync<List<byte[]>>(cacheKey, image);
+            }
+            return File(image[0], "image/jpeg");
         }
 
         [HttpGet]
         [Route("{guid}/{id}")]
-        public async Task<IActionResult> Get (string guid,int id)
+        public async Task<IActionResult> Get(string guid, int id)
         {
-            var images = await _service.GetImage(guid);
-            var img = images[id];
-            var mStream = new MemoryStream(img);
-            return File(img,"image/jpeg");
+            var cacheKey = "GET_IMAGE_BY_INDEX";
+            var image = await _cache.GetRecordAsync<List<byte[]>>(cacheKey);
+            if (image is null)
+            {
+                image = await _service.GetImage(guid);
+                await _cache.SetRecordAsync<List<byte[]>>(cacheKey, image);
+            }
+            return File(image[id], "image/jpeg");
         }
 
     }
