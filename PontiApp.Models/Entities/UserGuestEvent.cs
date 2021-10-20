@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Entities
 {
-    public class UserGuestEvent
+    public class UserGuestEvent : BaseEntity
     {
         public int EventEntityId { get; set; }
         public EventEntity EventEntity { get; set; }
         public int UserEntityId { get; set; }
         public UserEntity UserEntity { get; set; }
-
-        public bool IsActive { get; set; }
     }
 }

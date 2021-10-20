@@ -15,6 +15,9 @@ namespace PontiApp.Data.EntityConfiguration
             builder.HasMany(u => u.UserHostPlaces)
                     .WithOne(p => p.HostUser)
                     .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property<bool>("IsDeleted");
+            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PontiApp.Data.DbContexts;
@@ -9,9 +10,10 @@ using PontiApp.Data.DbContexts;
 namespace PontiApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211019144249_zoriak")]
+    partial class zoriak
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,24 +147,28 @@ namespace PontiApp.Data.Migrations
 
             modelBuilder.Entity("PontiApp.Models.Entities.PlaceCategory", b =>
                 {
-                    b.Property<int>("PlaceEntityId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CategoryEntityId")
-                        .HasColumnType("integer");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Category")
                         .HasColumnType("text");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryEntityId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.HasKey("PlaceEntityId", "CategoryEntityId");
+                    b.Property<int>("PlaceEntityId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryEntityId");
+
+                    b.HasIndex("PlaceEntityId");
 
                     b.ToTable("PlaceCategories");
                 });
@@ -380,24 +386,28 @@ namespace PontiApp.Data.Migrations
 
             modelBuilder.Entity("PontiApp.Models.EventCategory", b =>
                 {
-                    b.Property<int>("EventEntityId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CategoryEntityId")
-                        .HasColumnType("integer");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Category")
                         .HasColumnType("text");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("EventEntityId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.HasKey("EventEntityId", "CategoryEntityId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryEntityId");
+
+                    b.HasIndex("EventEntityId");
 
                     b.ToTable("EventCategories");
                 });

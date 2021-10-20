@@ -19,11 +19,14 @@ namespace PontiApp.Data.EntityConfiguration
 
             builder.HasMany(pl => pl.Reviews)
                     .WithOne(r => r.PlaceEntity)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.Navigation(x => x.PlaceCategories).AutoInclude();
             builder.Navigation(x => x.WeekSchedule).AutoInclude();
             builder.Navigation(x => x.Reviews).AutoInclude();
+
+            builder.Property<bool>("IsDeleted");
+            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
 
         }
     }

@@ -26,6 +26,9 @@ namespace PontiApp.Data.EntityConfiguration
                     .WithMany(e => e.UserGuests)
                     .HasForeignKey(o => o.PlaceEntityId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property<bool>("IsDeleted");
+            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
     }
 }

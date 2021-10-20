@@ -3,6 +3,9 @@
 using PontiApp.Models.Entities;
 using PontiApp.Data.EntityConfiguration;
 using PontiApp.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace PontiApp.Data.DbContexts
 {
@@ -41,6 +44,36 @@ namespace PontiApp.Data.DbContexts
             options.ApplyConfiguration(new PlaceCategoryConfiguration());
             options.ApplyConfiguration(new EventCategoryConfiguration());
         }
+
+        public override int SaveChanges()
+        {
+            UpdateSoftDeleteStatuses();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UpdateSoftDeleteStatuses();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void UpdateSoftDeleteStatuses()
+        {
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.CurrentValues["IsDeleted"] = false;
+                        break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues["IsDeleted"] = true;
+                        break;
+                }
+            }
+        }
+
 
     }
 }

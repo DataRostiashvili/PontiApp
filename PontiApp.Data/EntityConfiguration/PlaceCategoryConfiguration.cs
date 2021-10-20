@@ -13,7 +13,7 @@ namespace PontiApp.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<PlaceCategory> builder)
         {
-            builder.HasKey(o => o.Id);
+            builder.HasKey(o => new { o.PlaceEntityId, o.CategoryEntityId });
 
             builder.HasOne(o => o.placeEntity)
                     .WithMany(p => p.PlaceCategories)
@@ -24,6 +24,9 @@ namespace PontiApp.Data.EntityConfiguration
                     .WithMany(c => c.PlaceCategories)
                     .HasForeignKey(o => o.CategoryEntityId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property<bool>("IsDeleted");
+            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
     }
 }

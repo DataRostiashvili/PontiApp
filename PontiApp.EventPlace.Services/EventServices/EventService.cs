@@ -49,7 +49,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task DeleteHostingEvent(HostDTO currEventHostDTO)
         {
             EventEntity currEvent = await _eventRepo.GetByID(currEventHostDTO.EventId);
-            await _eventRepo.DeleteHosting(currEvent);
+            await _eventRepo.Delete(currEvent);
         }
 
         public async Task AddGusestingEvent(GuestDTO currEventGuestDTO)

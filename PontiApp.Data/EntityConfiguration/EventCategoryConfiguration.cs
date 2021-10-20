@@ -13,7 +13,7 @@ namespace PontiApp.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<EventCategory> builder)
         {
-            builder.HasKey(o => o.Id);
+            builder.HasKey(o => new { o.EventEntityId, o.CategoryEntityId });
 
             builder.HasOne(o => o.eventEntity)
                     .WithMany(e => e.EventCategories)
@@ -24,6 +24,9 @@ namespace PontiApp.Data.EntityConfiguration
                     .WithMany(c => c.EventsCategories)
                     .HasForeignKey(o => o.CategoryEntityId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property<bool>("IsDeleted");
+            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
     }
 }
