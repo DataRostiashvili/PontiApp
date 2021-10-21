@@ -107,11 +107,11 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateInGuestingPlaces))]
-        public async Task<ActionResult> UpdateInGuestingPlaces([FromBody] GuestDTO guestPlaceDTO)
+        public async Task<ActionResult> UpdateInGuestingPlaces([FromBody] PlaceReviewDTO placeReviewDTO)
         {
             try
             {
-                await _placeService.UpdateGuestingPlace(guestPlaceDTO);
+                await _placeService.UpdateGuestingPlace(placeReviewDTO);
                 return Ok();
             }
             catch (Exception e)
@@ -122,7 +122,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(RemoveFromGuestingPlaces))]
-        public async Task<ActionResult> RemoveFromGuestingPlaces([FromBody] GuestDTO guestPlaceDTO)
+        public async Task<ActionResult> RemoveFromGuestingPlaces([FromBody] PlaceGuestDTO guestPlaceDTO)
         {
             try
             {

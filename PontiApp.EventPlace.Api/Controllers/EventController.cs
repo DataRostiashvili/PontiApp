@@ -108,11 +108,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateInGuestingEvents))]
-        public async Task<ActionResult> UpdateInGuestingEvents([FromBody] GuestDTO guestEventDTO)
+        public async Task<ActionResult> UpdateInGuestingEvents([FromBody] EventReviewDTO eventReviewDTO)
         {
             try
             {
-                await _eventService.UpdateGuestingEvent(guestEventDTO);
+                await _eventService.UpdateGuestingEvent(eventReviewDTO);
                 return Ok();
             }
             catch (Exception e)
@@ -123,7 +123,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(RemoveFromGuestingEvents))]
-        public async Task<ActionResult> RemoveFromGuestingEvents([FromBody] GuestDTO guestEventDTO)
+        public async Task<ActionResult> RemoveFromGuestingEvents([FromBody] EventGuestDTO guestEventDTO)
         {
             try
             {

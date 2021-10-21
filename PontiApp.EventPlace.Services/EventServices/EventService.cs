@@ -57,10 +57,9 @@ namespace PontiApp.EventPlace.Services.EventServices
             await _eventRepo.InsertGuesting(currEventGuestDTO);
         }
 
-        public async Task DeleteGuestingEvent(GuestDTO currEventGuestDTO)
+        public async Task DeleteGuestingEvent(EventGuestDTO currEventGuestDTO)
         {
-            EventEntity currEvent = await _eventRepo.GetByID(currEventGuestDTO.EventId);
-            await _eventRepo.DeleteGuesting(currEvent, currEventGuestDTO.UserGuestId);
+            await _eventRepo.DeleteGuesting(currEventGuestDTO);
         }
 
         public async Task<List<EventResponseDTO>> GetAllEvent()
@@ -99,9 +98,9 @@ namespace PontiApp.EventPlace.Services.EventServices
             return _mapper.Map<EventResponseDTO>(currEvent);
         }
 
-        public async Task UpdateGuestingEvent(GuestDTO currEventGuestDTO)
+        public async Task UpdateGuestingEvent(EventReviewDTO eventReviewDTO)
         {
-            await _eventRepo.UpdateGuestingEvent(currEventGuestDTO);
+            await _eventRepo.UpdateGuestingEvent(eventReviewDTO);
         }
 
         public async Task UpdateHostingEvent(EventRequestDTO currEventDTO)

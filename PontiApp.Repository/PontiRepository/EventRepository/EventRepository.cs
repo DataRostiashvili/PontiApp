@@ -33,9 +33,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteGuesting(EventEntity currEvent, int guestId)
+        public async Task DeleteGuesting(EventGuestDTO currEventGuestDTO)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == guestId);
+            EventEntity currEvent = await GetByID(currEventGuestDTO.EventId);
+            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEventGuestDTO.UserGuestId);
 
             UserGuestEvent currBond = await _applicationDbContext.UserGuestEvents.Where(o => o.EventEntityId == currEvent.Id && o.UserEntityId == currUser.Id).FirstAsync();
 
@@ -57,16 +58,16 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             return currUser.UserHostEvents;
         }
 
-        public async Task UpdateGuestingEvent(GuestDTO currEventGuestDTO)
+        public async Task UpdateGuestingEvent(EventReviewDTO eventReviewDTO)
         {
-            EventEntity currEvent = await entities.Include(p => p.Reviews).SingleAsync(p => p.Id == currEventGuestDTO.EventId);
+            EventEntity currEvent = await entities.Include(p => p.Reviews).SingleAsync(p => p.Id == eventReviewDTO.EventEntityId);
             EventReviewEntity currReview = new()
             {
-                ReviewRanking = currEventGuestDTO.ReviewRanking,
+                ReviewRanking = eventReviewDTO.ReviewRanking,
                 EventEntity = currEvent,
-                EventEntityId = currEventGuestDTO.EventId,
-                UserEntityId = currEventGuestDTO.UserGuestId,
-                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEventGuestDTO.UserGuestId)
+                EventEntityId = eventReviewDTO.EventEntityId,
+                UserEntityId = eventReviewDTO.UserEntityId,
+                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == eventReviewDTO.UserEntityId)
             };
 
             if (currEvent.Reviews.Contains(currReview))
