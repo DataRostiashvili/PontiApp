@@ -62,31 +62,31 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.Delete(currPlace);
         }
 
-        public async Task<List<PlaceHostResponseDTO>> GetAllGuestingPlace(int userGuestId)
+        public async Task<List<PlaceListingResponseDTO>> GetAllGuestingPlace(int userGuestId)
         {
             List<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(userGuestId);
-            List<PlaceHostResponseDTO> guestingPlaceDTOs = _mapper.Map<List<PlaceHostResponseDTO>>(guestingPlaces);
+            List<PlaceListingResponseDTO> guestingPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(guestingPlaces);
 
             return guestingPlaceDTOs;
         }
 
-        public async Task<List<PlaceHostResponseDTO>> GetAllHsotingPlace(int userHostId)
+        public async Task<List<PlaceListingResponseDTO>> GetAllHsotingPlace(int userHostId)
         {
             List<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(userHostId);
-            List<PlaceHostResponseDTO> hostingPlaceDTOs = _mapper.Map<List<PlaceHostResponseDTO>>(hostingPlaces);
+            List<PlaceListingResponseDTO> hostingPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(hostingPlaces);
 
             return hostingPlaceDTOs;
         }
 
-        public async Task<List<PlaceHostResponseDTO>> GetAllPlace()
+        public async Task<List<PlaceListingResponseDTO>> GetAllPlace()
         {
             List<PlaceEntity> allPlace = await _placeRepo.GetAll();
-            List<PlaceHostResponseDTO> allPlaceDTOs = _mapper.Map<List<PlaceHostResponseDTO>>(allPlace);
+            List<PlaceListingResponseDTO> allPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(allPlace);
 
             return allPlaceDTOs;
         }
 
-        public Task<List<PlaceHostResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
+        public Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
         {
             throw new NotImplementedException();
         }

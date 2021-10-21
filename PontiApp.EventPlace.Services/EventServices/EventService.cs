@@ -62,32 +62,32 @@ namespace PontiApp.EventPlace.Services.EventServices
             await _eventRepo.DeleteGuesting(currEventGuestDTO);
         }
 
-        public async Task<List<EventHostResponseDTO>> GetAllEvent()
+        public async Task<List<EventListingResponseDTO>> GetAllEvent()
         {
             List<EventEntity> allEvent = await _eventRepo.GetAll();
-            List<EventHostResponseDTO> allEventDTOs = _mapper.Map<List<EventHostResponseDTO>>(allEvent);
+            List<EventListingResponseDTO> allEventDTOs = _mapper.Map<List<EventListingResponseDTO>>(allEvent);
 
 
             return allEventDTOs;
         }
 
-        public async Task<List<EventHostResponseDTO>> GetAllGuestingEvent(int userGuestId)
+        public async Task<List<EventListingResponseDTO>> GetAllGuestingEvent(int userGuestId)
         {
             List<EventEntity> guestingEvents = await _eventRepo.GetAllGuesting(userGuestId);
-            List<EventHostResponseDTO> guestingEventDTOs = _mapper.Map<List<EventHostResponseDTO>>(guestingEvents);
+            List<EventListingResponseDTO> guestingEventDTOs = _mapper.Map<List<EventListingResponseDTO>>(guestingEvents);
 
             return guestingEventDTOs;
         }
 
-        public async Task<List<EventHostResponseDTO>> GetAllHsotingEvent(int userHostId)
+        public async Task<List<EventListingResponseDTO>> GetAllHsotingEvent(int userHostId)
         {
             List<EventEntity> hostingEvents = await _eventRepo.GetAllHosting(userHostId);
-            List<EventHostResponseDTO> hostingEventDTOs = _mapper.Map<List<EventHostResponseDTO>>(hostingEvents);
+            List<EventListingResponseDTO> hostingEventDTOs = _mapper.Map<List<EventListingResponseDTO>>(hostingEvents);
 
             return hostingEventDTOs;
         }
 
-        public Task<List<EventHostResponseDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO)
+        public Task<List<EventListingResponseDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO)
         {
             throw new NotImplementedException();
         }

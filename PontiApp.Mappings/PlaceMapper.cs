@@ -13,8 +13,10 @@ namespace PontiApp.Mappings
     {
         public PlaceMapper()
         {
-            CreateMap<PlaceHostRequestDTO, PlaceEntity>().ReverseMap();
-            CreateMap<PlaceHostResponseDTO, PlaceEntity>().ReverseMap();
+            CreateMap<PlaceHostRequestDTO, PlaceEntity>();
+            CreateMap<PlaceEntity, PlaceHostResponseDTO>();
+            CreateMap<PlaceEntity, PlaceGuestResponseDTO>();
+            CreateMap<PlaceEntity, PlaceListingResponseDTO>();
         }
     }
 }

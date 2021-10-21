@@ -79,7 +79,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetGuestingPlace/{place}/{guestId}")]
-        public async Task<ActionResult<PlaceHostResponseDTO>> GetGuestingPlace(int placeId, int guestId)
+        public async Task<ActionResult<PlaceGuestResponseDTO>> GetGuestingPlace(int placeId, int guestId)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetHostingPlaces/{userHostId}")]
-        public async Task<ActionResult<IEnumerable<PlaceHostResponseDTO>>> GetHostingPlaces(int userHostId)
+        public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetHostingPlaces(int userHostId)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GuestingPlaces/{userGuestId}")]
-        public async Task<ActionResult<IEnumerable<PlaceGuestRequestDTO>>> GetGuestingPlaces(int userGuestId)
+        public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetGuestingPlaces(int userGuestId)
         {
             try
             {
@@ -169,7 +169,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetAllPlace")]
-        public async Task<ActionResult<IEnumerable<PlaceHostRequestDTO>>> GetAllPlace()
+        public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetAllPlace()
         {
             try
             {

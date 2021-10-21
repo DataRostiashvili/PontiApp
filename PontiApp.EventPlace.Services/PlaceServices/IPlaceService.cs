@@ -17,9 +17,9 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         Task DeleteGuestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO);
         Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId);
         Task<PlaceGuestResponseDTO> GetDetailedGuestingPlace(PlaceGuestRequestDTO placeGuest);
-        Task<List<PlaceHostResponseDTO>> GetAllPlace();
-        Task<List<PlaceHostResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO);
-        Task<List<PlaceHostResponseDTO>> GetAllHsotingPlace(int userHostId);
-        Task<List<PlaceHostResponseDTO>> GetAllGuestingPlace(int userGuestId);
+        Task<List<PlaceListingResponseDTO>> GetAllPlace();
+        Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO);
+        Task<List<PlaceListingResponseDTO>> GetAllHsotingPlace(int userHostId);
+        Task<List<PlaceListingResponseDTO>> GetAllGuestingPlace(int userGuestId);
     }
 }

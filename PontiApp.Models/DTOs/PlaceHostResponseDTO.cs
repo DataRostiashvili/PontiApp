@@ -15,5 +15,7 @@ namespace PontiApp.Models.DTOs
         public int GuestCount { get; set; }
 
         public int ReviewCount { get; set; }
+
+        public int AverageRanking { get; set; }
     }
 }
