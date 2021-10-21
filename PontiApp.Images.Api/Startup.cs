@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PontiApp.Images.Api.RabbitBackgroundService;
 using PontiApp.Images.Api.Utils;
+using PontiApp.Images.Cache.Caching_service;
 using PontiApp.Images.Repository;
 using PontiApp.Images.Services.Generic_Services;
 using PontiApp.Utilities;
@@ -41,6 +42,7 @@ namespace PontiApp.Images.Api
             {
                 options.Configuration = Configuration.GetConnectionString("Redis");
             });
+            services.AddScoped<ICachingService,CachingService>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure (IApplicationBuilder app,IWebHostEnvironment env)

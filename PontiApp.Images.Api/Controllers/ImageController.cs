@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Distributed;
 using PontiApp.Images.Cache;
 using System;
+using PontiApp.Images.Cache.Caching_service;
 
 namespace PontiApp.Images.Api.Controllers
 {
@@ -26,13 +27,14 @@ namespace PontiApp.Images.Api.Controllers
     {
 
         //[FromHeader(Name = "ApiKey")] public string ApiKey { get; set; }
-        private readonly IDistributedCache _cache;
+        
+        private readonly ICachingService _cachingService;
         private readonly IMongoService _service;
 
-        public ImageController(IMongoService service, IDistributedCache cache)
+        public ImageController(IMongoService service,ICachingService cachingService)
         {
-            _cache = cache;
             _service = service;
+            _cachingService = cachingService;
         }
 
         [HttpGet]
@@ -42,11 +44,11 @@ namespace PontiApp.Images.Api.Controllers
         public async Task<ActionResult> Get(string guid)
         {
             var cacheKey = "Get_Profile_Pic";
-            var image = await _cache.GetRecordAsync<List<byte[]>>(cacheKey);
+            var image = await _cachingService.GetRecordAsync<List<byte[]>>(cacheKey);
             if (image is null)
             {
                 image = await _service.GetImage(guid);
-                await _cache.SetRecordAsync<List<byte[]>>(cacheKey, image);
+                await _cachingService.SetRecordAsync<List<byte[]>>(cacheKey, image, TimeSpan.FromMinutes(60), TimeSpan.FromMinutes(30));
             }
             return File(image[0], "image/jpeg");
         }
@@ -56,11 +58,11 @@ namespace PontiApp.Images.Api.Controllers
         public async Task<IActionResult> Get(string guid, int id)
         {
             var cacheKey = "GET_IMAGE_BY_INDEX";
-            var image = await _cache.GetRecordAsync<List<byte[]>>(cacheKey);
+            var image =await _cachingService.GetRecordAsync<List<byte[]>>(cacheKey);
             if (image is null)
             {
                 image = await _service.GetImage(guid);
-                await _cache.SetRecordAsync<List<byte[]>>(cacheKey, image);
+                await _cachingService.SetRecordAsync<List<byte[]>>(cacheKey, image, TimeSpan.FromMinutes(60), TimeSpan.FromMinutes(30));
             }
             return File(image[id], "image/jpeg");
         }
