@@ -26,12 +26,12 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             _placeRepo = placeRepo;
         }
 
-        public async Task AddGusestingPlace(PlaceGuestDTO currPlaceGuestDTO)
+        public async Task AddGusestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
             await _placeRepo.InsertGuesting(currPlaceGuestDTO);
         }
 
-        public async Task AddHostingPlace(PlaceRequestDTO newPlaceDTO)
+        public async Task AddHostingPlace(PlaceHostRequestDTO newPlaceDTO)
         {
             PlaceEntity newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
             await _placeRepo.Insert(newPlace);
@@ -51,7 +51,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         //    }
         //}
 
-        public async Task DeleteGuestingPlace(PlaceGuestDTO currPlaceGuestDTO)
+        public async Task DeleteGuestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
             await _placeRepo.DeleteGuesting(currPlaceGuestDTO);
         }
@@ -62,39 +62,45 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.Delete(currPlace);
         }
 
-        public async Task<List<PlaceResponseDTO>> GetAllGuestingPlace(int userGuestId)
+        public async Task<List<PlaceHostResponseDTO>> GetAllGuestingPlace(int userGuestId)
         {
             List<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(userGuestId);
-            List<PlaceResponseDTO> guestingPlaceDTOs = _mapper.Map<List<PlaceResponseDTO>>(guestingPlaces);
+            List<PlaceHostResponseDTO> guestingPlaceDTOs = _mapper.Map<List<PlaceHostResponseDTO>>(guestingPlaces);
 
             return guestingPlaceDTOs;
         }
 
-        public async Task<List<PlaceResponseDTO>> GetAllHsotingPlace(int userHostId)
+        public async Task<List<PlaceHostResponseDTO>> GetAllHsotingPlace(int userHostId)
         {
             List<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(userHostId);
-            List<PlaceResponseDTO> hostingPlaceDTOs = _mapper.Map<List<PlaceResponseDTO>>(hostingPlaces);
+            List<PlaceHostResponseDTO> hostingPlaceDTOs = _mapper.Map<List<PlaceHostResponseDTO>>(hostingPlaces);
 
             return hostingPlaceDTOs;
         }
 
-        public async Task<List<PlaceResponseDTO>> GetAllPlace()
+        public async Task<List<PlaceHostResponseDTO>> GetAllPlace()
         {
             List<PlaceEntity> allPlace = await _placeRepo.GetAll();
-            List<PlaceResponseDTO> allPlaceDTOs = _mapper.Map<List<PlaceResponseDTO>>(allPlace);
+            List<PlaceHostResponseDTO> allPlaceDTOs = _mapper.Map<List<PlaceHostResponseDTO>>(allPlace);
 
             return allPlaceDTOs;
         }
 
-        public Task<List<PlaceResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
+        public Task<List<PlaceHostResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<PlaceResponseDTO> GetSinglePlace(int PlaceId)
+        public async Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(PlaceId);
-            return _mapper.Map<PlaceResponseDTO>(currPlace);
+            PlaceEntity currPlace = await _placeRepo.GetByID(placeId);
+            return _mapper.Map<PlaceHostResponseDTO>(currPlace);
+        }
+
+        
+        public async Task<PlaceGuestResponseDTO> GetDetailedGuestingPlace(PlaceGuestRequestDTO placeGuest)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO)
@@ -102,7 +108,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.UpdateGuestingPlace(placeReviewDTO);
         }
 
-        public async Task UpdateHostingPlace(PlaceRequestDTO currPlaceDTO)
+        public async Task UpdateHostingPlace(PlaceHostRequestDTO currPlaceDTO)
         {
             PlaceEntity currPlace =  _mapper.Map<PlaceEntity>(currPlaceDTO);
             await _placeRepo.Update(currPlace);

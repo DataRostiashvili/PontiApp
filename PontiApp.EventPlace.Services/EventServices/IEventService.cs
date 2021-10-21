@@ -9,17 +9,18 @@ namespace PontiApp.EventPlace.Services.EventServices
 {
     public interface IEventService
     {
-        Task AddHostingEvent(EventRequestDTO newEventDTO);
-        Task AddGusestingEvent(EventGuestDTO currEventGuestDTO);
-        Task UpdateHostingEvent(EventRequestDTO currEventHostDTO);
+        Task AddHostingEvent(EventHostRequestDTO newEventDTO);
+        Task AddGusestingEvent(EventGuestRequestDTO currEventGuestDTO);
+        Task UpdateHostingEvent(EventHostRequestDTO currEventHostDTO);
         Task UpdateGuestingEvent(EventReviewDTO eventReviewDTO);
         Task DeleteHostingEvent(int hostEventId);
-        Task DeleteGuestingEvent(EventGuestDTO currEventGuestDTO);
-        Task<EventResponseDTO> GetSingleEvent(int eventId);
-        Task<List<EventResponseDTO>> GetAllEvent();
-        Task<List<EventResponseDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO);
-        Task<List<EventResponseDTO>> GetAllHsotingEvent(int userHostId);
-        Task<List<EventResponseDTO>> GetAllGuestingEvent(int userGuestId);
+        Task DeleteGuestingEvent(EventGuestRequestDTO currEventGuestDTO);
+        Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId);
+        Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest);
+        Task<List<EventHostResponseDTO>> GetAllEvent();
+        Task<List<EventHostResponseDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO);
+        Task<List<EventHostResponseDTO>> GetAllHsotingEvent(int userHostId);
+        Task<List<EventHostResponseDTO>> GetAllGuestingEvent(int userGuestId);
 
     }
 }

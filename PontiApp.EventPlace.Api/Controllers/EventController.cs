@@ -22,7 +22,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreateEvent))]
-        public async Task<ActionResult> CreateEvent([FromBody] EventRequestDTO eventDTO)
+        public async Task<ActionResult> CreateEvent([FromBody] EventHostRequestDTO eventDTO)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateEvent))]
-        public async Task<ActionResult> UpdateEvent([FromBody] EventRequestDTO hostEventDTO)
+        public async Task<ActionResult> UpdateEvent([FromBody] EventHostRequestDTO hostEventDTO)
         {
             try
             {
@@ -65,12 +65,30 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("GetEvent/{id}")]
-        public async Task<ActionResult<EventResponseDTO>> GetEvent(int id)
+        [HttpGet("GetDetailedHostingEvent/{id}")]
+        public async Task<ActionResult<EventHostResponseDTO>> GetDetailedHostingEvent(int id)
         {
             try
             {
-                return Ok(await _eventService.GetSingleEvent(id));
+                return Ok(await _eventService.GetDetailedHostingEvent(id));
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("GetGuestingEvent/{eventId}/{guestId}")]
+        public async Task<ActionResult<EventGuestResponseDTO>> GetGuestingEvent(int eventId, int guestId)
+        {
+            try
+            {
+                EventGuestRequestDTO guestRequestDTO = new EventGuestRequestDTO()
+                {
+                    EventId = eventId,
+                    UserGuestId = guestId
+                };
+                return Ok(await _eventService.GetDetailedGuestingEvent(guestRequestDTO));
             }
             catch (Exception e)
             {
@@ -79,7 +97,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetHostingEvents/{userHostId}")]
-        public async Task<ActionResult<IEnumerable<EventResponseDTO>>> GetHostingEvents(int userHostId)
+        public async Task<ActionResult<IEnumerable<EventHostResponseDTO>>> GetHostingEvents(int userHostId)
         {
             try
             {
@@ -93,7 +111,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(AddInGuestingEvents))]
-        public async Task<ActionResult> AddInGuestingEvents([FromBody] EventGuestDTO guestEventDTO)
+        public async Task<ActionResult> AddInGuestingEvents([FromBody] EventGuestRequestDTO guestEventDTO)
         {
             try
             {
@@ -123,7 +141,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(RemoveFromGuestingEvents))]
-        public async Task<ActionResult> RemoveFromGuestingEvents([FromBody] EventGuestDTO guestEventDTO)
+        public async Task<ActionResult> RemoveFromGuestingEvents([FromBody] EventGuestRequestDTO guestEventDTO)
         {
             try
             {
@@ -137,7 +155,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetGuestingEvents/{userGuestId}")]
-        public async Task<ActionResult<IEnumerable<EventResponseDTO>>> GetGuestingEvents(int userGuestId)
+        public async Task<ActionResult<IEnumerable<EventGuestResponseDTO>>> GetGuestingEvents(int userGuestId)
         {
             try
             {
@@ -150,7 +168,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetAllEvent")]
-        public async Task<ActionResult<IEnumerable<EventResponseDTO>>> GetAllEvent()
+        public async Task<ActionResult<IEnumerable<EventHostResponseDTO>>> GetAllEvent()
         {
             try
             {

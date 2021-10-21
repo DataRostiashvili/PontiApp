@@ -18,7 +18,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
         }
 
-        public async Task InsertGuesting(EventGuestDTO currEventGuestDTO)
+        public async Task InsertGuesting(EventGuestRequestDTO currEventGuestDTO)
         {
             EventEntity currEvent = await GetByID(currEventGuestDTO.EventId);
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEventGuestDTO.UserGuestId);
@@ -33,7 +33,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteGuesting(EventGuestDTO currEventGuestDTO)
+        public async Task DeleteGuesting(EventGuestRequestDTO currEventGuestDTO)
         {
             EventEntity currEvent = await GetByID(currEventGuestDTO.EventId);
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEventGuestDTO.UserGuestId);

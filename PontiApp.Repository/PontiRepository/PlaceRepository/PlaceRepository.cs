@@ -18,7 +18,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         }
         
-        public async Task InsertGuesting(PlaceGuestDTO currPlaceGuestDTO)
+        public async Task InsertGuesting(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
             PlaceEntity currPlace = await GetByID(currPlaceGuestDTO.PlaceId);
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlaceGuestDTO.UserGuestId);
@@ -33,7 +33,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteGuesting(PlaceGuestDTO currPlaceGuestDTO)
+        public async Task DeleteGuesting(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
             PlaceEntity currPlace = await GetByID(currPlaceGuestDTO.PlaceId);
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlace.UserEntityId);
