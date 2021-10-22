@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PontiApp.Data.DbContexts;
+using PontiApp.EventEvent.Services.EventCategoryServices;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Ponti.Repository.PontiRepository;
@@ -18,12 +19,14 @@ namespace PontiApp.EventPlace.Services.EventServices
         private readonly IMapper _mapper;
         private readonly EventDTOValidator _validator;
         private readonly EventRepository _eventRepo;
+        private readonly IEventCategoryService _eventCategoryService;
 
-        public EventService(IMapper mapper, EventDTOValidator validator, EventRepository eventRepo)
+        public EventService(IMapper mapper, EventDTOValidator validator, EventRepository eventRepo, IEventCategoryService eventCategoryService)
         {
             _mapper = mapper;
             _validator = validator;
             _eventRepo = eventRepo;
+            _eventCategoryService = eventCategoryService;
         }
 
         public async Task AddHostingEvent(EventHostRequestDTO newEventDTO)

@@ -9,8 +9,8 @@ namespace PontiApp.Models.DTOs
 {
     public class PlaceHostRequestDTO : PontiBaseDTO
     {
-        public List<WeekScheduleDTO> WeekSchedules { get; set; }
+        public List<WeekScheduleDTO> WeekSchedule { get; set; }
 
-        public List<PlaceCategoryDTO> PlaceCategoryDTOs { get; set; }
+        public List<PlaceCategoryDTO> PlaceCategories { get; set; }
     }
 }
