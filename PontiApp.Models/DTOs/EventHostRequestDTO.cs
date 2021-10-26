@@ -11,6 +11,8 @@ namespace PontiApp.Models.DTOs
     {
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+
+        //From front side if this field is null,it must not be passed to json stirng
         public int? PlaceEntityId { get; set; }
         public List<EventCategoryDTO> EventCategories { get; set; }
     }
