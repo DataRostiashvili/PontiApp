@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PontiApp.EventPlace.Services.EventServices;
 using PontiApp.Models.DTOs;
+using PontiApp.Models.DTOs.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -178,6 +179,18 @@ namespace PontiApp.EventPlace.Api.Controllers
             {
                 throw;
             }
+        }
+
+        [HttpGet("SearchEvent")]
+        public async Task<IActionResult> SearchEvent(SearchBaseDTO searchDto)
+        {
+            if (searchDto.PontiType != PontiTypeEnum.Event)
+            {
+                return BadRequest();
+            }
+            var searchResult = await _eventService.GetSearchedEvents(searchDto);
+
+            return Ok(searchResult);
         }
     }
 }

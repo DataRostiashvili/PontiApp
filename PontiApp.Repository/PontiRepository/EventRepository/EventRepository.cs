@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PontiApp.Data.DbContexts;
 using PontiApp.Models.DTOs;
+using PontiApp.Models.DTOs.Enums;
 using PontiApp.Models.Entities;
 using PontiApp.Ponti.Repository.BaseRepository;
 using System;
@@ -77,6 +78,51 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
             currEvent.Reviews.Add(currReview);
             await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<EventEntity>> GetEventSearchResult(SearchBaseDTO searchBaseDTO)
+        {
+
+            var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
+            var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
+
+
+            var events = await (from @event in _applicationDbContext.Events
+                         where searchForEveryTitle ? true : @event.Name.Contains(searchBaseDTO.SearchKeyWord)
+                         where searchForEveryCategory ? true : EventHasCategories(@event.EventCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id))
+                         where @event.EndTime < GetDeadline(searchBaseDTO.Time)
+                         select @event).ToListAsync();
+
+            return events;
+        }
+
+        private bool EventHasCategories(IEnumerable<int> eventCategoryIds, IEnumerable<int> searchEventCategoryIds)
+        {
+            return !searchEventCategoryIds.Except(eventCategoryIds).Any();
+        }
+
+        private DateTime GetDeadline(TimeFilterEnum searchedEventTime)
+        {
+            DateTime deadline;
+            switch (searchedEventTime)
+            {
+                case TimeFilterEnum.today:
+                    deadline = DateTime.Today.AddDays(1);
+                    break;
+                case TimeFilterEnum.tomorrow:
+                    deadline = DateTime.Today.AddDays(2);
+                    break;
+                case TimeFilterEnum.currentWeek:
+                    deadline = DateTime.Today.AddDays(7);
+                    break;
+                case TimeFilterEnum.upcomming:
+                    deadline = DateTime.MaxValue;
+                    break;
+                default:
+                    deadline = DateTime.MaxValue;
+                    break;
+            }
+            return deadline;
         }
     }
 }
