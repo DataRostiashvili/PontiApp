@@ -1,11 +1,31 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PontiApp.Data.DbContexts;
+using PontiApp.EventEvent.Services.EventCategoryServices;
+using PontiApp.EventPlace.Services.CategoryServices;
+using PontiApp.EventPlace.Services.EventServices;
+using PontiApp.EventPlace.Services.PlaceCategoryServices;
+using PontiApp.EventPlace.Services.UserServices;
+using PontiApp.EventPlace.Services.WeekDayServices;
+using PontiApp.Mappings;
+using PontiApp.Models;
+using PontiApp.Models.Entities;
+using PontiApp.PlacePlace.Services.PlaceServices;
+using PontiApp.Ponti.Repository.BaseRepository;
+using PontiApp.Ponti.Repository.PontiRepository;
+using PontiApp.Ponti.Repository.PontiRepository.BaseRepository;
+using PontiApp.Ponti.Repository.PontiRepository.EventRepository;
+using PontiApp.Validators.EntityValidators;
+using System;
+using System.Reflection;
 using System;
 using PontiApp.Utilities;
 using System.IO;
@@ -33,9 +53,43 @@ namespace PontiApp.EventPlace.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.EventPlace.Api", Version = "v1" });
                 
             });
+
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IPlaceService, PlaceService>();
+            services.AddScoped<IPlaceCategoryService, PlaceCategoryService>();
+            services.AddScoped<IEventCategoryService, EventCategoryService>();
+            services.AddScoped<IWeekDayService, WeekDayService>();
+            services.AddScoped<BaseRepository<UserEntity>>();
+            services.AddScoped<BaseRepository<CategoryEntity>>();
+            services.AddScoped<BaseRepository<PlaceCategory>>();
+            services.AddScoped<BaseRepository<EventCategory>>();
+            services.AddScoped<BaseRepository<WeekEntity>>();
+            services.AddScoped<EventRepository>();
+            services.AddScoped<PlaceRepository>();
+            services.AddScoped<EventDTOValidator>();
+            services.AddScoped<PlaceDTOValidator>();
+
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("DbConnection"));
+            });
+
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(UserMapper));
+            services.AddAutoMapper(typeof(EventMapper));
+            services.AddAutoMapper(typeof(PlaceMapper));
+            services.AddAutoMapper(typeof(CategoryMapper));
+            services.AddAutoMapper(typeof(WeekDayMapper));
+            services.AddAutoMapper(typeof(ReviewMapper));
             services.AddCustomAuth();
 
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,10 +1,12 @@
 ﻿namespace PontiApp.Models.Entities
 {
-    public class EventPicEntity
+    public class EventPicEntity : BaseEntity
     {
         public int EventPicEntityId { get; set; }
-        public string Uri { get; set; }
+        public string MongoKey { get; set; }
 
-        public EventEntity EventEntity { get; set; }   
+        public int EventEntityId { get; set; }
+        public EventEntity EventEntity { get; set; }
+        
     }
 }
