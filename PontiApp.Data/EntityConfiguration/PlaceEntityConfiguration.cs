@@ -5,18 +5,29 @@ using PontiApp.Models.Entities;
 namespace PontiApp.Data.EntityConfiguration
 {
     public class PlaceEntityConfiguration : IEntityTypeConfiguration<PlaceEntity>
-    { 
+    {
 
         public void Configure(EntityTypeBuilder<PlaceEntity> builder)
         {
             builder.HasMany(pl => pl.WeekSchedule)
-                    .WithOne(w => w.Place);
+                    .WithOne(w => w.Place)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(pl => pl.PictureUries)
-                    .WithOne(pic => pic.PlaceEntity);
+            builder.HasMany(pl => pl.Pictures)
+                    .WithOne(pic => pic.PlaceEntity)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(pl => pl.PlaceReviews)
-                    .WithOne(r => r.PlaceEntity);
+            builder.HasMany(pl => pl.Reviews)
+                    .WithOne(r => r.PlaceEntity)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Navigation(x => x.PlaceCategories).AutoInclude();
+            builder.Navigation(x => x.WeekSchedule).AutoInclude();
+            builder.Navigation(x => x.Reviews).AutoInclude();
+
+            builder.Property<bool>("IsDeleted");
+            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+
         }
     }
 }

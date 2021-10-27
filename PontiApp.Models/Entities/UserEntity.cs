@@ -2,10 +2,8 @@
 
 namespace PontiApp.Models.Entities
 {
-    public class UserEntity
+    public class UserEntity : BaseEntity
     {
-        public int UserEntityId { get; set; }
-
         public string Name { get; set; }
 
         public string Surename { get; set; }
@@ -21,11 +19,21 @@ namespace PontiApp.Models.Entities
         public int TotalReviewerCount { get; set; }
 
         public bool IsVerifiedUser { get; set; }
+        public string MongoKey { get; set; }
 
-        public ProfilePicEntity PictureUri { get; set; }
+        public bool IsActive { get; set; }
 
-        public ICollection<UserGuestEventEntity> UserGuestEvents { get; set; }
+        //One to Many
+        public List<EventEntity> UserHostEvents { get; set; }
+        public List<PlaceEntity> UserHostPlaces { get; set; }
+        public List<PlaceReviewEntity> GuestingPlaceReviews { get; set; }
+        public List<EventReviewEntity> GuestingEventReviews { get; set; }
 
-        public ICollection<UserHostEventEntity> UserHostEvents { get; set; }
+        //Many to many
+        public List<UserGuestEvent> UserGuestEvents { get; set; }
+        public List<UserGuestPlace> UserGuestPlaces { get; set; }
+        
+
+
     }
 }

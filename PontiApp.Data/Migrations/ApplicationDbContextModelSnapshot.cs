@@ -19,9 +19,27 @@ namespace PontiApp.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("PontiApp.Models.Entities.CategoryEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Cetegory")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("PontiApp.Models.Entities.EventEntity", b =>
                 {
-                    b.Property<int>("EventEntityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -35,6 +53,9 @@ namespace PontiApp.Data.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Mail")
                         .HasColumnType("text");
 
@@ -44,60 +65,111 @@ namespace PontiApp.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
+                    b.Property<int?>("PlaceEntityId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("TicketBuyUrl")
                         .HasColumnType("text");
 
-                    b.HasKey("EventEntityId");
+                    b.Property<int>("UserEntityId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlaceEntityId");
+
+                    b.HasIndex("UserEntityId");
 
                     b.ToTable("Events");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.EventPicEntity", b =>
                 {
-                    b.Property<int>("EventPicEntityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("EventEntityId")
+                    b.Property<int>("EventEntityId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Uri")
+                    b.Property<int>("EventPicEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MongoKey")
                         .HasColumnType("text");
 
-                    b.HasKey("EventPicEntityId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EventEntityId");
 
-                    b.ToTable("EventPicEntity");
+                    b.ToTable("EventPics");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.EventReviewEntity", b =>
                 {
-                    b.Property<int>("EventReviewEntityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("EventEntityId")
+                    b.Property<int>("EventEntityId")
                         .HasColumnType("integer");
+
+                    b.Property<int>("EventReviewEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<float>("ReviewRanking")
                         .HasColumnType("real");
 
-                    b.HasKey("EventReviewEntityId");
+                    b.Property<int>("UserEntityId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("EventEntityId");
 
-                    b.ToTable("EventReviewEntity");
+                    b.HasIndex("UserEntityId");
+
+                    b.ToTable("EventReviews");
+                });
+
+            modelBuilder.Entity("PontiApp.Models.Entities.PlaceCategory", b =>
+                {
+                    b.Property<int>("PlaceEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CategoryEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("PlaceEntityId", "CategoryEntityId");
+
+                    b.HasIndex("CategoryEntityId");
+
+                    b.ToTable("PlaceCategories");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.PlaceEntity", b =>
                 {
-                    b.Property<int>("PlaceEntityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -108,8 +180,8 @@ namespace PontiApp.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int>("EventRef")
-                        .HasColumnType("integer");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Mail")
                         .HasColumnType("text");
@@ -123,78 +195,73 @@ namespace PontiApp.Data.Migrations
                     b.Property<string>("TicketBuyUrl")
                         .HasColumnType("text");
 
-                    b.HasKey("PlaceEntityId");
+                    b.Property<int>("UserEntityId")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("EventRef")
-                        .IsUnique();
+                    b.HasKey("Id");
 
-                    b.ToTable("PlaceEntity");
+                    b.HasIndex("UserEntityId");
+
+                    b.ToTable("Places");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.PlacePicEntity", b =>
                 {
-                    b.Property<int>("PlacePicEntityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("PlaceEntityId")
-                        .HasColumnType("integer");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("Uri")
+                    b.Property<string>("MongoKey")
                         .HasColumnType("text");
 
-                    b.HasKey("PlacePicEntityId");
+                    b.Property<int>("PlaceEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlacePicEntityId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("PlaceEntityId");
 
-                    b.ToTable("PlacePicEntity");
+                    b.ToTable("PlacePics");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.PlaceReviewEntity", b =>
                 {
-                    b.Property<int>("PlaceReviewEntityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("PlaceEntityId")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("PlaceEntityId")
                         .HasColumnType("integer");
 
                     b.Property<float>("ReviewRanking")
                         .HasColumnType("real");
 
-                    b.HasKey("PlaceReviewEntityId");
+                    b.Property<int>("UserEntityId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("PlaceEntityId");
 
-                    b.ToTable("PlaceReviewEntity");
-                });
+                    b.HasIndex("UserEntityId");
 
-            modelBuilder.Entity("PontiApp.Models.Entities.ProfilePicEntity", b =>
-                {
-                    b.Property<int>("ProfilePicEntityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Uri")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserRef")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ProfilePicEntityId");
-
-                    b.HasIndex("UserRef")
-                        .IsUnique();
-
-                    b.ToTable("ProfilePicEntity");
+                    b.ToTable("PlaceReviews");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.UserEntity", b =>
                 {
-                    b.Property<int>("UserEntityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -205,10 +272,19 @@ namespace PontiApp.Data.Migrations
                     b.Property<float>("AverageRanking")
                         .HasColumnType("real");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsVerifiedUser")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Mail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MongoKey")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -223,54 +299,56 @@ namespace PontiApp.Data.Migrations
                     b.Property<int>("TotalReviewerCount")
                         .HasColumnType("integer");
 
-                    b.HasKey("UserEntityId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PontiApp.Models.Entities.UserGuestEventEntity", b =>
+            modelBuilder.Entity("PontiApp.Models.Entities.UserGuestEvent", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<int>("EventEntityId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserEntityId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("PlaceEntityId")
+                    b.Property<int>("Id")
                         .HasColumnType("integer");
 
-                    b.HasKey("EventId", "UserId");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
-                    b.HasIndex("PlaceEntityId");
+                    b.HasKey("EventEntityId", "UserEntityId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserEntityId");
 
                     b.ToTable("UserGuestEvents");
                 });
 
-            modelBuilder.Entity("PontiApp.Models.Entities.UserHostEventEntity", b =>
+            modelBuilder.Entity("PontiApp.Models.Entities.UserGuestPlace", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<int>("PlaceEntityId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserEntityId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("PlaceEntityId")
+                    b.Property<int>("Id")
                         .HasColumnType("integer");
 
-                    b.HasKey("EventId", "UserId");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
-                    b.HasIndex("PlaceEntityId");
+                    b.HasKey("PlaceEntityId", "UserEntityId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserEntityId");
 
-                    b.ToTable("UserHostEvents");
+                    b.ToTable("UserGuestPlaces");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.WeekEntity", b =>
                 {
-                    b.Property<int>("WeekEntityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -281,24 +359,74 @@ namespace PontiApp.Data.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("PlaceEntityId")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsWorking")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("PlaceEntityId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("timestamp without time zone");
 
-                    b.HasKey("WeekEntityId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PlaceEntityId");
 
-                    b.ToTable("WeekEntity");
+                    b.ToTable("WeekDays");
+                });
+
+            modelBuilder.Entity("PontiApp.Models.EventCategory", b =>
+                {
+                    b.Property<int>("EventEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CategoryEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("EventEntityId", "CategoryEntityId");
+
+                    b.HasIndex("CategoryEntityId");
+
+                    b.ToTable("EventCategories");
+                });
+
+            modelBuilder.Entity("PontiApp.Models.Entities.EventEntity", b =>
+                {
+                    b.HasOne("PontiApp.Models.Entities.PlaceEntity", "PlaceEntity")
+                        .WithMany("PlaceEvents")
+                        .HasForeignKey("PlaceEntityId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("PontiApp.Models.Entities.UserEntity", "UserEntity")
+                        .WithMany("UserHostEvents")
+                        .HasForeignKey("UserEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PlaceEntity");
+
+                    b.Navigation("UserEntity");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.EventPicEntity", b =>
                 {
                     b.HasOne("PontiApp.Models.Entities.EventEntity", "EventEntity")
-                        .WithMany("PictureUries")
-                        .HasForeignKey("EventEntityId");
+                        .WithMany("Pictures")
+                        .HasForeignKey("EventEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EventEntity");
                 });
@@ -306,28 +434,59 @@ namespace PontiApp.Data.Migrations
             modelBuilder.Entity("PontiApp.Models.Entities.EventReviewEntity", b =>
                 {
                     b.HasOne("PontiApp.Models.Entities.EventEntity", "EventEntity")
-                        .WithMany("EventReviews")
-                        .HasForeignKey("EventEntityId");
+                        .WithMany("Reviews")
+                        .HasForeignKey("EventEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("EventEntity");
-                });
-
-            modelBuilder.Entity("PontiApp.Models.Entities.PlaceEntity", b =>
-                {
-                    b.HasOne("PontiApp.Models.Entities.EventEntity", "EventEntity")
-                        .WithOne("Place")
-                        .HasForeignKey("PontiApp.Models.Entities.PlaceEntity", "EventRef")
+                    b.HasOne("PontiApp.Models.Entities.UserEntity", "UserEntity")
+                        .WithMany("GuestingEventReviews")
+                        .HasForeignKey("UserEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("EventEntity");
+
+                    b.Navigation("UserEntity");
+                });
+
+            modelBuilder.Entity("PontiApp.Models.Entities.PlaceCategory", b =>
+                {
+                    b.HasOne("PontiApp.Models.Entities.CategoryEntity", "categoryEntity")
+                        .WithMany("PlaceCategories")
+                        .HasForeignKey("CategoryEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PontiApp.Models.Entities.PlaceEntity", "placeEntity")
+                        .WithMany("PlaceCategories")
+                        .HasForeignKey("PlaceEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("categoryEntity");
+
+                    b.Navigation("placeEntity");
+                });
+
+            modelBuilder.Entity("PontiApp.Models.Entities.PlaceEntity", b =>
+                {
+                    b.HasOne("PontiApp.Models.Entities.UserEntity", "HostUser")
+                        .WithMany("UserHostPlaces")
+                        .HasForeignKey("UserEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HostUser");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.PlacePicEntity", b =>
                 {
                     b.HasOne("PontiApp.Models.Entities.PlaceEntity", "PlaceEntity")
-                        .WithMany("PictureUries")
-                        .HasForeignKey("PlaceEntityId");
+                        .WithMany("Pictures")
+                        .HasForeignKey("PlaceEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("PlaceEntity");
                 });
@@ -335,111 +494,136 @@ namespace PontiApp.Data.Migrations
             modelBuilder.Entity("PontiApp.Models.Entities.PlaceReviewEntity", b =>
                 {
                     b.HasOne("PontiApp.Models.Entities.PlaceEntity", "PlaceEntity")
-                        .WithMany("PlaceReviews")
-                        .HasForeignKey("PlaceEntityId");
-
-                    b.Navigation("PlaceEntity");
-                });
-
-            modelBuilder.Entity("PontiApp.Models.Entities.ProfilePicEntity", b =>
-                {
-                    b.HasOne("PontiApp.Models.Entities.UserEntity", "UserEntity")
-                        .WithOne("PictureUri")
-                        .HasForeignKey("PontiApp.Models.Entities.ProfilePicEntity", "UserRef")
+                        .WithMany("Reviews")
+                        .HasForeignKey("PlaceEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("PontiApp.Models.Entities.UserEntity", "UserEntity")
+                        .WithMany("GuestingPlaceReviews")
+                        .HasForeignKey("UserEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PlaceEntity");
 
                     b.Navigation("UserEntity");
                 });
 
-            modelBuilder.Entity("PontiApp.Models.Entities.UserGuestEventEntity", b =>
+            modelBuilder.Entity("PontiApp.Models.Entities.UserGuestEvent", b =>
                 {
-                    b.HasOne("PontiApp.Models.Entities.EventEntity", "Event")
-                        .WithMany("UserGuestEvents")
-                        .HasForeignKey("EventId")
+                    b.HasOne("PontiApp.Models.Entities.EventEntity", "EventEntity")
+                        .WithMany("UserGuests")
+                        .HasForeignKey("EventEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PontiApp.Models.Entities.PlaceEntity", null)
+                    b.HasOne("PontiApp.Models.Entities.UserEntity", "UserEntity")
                         .WithMany("UserGuestEvents")
-                        .HasForeignKey("PlaceEntityId");
-
-                    b.HasOne("PontiApp.Models.Entities.UserEntity", "User")
-                        .WithMany("UserGuestEvents")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Event");
+                    b.Navigation("EventEntity");
 
-                    b.Navigation("User");
+                    b.Navigation("UserEntity");
                 });
 
-            modelBuilder.Entity("PontiApp.Models.Entities.UserHostEventEntity", b =>
+            modelBuilder.Entity("PontiApp.Models.Entities.UserGuestPlace", b =>
                 {
-                    b.HasOne("PontiApp.Models.Entities.EventEntity", "Event")
-                        .WithMany("UserHostEvents")
-                        .HasForeignKey("EventId")
+                    b.HasOne("PontiApp.Models.Entities.PlaceEntity", "PlaceEntity")
+                        .WithMany("UserGuests")
+                        .HasForeignKey("PlaceEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PontiApp.Models.Entities.PlaceEntity", null)
-                        .WithMany("UserHostEvents")
-                        .HasForeignKey("PlaceEntityId");
-
-                    b.HasOne("PontiApp.Models.Entities.UserEntity", "User")
-                        .WithMany("UserHostEvents")
-                        .HasForeignKey("UserId")
+                    b.HasOne("PontiApp.Models.Entities.UserEntity", "UserEntity")
+                        .WithMany("UserGuestPlaces")
+                        .HasForeignKey("UserEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Event");
+                    b.Navigation("PlaceEntity");
 
-                    b.Navigation("User");
+                    b.Navigation("UserEntity");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.WeekEntity", b =>
                 {
                     b.HasOne("PontiApp.Models.Entities.PlaceEntity", "Place")
                         .WithMany("WeekSchedule")
-                        .HasForeignKey("PlaceEntityId");
+                        .HasForeignKey("PlaceEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Place");
+                });
+
+            modelBuilder.Entity("PontiApp.Models.EventCategory", b =>
+                {
+                    b.HasOne("PontiApp.Models.Entities.CategoryEntity", "categoryEntity")
+                        .WithMany("EventsCategories")
+                        .HasForeignKey("CategoryEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PontiApp.Models.Entities.EventEntity", "eventEntity")
+                        .WithMany("EventCategories")
+                        .HasForeignKey("EventEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("categoryEntity");
+
+                    b.Navigation("eventEntity");
+                });
+
+            modelBuilder.Entity("PontiApp.Models.Entities.CategoryEntity", b =>
+                {
+                    b.Navigation("EventsCategories");
+
+                    b.Navigation("PlaceCategories");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.EventEntity", b =>
                 {
-                    b.Navigation("EventReviews");
+                    b.Navigation("EventCategories");
 
-                    b.Navigation("PictureUries");
+                    b.Navigation("Pictures");
 
-                    b.Navigation("Place");
+                    b.Navigation("Reviews");
 
-                    b.Navigation("UserGuestEvents");
-
-                    b.Navigation("UserHostEvents");
+                    b.Navigation("UserGuests");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.PlaceEntity", b =>
                 {
-                    b.Navigation("PictureUries");
+                    b.Navigation("Pictures");
 
-                    b.Navigation("PlaceReviews");
+                    b.Navigation("PlaceCategories");
 
-                    b.Navigation("UserGuestEvents");
+                    b.Navigation("PlaceEvents");
 
-                    b.Navigation("UserHostEvents");
+                    b.Navigation("Reviews");
+
+                    b.Navigation("UserGuests");
 
                     b.Navigation("WeekSchedule");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.UserEntity", b =>
                 {
-                    b.Navigation("PictureUri");
+                    b.Navigation("GuestingEventReviews");
+
+                    b.Navigation("GuestingPlaceReviews");
 
                     b.Navigation("UserGuestEvents");
 
+                    b.Navigation("UserGuestPlaces");
+
                     b.Navigation("UserHostEvents");
+
+                    b.Navigation("UserHostPlaces");
                 });
 #pragma warning restore 612, 618
         }
