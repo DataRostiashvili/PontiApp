@@ -26,13 +26,12 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             _placeRepo = placeRepo;
         }
 
-        public async Task AddGusestingPlace(GuestDTO currPlaceGuestDTO)
+        public async Task AddGusestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceId);
-            await _placeRepo.InsertGuesting(currPlace, currPlaceGuestDTO.UserGuestId);
+            await _placeRepo.InsertGuesting(currPlaceGuestDTO);
         }
 
-        public async Task AddHostingPlace(PlaceRequestDTO newPlaceDTO)
+        public async Task AddHostingPlace(PlaceHostRequestDTO newPlaceDTO)
         {
             PlaceEntity newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
             await _placeRepo.Insert(newPlace);
@@ -52,59 +51,64 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         //    }
         //}
 
-        public async Task DeleteGuestingPlace(GuestDTO currPlaceGuestDTO)
+        public async Task DeleteGuestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceGuestDTO.PlaceId);
-            await _placeRepo.DeleteGuesting(currPlace, currPlaceGuestDTO.UserGuestId);
+            await _placeRepo.DeleteGuesting(currPlaceGuestDTO);
         }
 
-        public async Task DeleteHostingPlace(HostDTO currPlaceHostDTO)
+        public async Task DeleteHostingPlace(int hostPlaceId)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(currPlaceHostDTO.PlaceId);
+            PlaceEntity currPlace = await _placeRepo.GetByID(hostPlaceId);
             await _placeRepo.Delete(currPlace);
         }
 
-        public async Task<List<PlaceResponseDTO>> GetAllGuestingPlace(int userGuestId)
+        public async Task<List<PlaceListingResponseDTO>> GetAllGuestingPlace(int userGuestId)
         {
             List<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(userGuestId);
-            List<PlaceResponseDTO> guestingPlaceDTOs = _mapper.Map<List<PlaceResponseDTO>>(guestingPlaces);
+            List<PlaceListingResponseDTO> guestingPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(guestingPlaces);
 
             return guestingPlaceDTOs;
         }
 
-        public async Task<List<PlaceResponseDTO>> GetAllHsotingPlace(int userHostId)
+        public async Task<List<PlaceListingResponseDTO>> GetAllHsotingPlace(int userHostId)
         {
             List<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(userHostId);
-            List<PlaceResponseDTO> hostingPlaceDTOs = _mapper.Map<List<PlaceResponseDTO>>(hostingPlaces);
+            List<PlaceListingResponseDTO> hostingPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(hostingPlaces);
 
             return hostingPlaceDTOs;
         }
 
-        public async Task<List<PlaceResponseDTO>> GetAllPlace()
+        public async Task<List<PlaceListingResponseDTO>> GetAllPlace()
         {
             List<PlaceEntity> allPlace = await _placeRepo.GetAll();
-            List<PlaceResponseDTO> allPlaceDTOs = _mapper.Map<List<PlaceResponseDTO>>(allPlace);
+            List<PlaceListingResponseDTO> allPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(allPlace);
 
             return allPlaceDTOs;
         }
 
-        public Task<List<PlaceResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
+        public Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<PlaceResponseDTO> GetSinglePlace(int PlaceId)
+        public async Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId)
         {
-            PlaceEntity currPlace = await _placeRepo.GetByID(PlaceId);
-            return _mapper.Map<PlaceResponseDTO>(currPlace);
+            PlaceEntity currPlace = await _placeRepo.GetByID(placeId);
+            return _mapper.Map<PlaceHostResponseDTO>(currPlace);
         }
 
-        public async Task UpdateGuestingPlace(GuestDTO currPlaceGuestDTO)
+        
+        public async Task<PlaceGuestResponseDTO> GetDetailedGuestingPlace(PlaceGuestRequestDTO placeGuest)
         {
-            await _placeRepo.UpdateGuestingPlace(currPlaceGuestDTO);
+            throw new NotImplementedException();
         }
 
-        public async Task UpdateHostingPlace(PlaceRequestDTO currPlaceDTO)
+        public async Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO)
+        {
+            await _placeRepo.UpdateGuestingPlace(placeReviewDTO);
+        }
+
+        public async Task UpdateHostingPlace(PlaceHostRequestDTO currPlaceDTO)
         {
             PlaceEntity currPlace =  _mapper.Map<PlaceEntity>(currPlaceDTO);
             await _placeRepo.Update(currPlace);

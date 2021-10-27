@@ -11,7 +11,7 @@ namespace PontiApp.Images.Api
         {
             Log.Logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
-            .WriteTo.File("Logs/Logs.txt",shared:true)
+            .WriteTo.File("Logs/Message_Consumption.txt",shared:true)
             .CreateLogger();
             CreateHostBuilder(args).Build().Run();
         }

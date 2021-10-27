@@ -14,8 +14,10 @@ namespace PontiApp.Mappings
     {
         public EventMapper()
         {
-            CreateMap<EventRequestDTO, EventEntity>().ReverseMap();
-            CreateMap<EventResponseDTO, EventEntity>().ReverseMap();
+            CreateMap<EventHostRequestDTO, EventEntity>();
+            CreateMap<EventEntity, EventHostResponseDTO>();
+            CreateMap<EventEntity, EventGuestResponseDTO>();
+            CreateMap<EventEntity, EventListingResponseDTO>();
         }
     }
 }

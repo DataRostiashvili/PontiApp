@@ -17,5 +17,7 @@ namespace PontiApp.Models.DTOs
         public bool IsWorking { get; set; }
 
         public int PlaceEntityId { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

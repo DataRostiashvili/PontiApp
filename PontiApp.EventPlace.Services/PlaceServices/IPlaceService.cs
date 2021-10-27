@@ -9,16 +9,17 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 {
     public interface IPlaceService
     {
-        Task AddHostingPlace(PlaceRequestDTO newPlaceDTO);
-        Task AddGusestingPlace(GuestDTO currPlaceGuestDTO);
-        Task UpdateHostingPlace(PlaceRequestDTO currPlaceHostDTO);
-        Task UpdateGuestingPlace(GuestDTO currPlaceGuestDRO);
-        Task DeleteHostingPlace(HostDTO currPlaceHostDTO);
-        Task DeleteGuestingPlace(GuestDTO currPlaceGuestDTO);
-        Task<PlaceResponseDTO> GetSinglePlace(int placeId);
-        Task<List<PlaceResponseDTO>> GetAllPlace();
-        Task<List<PlaceResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO);
-        Task<List<PlaceResponseDTO>> GetAllHsotingPlace(int userHostId);
-        Task<List<PlaceResponseDTO>> GetAllGuestingPlace(int userGuestId);
+        Task AddHostingPlace(PlaceHostRequestDTO newPlaceDTO);
+        Task AddGusestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO);
+        Task UpdateHostingPlace(PlaceHostRequestDTO currPlaceHostDTO);
+        Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO);
+        Task DeleteHostingPlace(int hostPlaceId);
+        Task DeleteGuestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO);
+        Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId);
+        Task<PlaceGuestResponseDTO> GetDetailedGuestingPlace(PlaceGuestRequestDTO placeGuest);
+        Task<List<PlaceListingResponseDTO>> GetAllPlace();
+        Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO);
+        Task<List<PlaceListingResponseDTO>> GetAllHsotingPlace(int userHostId);
+        Task<List<PlaceListingResponseDTO>> GetAllGuestingPlace(int userGuestId);
     }
 }

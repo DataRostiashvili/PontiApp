@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class PlaceReviewDTO
-    {
-        public int PlaceReviewEntityId { get; set; }
+    public class PlaceReviewDTO : IdDTO
+    { 
         public float ReviewRanking { get; set; }
         public int UserEntityId { get; set; }
         public int PlaceEntityId { get; set; }
