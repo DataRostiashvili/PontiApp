@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs.Enums
 {
-    public enum TImeFilterEnum
+    public enum TimeFilterEnum
     {
         today,
         tomorrow,
