@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.1" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
@@ -18,10 +20,12 @@
 
   <ItemGroup>
     <Folder Include="Controllers\NewFolder\" />
+    <Folder Include="Logs\" />
     <Folder Include="Temps\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PontiApp.Images.Cache\PontiApp.Images.Cache.csproj" />
     <ProjectReference Include="..\PontiApp.Images.Services\PontiApp.Images.Services.csproj" />
     <ProjectReference Include="..\PontiApp.MessageSender\PontiApp.MessageSender.csproj" />
     <ProjectReference Include="..\PontiApp.Utilities\PontiApp.Utilities.csproj" />

@@ -14,6 +14,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
@@ -23,6 +24,10 @@
     <ProjectReference Include="..\PontiApp.EventPlace.Services\PontiApp.EventPlace.Services.csproj" />
     <ProjectReference Include="..\PontiApp.Mappings\PontiApp.Mappings.csproj" />
     <ProjectReference Include="..\PontiApp.Repository\PontiApp.Ponti.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PontiApp.Utilities\PontiApp.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

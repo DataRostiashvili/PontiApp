@@ -1,6 +1,6 @@
 using System;
 
-namespace PontiApp.Gateway.Api
+namespace ImageTestttt
 {
     public class WeatherForecast
     {
@@ -8,7 +8,7 @@ namespace PontiApp.Gateway.Api
 
         public int TemperatureC { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        public int TemperatureF => 32 + (int) (TemperatureC / 0.5556);
 
         public string Summary { get; set; }
     }

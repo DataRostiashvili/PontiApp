@@ -18,9 +18,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         }
         
-        public async Task InsertGuesting(PlaceEntity currPlace, int guestId)
+        public async Task InsertGuesting(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == guestId);
+            PlaceEntity currPlace = await GetByID(currPlaceGuestDTO.PlaceId);
+            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlaceGuestDTO.UserGuestId);
 
             UserGuestPlace guestOnPlace = new UserGuestPlace()
             {
@@ -32,9 +33,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteGuesting(PlaceEntity currPlace, int guestId)
+        public async Task DeleteGuesting(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
-            var currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == guestId);
+            PlaceEntity currPlace = await GetByID(currPlaceGuestDTO.PlaceId);
+            UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlace.UserEntityId);
 
             UserGuestPlace currBond = await _applicationDbContext.UserGuestPlaces.Where(o => o.PlaceEntityId == currPlace.Id && o.UserEntityId == currUser.Id).FirstAsync();
             
@@ -56,16 +58,16 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             return currUser.UserHostPlaces;
         }
 
-        public async Task UpdateGuestingPlace(GuestDTO currPlaceGuestDTO)
+        public async Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO)
         {
-            PlaceEntity currPlace = await entities.Include(p => p.Reviews).SingleAsync(p => p.Id == currPlaceGuestDTO.PlaceId);
+            PlaceEntity currPlace = await entities.Include(p => p.Reviews).SingleAsync(p => p.Id == placeReviewDTO.PlaceEntityId);
             PlaceReviewEntity currReview = new()
             {
-                ReviewRanking = currPlaceGuestDTO.ReviewRanking,
+                ReviewRanking = placeReviewDTO.ReviewRanking,
                 PlaceEntity = currPlace,
-                PlaceEntityId = currPlaceGuestDTO.PlaceId,
-                UserEntityId = currPlaceGuestDTO.UserGuestId,
-                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlaceGuestDTO.UserGuestId)
+                PlaceEntityId = placeReviewDTO.PlaceEntityId,
+                UserEntityId = placeReviewDTO.UserEntityId,
+                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == placeReviewDTO.UserEntityId)
             };
 
             if (currPlace.Reviews.Contains(currReview))

@@ -20,7 +20,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreatePlace))]
-        public async Task<ActionResult> CreatePlace([FromBody] PlaceRequestDTO PlaceDTO)
+        public async Task<ActionResult> CreatePlace([FromBody] PlaceHostRequestDTO PlaceDTO)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdatePlace))]
-        public async Task<ActionResult> UpdatePlace([FromBody] PlaceRequestDTO hostPlaceDTO)
+        public async Task<ActionResult> UpdatePlace([FromBody] PlaceHostRequestDTO hostPlaceDTO)
         {
             try
             {
@@ -50,11 +50,11 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpDelete]
         [Route(nameof(DeletePlace))]
-        public async Task<ActionResult> DeletePlace([FromBody] HostDTO hostPlaceDTO)
+        public async Task<ActionResult> DeletePlace(int hostPlaceId)
         {
             try
             {
-                await _placeService.DeleteHostingPlace(hostPlaceDTO);
+                await _placeService.DeleteHostingPlace(hostPlaceId);
                 return Ok();
             }
             catch (Exception e)
@@ -63,13 +63,33 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpGet("GetPlace/{id}")]
-        public async Task<ActionResult<PlaceResponseDTO>> GetPlace(int id)
+        //Should be separated
+        [HttpGet("GetDetailedHostingPlace/{id}")]
+        public async Task<ActionResult<PlaceHostResponseDTO>> GetDetailedHostingPlace(int id)
         {
             try
             {
                 
-                return Ok(await _placeService.GetSinglePlace(id));
+                return Ok(await _placeService.GetDetailedHostingPlace(id));
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("GetGuestingPlace/{place}/{guestId}")]
+        public async Task<ActionResult<PlaceGuestResponseDTO>> GetGuestingPlace(int placeId, int guestId)
+        {
+            try
+            {
+                PlaceGuestRequestDTO guestRequestDTO = new PlaceGuestRequestDTO()
+                {
+                    PlaceId = placeId,
+                    UserGuestId = guestId
+                };
+
+                return Ok(await _placeService.GetDetailedGuestingPlace(guestRequestDTO));
             }
             catch (Exception e)
             {
@@ -78,7 +98,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetHostingPlaces/{userHostId}")]
-        public async Task<ActionResult<IEnumerable<PlaceResponseDTO>>> GetHostingPlaces(int userHostId)
+        public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetHostingPlaces(int userHostId)
         {
             try
             {
@@ -90,9 +110,9 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route(nameof(AddInGuestingPlaces))]
-        public async Task<ActionResult> AddInGuestingPlaces([FromBody] GuestDTO guestPlaceDTO)
+        public async Task<ActionResult> AddInGuestingPlaces([FromBody] PlaceGuestRequestDTO guestPlaceDTO)
         {
             try
             {
@@ -107,11 +127,11 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateInGuestingPlaces))]
-        public async Task<ActionResult> UpdateInGuestingPlaces([FromBody] GuestDTO guestPlaceDTO)
+        public async Task<ActionResult> UpdateInGuestingPlaces([FromBody] PlaceReviewDTO placeReviewDTO)
         {
             try
             {
-                await _placeService.UpdateGuestingPlace(guestPlaceDTO);
+                await _placeService.UpdateGuestingPlace(placeReviewDTO);
                 return Ok();
             }
             catch (Exception e)
@@ -122,7 +142,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(RemoveFromGuestingPlaces))]
-        public async Task<ActionResult> RemoveFromGuestingPlaces([FromBody] GuestDTO guestPlaceDTO)
+        public async Task<ActionResult> RemoveFromGuestingPlaces([FromBody] PlaceGuestRequestDTO guestPlaceDTO)
         {
             try
             {
@@ -136,7 +156,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GuestingPlaces/{userGuestId}")]
-        public async Task<ActionResult<IEnumerable<PlaceRequestDTO>>> GetGuestingPlaces(int userGuestId)
+        public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetGuestingPlaces(int userGuestId)
         {
             try
             {
@@ -149,7 +169,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetAllPlace")]
-        public async Task<ActionResult<IEnumerable<PlaceRequestDTO>>> GetAllPlace()
+        public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetAllPlace()
         {
             try
             {

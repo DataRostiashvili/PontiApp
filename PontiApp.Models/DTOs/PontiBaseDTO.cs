@@ -17,7 +17,6 @@ namespace PontiApp.Models.DTOs
         public string Address { get; set; }
         public string Mail { get; set; }
         public string TicketBuyUrl { get; set; }
-        public float CurrentRanking { get; set; }
 
         //public ICollection<byte[]> Pictures { get; set; }
 

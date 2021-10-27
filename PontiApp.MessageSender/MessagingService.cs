@@ -24,10 +24,14 @@ namespace PontiApp.MessageSender
             _config = config;
             _factory = factory;
             _logger = logger;
-            _factory.HostName = _config.GetSection("RabbitMQ").GetSection("HostName").Value;
-            _factory.UserName = _config.GetSection("RabbitMQ").GetSection("UserName").Value;
-            _factory.Password = _config.GetSection("RabbitMQ").GetSection("PassWord").Value;
-            _factory.Port = Convert.ToInt16(_config.GetSection("RabbitMQ").GetSection("Port").Value);
+            //_factory.HostName = _config.GetSection("RabbitMQ").GetSection("HostName").Value;
+            //_factory.UserName = _config.GetSection("RabbitMQ").GetSection("UserName").Value;
+            //_factory.Password = _config.GetSection("RabbitMQ").GetSection("PassWord").Value;
+            //_factory.Port = Convert.ToInt16(_config.GetSection("RabbitMQ").GetSection("Port").Value);
+            _factory.HostName = "localhost";
+            _factory.UserName = "guest";
+            _factory.Password = "guest";
+            _factory.Port = 5672;
             Conn = factory.CreateConnection();
             Channel = Conn.CreateModel();
         }
@@ -69,6 +73,7 @@ namespace PontiApp.MessageSender
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.DELETE_Q, null, body);
             _logger.LogInformation($"Message sent to {RabbitMQConsts.DELETE_Q} at {DateTime.Now}");
         }
+        
         
     }
 }

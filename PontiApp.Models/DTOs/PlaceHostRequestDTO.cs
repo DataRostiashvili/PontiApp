@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class EventRequestDTO : PontiBaseDTO
+    public class PlaceHostRequestDTO : PontiBaseDTO
     {
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public int? PlaceEntityId { get; set; }
+        public List<WeekScheduleDTO> WeekSchedule { get; set; }
+
+        public List<PlaceCategoryDTO> PlaceCategories { get; set; }
     }
 }
