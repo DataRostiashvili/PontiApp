@@ -10,8 +10,8 @@ namespace PontiApp.Models.DTOs
     public class SearchBaseDTO
     {
         PontiTypeEnum PontiType { get; set; }
-        string Categoty { get; set; }
-        TImeFilterEnum Time { get; set; }
+        List<CategoryDTO> Categories { get; set; }
+        TimeFilterEnum Time { get; set; }
         string SearchKeyWord { get; set; }
     }
 }

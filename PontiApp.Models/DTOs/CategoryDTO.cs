@@ -11,6 +11,6 @@ namespace PontiApp.Models.DTOs
     {
         public string Cetegory { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
