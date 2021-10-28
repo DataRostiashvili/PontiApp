@@ -16,7 +16,7 @@ namespace PontiApp.Utilities
 {
     public static class AuthUtils
     {
-        
+
         public static IServiceCollection AddCustomAuth(this IServiceCollection services)
         {
             IConfiguration config = new ConfigurationBuilder().SetBasePath(@"C:\Users\USER\source\repos\PontiApp\PontiApp.Utilities")
