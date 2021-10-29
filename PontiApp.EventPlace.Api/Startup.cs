@@ -31,6 +31,8 @@ using PontiApp.Utilities;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using PontiApp.MessageSender;
+using RabbitMQ.Client;
 
 namespace PontiApp.EventPlace.Api
 {
@@ -72,6 +74,9 @@ namespace PontiApp.EventPlace.Api
             services.AddScoped<PlaceRepository>();
             services.AddScoped<EventDTOValidator>();
             services.AddScoped<PlaceDTOValidator>();
+            services.AddScoped<MessagingService>();
+            services.AddScoped<ConnectionFactory>();
+            services.AddHttpClient();
 
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -86,7 +91,7 @@ namespace PontiApp.EventPlace.Api
             services.AddAutoMapper(typeof(CategoryMapper));
             services.AddAutoMapper(typeof(WeekDayMapper));
             services.AddAutoMapper(typeof(ReviewMapper));
-            //services.AddCustomAuth();
+            //services.AddCustomAuth(Configuration);
 
         }
 

@@ -37,7 +37,7 @@ namespace PontiApp.Images.Api
             {
                 c.SwaggerDoc("v1",new OpenApiInfo { Title = "PontiApp.Images.Api",Version = "v1" });
             });
-            services.AddCustomAuth();
+            services.AddCustomAuth(Configuration);
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetConnectionString("Redis");

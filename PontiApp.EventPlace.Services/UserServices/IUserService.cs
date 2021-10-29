@@ -9,11 +9,12 @@ namespace PontiApp.EventPlace.Services.UserServices
 {
     public interface IUserService
     {
-        Task Add(UserDTO newUserDTO);
+        Task Add(UserCreationDTO newUserDTO);
         Task Update(UserDTO currUserDTO);
         Task<UserDTO> Get(int id);
         Task Delete(UserDTO currUserDTO);
         Task<List<UserDTO>> GetAllUser();
+        Task<bool> UserExists(int id);
 
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.EventPlace.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]",Order =1)]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreateUser))]
-        public async Task<ActionResult> CreateUser([FromBody] UserDTO userDTO)
+        public async Task<ActionResult> CreateUser([FromBody] UserCreationDTO userDTO)
         {
             try
             {
@@ -90,5 +90,6 @@ namespace PontiApp.EventPlace.Api.Controllers
                 throw;
             }
         }
+
     }
 }
