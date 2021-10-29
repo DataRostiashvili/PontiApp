@@ -90,9 +90,11 @@ namespace PontiApp.EventPlace.Services.EventServices
             return hostingEventDTOs;
         }
 
-        public Task<List<EventListingResponseDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO)
+        public async Task<List<EventListingResponseDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO)
         {
-            throw new NotImplementedException();
+            var searchResult = await _eventRepo.GetEventSearchResult(searchBaseDTO);
+            var searchResultDto = _mapper.Map<List<EventListingResponseDTO>>(searchResult);
+            return searchResultDto;
         }
 
         public async Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId)

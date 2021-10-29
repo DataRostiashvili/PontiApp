@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PontiApp.Models.DTOs;
+using PontiApp.Models.DTOs.Enums;
 using PontiApp.PlacePlace.Services.PlaceServices;
 using System;
 using System.Collections.Generic;
@@ -179,6 +180,17 @@ namespace PontiApp.PlacePlace.Api.Controllers
             {
                 throw;
             }
+        }
+
+        [HttpGet("SearchPlace")]
+        public async Task<IActionResult> SearchPlace(SearchBaseDTO searchDto)
+        {
+            if (searchDto.PontiType != PontiTypeEnum.Place)
+            {
+                return BadRequest();
+            }
+            var searchResult = await _placeService.GetSearchedPlaces(searchDto);
+            return Ok(searchResult);
         }
     }
 }
