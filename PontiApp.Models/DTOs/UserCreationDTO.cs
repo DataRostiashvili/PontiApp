@@ -13,5 +13,6 @@ namespace PontiApp.Models.DTOs
         public string Email { get; set; }
         public string HomeTown { get; set; }
         public string PictureUrl { get; set; }
+        public long FbKey { get; set; }
     }
 }

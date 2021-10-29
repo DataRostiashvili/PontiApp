@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  pontiapp.eventplace.api:
+    container_name: pontiapp.eventplace.api-container
+    image: pontiapp.eventplace.api
+    build:
+      context: .
+      dockerfile: ./PontiApp.EventPlace.Api/Dockerfile
+    environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - 5000:80
+      # - 5001:443
+    networks: 
+       - pontiapp-network
+
+  pontiapp-auth:
+    container_name: pontiapp.auth-container
+    image: pontiapp.auth
+    ports:
+      - 5010:80
+      # - 5011:443
+    build:
+      context: .
+      dockerfile: ./PontiApp.Auth/Dockerfile
+    environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+    networks:  
+      - pontiapp-network
+
+networks:
+  pontiapp-network:
+    driver: "bridge"

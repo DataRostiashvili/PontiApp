@@ -48,6 +48,7 @@ namespace PontiApp.Auth
             {
                 c.SwaggerDoc("v1",new OpenApiInfo { Title = "PontiApp.Auth",Version = "v1" });
             });
+            services.AddHttpClient();
             
         }
 

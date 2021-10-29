@@ -41,6 +41,10 @@ namespace PontiApp.Ponti.Repository.BaseRepository
         {
             return await entities.Where(e => e.Id == Id).FirstOrDefaultAsync();
         }
+        public async Task<T> GetByID(long Id)
+        {
+            return await entities.Where(e => e.Id == Id).FirstOrDefaultAsync();
+        }
 
         public async Task Insert(T entity)
         {

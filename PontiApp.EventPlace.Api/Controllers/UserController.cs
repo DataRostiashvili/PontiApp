@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.EventPlace.Api.Controllers
 {
-    [Route("api/[controller]",Order =1)]
+    [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -91,5 +91,17 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
+
+
+        [HttpPost]
+        [Route("Process-User")]
+        public async Task<ActionResult<UserDTO>> ProcessUser(UserCreationDTO user)
+        {
+            if(!await _userService.UserExists(user.FbKey))
+            {
+                await _userService.Add(user);
+            }
+            return Ok(await _userService.GetUser(user.FbKey));
+        }
     }
 }

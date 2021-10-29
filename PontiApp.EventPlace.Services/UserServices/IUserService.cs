@@ -1,4 +1,5 @@
 ﻿using PontiApp.Models.DTOs;
+using PontiApp.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         Task Delete(UserDTO currUserDTO);
         Task<List<UserDTO>> GetAllUser();
         Task<bool> UserExists(int id);
-
+        Task<bool> UserExists(long id);
+        Task<UserEntity> GetUser(long id);
     }
 }

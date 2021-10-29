@@ -64,7 +64,11 @@ namespace PontiApp.EventPlace.Services.UserServices
             await _userRepository.Update(user);
         }
 
+        public async Task<bool> UserExists(long id) => await _userRepository.GetByID(id) is null;
+
         public async Task<bool> UserExists(int id) => await _userRepository.GetByID(id) is null;
+
+        public async Task<UserEntity> GetUser(long id) => await _userRepository.GetByID(id);
 
     }
 }
