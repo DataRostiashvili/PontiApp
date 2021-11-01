@@ -30,7 +30,8 @@ namespace PontiApp.GraphAPICalls
                 Last_Name = data.last_name,
                 Email = data.email,
                 HomeTown = data.hometown.name,
-                PictureUrl=pictureUrl
+                PictureUrl=pictureUrl,
+                FbKey=userID
             };
             return user;
         }

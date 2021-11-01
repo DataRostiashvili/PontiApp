@@ -29,6 +29,39 @@ services:
     networks:  
       - pontiapp-network
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    hostname: rabbit
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - pontiapp-network
+  postgre:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    networks: 
+      - pontiapp-network
+
+  mongodbb:
+    image : mongo
+    container_name: mongodb
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/barry/mongodb/database:/data/db
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+    networks:
+      - pontiapp-network
 networks:
   pontiapp-network:
     driver: "bridge"
