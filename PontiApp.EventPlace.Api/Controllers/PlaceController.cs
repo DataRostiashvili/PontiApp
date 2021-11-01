@@ -182,7 +182,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpGet("SearchPlace")]
+        [HttpPost("SearchPlace")]
         public async Task<IActionResult> SearchPlace(PontiTypeEnum PontiType, List<CategoryDTO> Categories, TimeFilterEnum Time, string SearchKeyWord)
         {
             if (PontiType != PontiTypeEnum.Place)
@@ -197,6 +197,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
                 SearchKeyWord = SearchKeyWord
             };
 
+            searchDto.Categories = new List<CategoryDTO>();
             foreach (var cat in Categories)
             {
                 searchDto.Categories.Add(cat);

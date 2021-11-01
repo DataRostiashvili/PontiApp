@@ -86,11 +86,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
 
 
-            var places = await (from place in _applicationDbContext.Places
+            var places = (await (from place in _applicationDbContext.Places
                                 where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
-                                where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id))
-                                where IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time) 
-                                select place).ToListAsync();
+                                where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id)) 
+                                select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
 
             return new List<PlaceListingResponseDTO>();
         }
