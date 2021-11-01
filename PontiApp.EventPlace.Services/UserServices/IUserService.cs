@@ -16,7 +16,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         Task Delete(UserDTO currUserDTO);
         Task<List<UserDTO>> GetAllUser();
         Task<bool> UserExists(int id);
-        Task<bool> UserExists(long id);
+        bool UserExists(long FbKey);
         Task<UserEntity> GetUser(long id);
     }
 }

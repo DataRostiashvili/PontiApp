@@ -30,7 +30,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         public async Task Add(UserCreationDTO newUserDTO)
         {
             UserEntity user = _mapper.Map<UserCreationDTO, UserEntity>(newUserDTO);
-            if (!await UserExists(user.Id))
+            if (!UserExists(user.FbKey))
             {
                 var guid = Guid.NewGuid().ToString();
                 user.MongoKey = guid;
@@ -64,7 +64,7 @@ namespace PontiApp.EventPlace.Services.UserServices
             await _userRepository.Update(user);
         }
 
-        public async Task<bool> UserExists(long id) => await _userRepository.GetByID(id) is null;
+        public  bool UserExists(long FbKey) =>  _userRepository.GetByPredicate(user => user.FbKey == FbKey).Any();
 
         public async Task<bool> UserExists(int id) => await _userRepository.GetByID(id) is null;
 

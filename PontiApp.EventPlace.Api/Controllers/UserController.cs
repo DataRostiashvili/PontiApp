@@ -97,7 +97,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         [Route("Process-User")]
         public async Task<ActionResult<UserDTO>> ProcessUser(UserCreationDTO user)
         {
-            if(!await _userService.UserExists(user.FbKey))
+            if(!_userService.UserExists(user.FbKey))
             {
                 await _userService.Add(user);
             }
