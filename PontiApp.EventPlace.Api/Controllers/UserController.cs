@@ -22,7 +22,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreateUser))]
-        public async Task<ActionResult> CreateUser([FromBody] UserDTO userDTO)
+        public async Task<ActionResult> CreateUser([FromBody] UserCreationDTO userDTO)
         {
             try
             {
@@ -89,6 +89,19 @@ namespace PontiApp.EventPlace.Api.Controllers
             {
                 throw;
             }
+        }
+
+
+
+        [HttpPost]
+        [Route("Process-User")]
+        public async Task<ActionResult<UserDTO>> ProcessUser(UserCreationDTO user)
+        {
+            if(!_userService.UserExists(user.FbKey))
+            {
+                await _userService.Add(user);
+            }
+            return Ok(await _userService.GetUser(user.FbKey));
         }
     }
 }

@@ -23,6 +23,7 @@
     <ProjectReference Include="..\PontiApp.EntityValidators\PontiApp.Validators.csproj" />
     <ProjectReference Include="..\PontiApp.EventPlace.Services\PontiApp.EventPlace.Services.csproj" />
     <ProjectReference Include="..\PontiApp.Mappings\PontiApp.Mappings.csproj" />
+    <ProjectReference Include="..\PontiApp.MessageSender\PontiApp.MessageSender.csproj" />
     <ProjectReference Include="..\PontiApp.Repository\PontiApp.Ponti.Repository.csproj" />
   </ItemGroup>
 

@@ -16,12 +16,10 @@ namespace PontiApp.Utilities
 {
     public static class AuthUtils
     {
-
-        public static IServiceCollection AddCustomAuth(this IServiceCollection services)
+        
+        public static IServiceCollection AddCustomAuth(this IServiceCollection services, IConfiguration config)
         {
-            IConfiguration config = new ConfigurationBuilder().SetBasePath(@"C:\Users\USER\source\repos\PontiApp\PontiApp.Utilities")
-                .AddJsonFile("appsettings.json")
-                .Build();
+            
             var jwtConfig = config.GetSection("JwtConfig").Get<JwtConfig>();
 
             services.AddAuthentication(x =>

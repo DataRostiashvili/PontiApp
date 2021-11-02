@@ -13,17 +13,17 @@ namespace PontiApp.Ponti.Repository.BaseRepository
 {
     public class BaseRepository<T> where T : BaseEntity
     {
-        
+
         protected readonly ApplicationDbContext _applicationDbContext;
         protected readonly DbSet<T> entities;
 
-         
+
         public BaseRepository(ApplicationDbContext applicationDbContext)
-        { 
+        {
             _applicationDbContext = applicationDbContext;
             entities = _applicationDbContext.Set<T>();
         }
-        
+
 
         public async Task Delete(T entity)
         {
@@ -40,6 +40,15 @@ namespace PontiApp.Ponti.Repository.BaseRepository
         public async Task<T> GetByID(int Id)
         {
             return await entities.Where(e => e.Id == Id).FirstOrDefaultAsync();
+        }
+        public async Task<T> GetByID(long Id)
+        {
+            return await entities.Where(e => e.Id == Id).FirstOrDefaultAsync();
+        }
+
+        public IEnumerable<T> GetByPredicate(Func<T, bool> predicate)
+        {
+            return entities.Where(predicate);
         }
 
         public async Task Insert(T entity)
@@ -70,7 +79,7 @@ namespace PontiApp.Ponti.Repository.BaseRepository
         {
             return await entities.CountAsync();
         }
-        
+
         public async Task<List<T>> GetAll()
         {
             return await entities.ToListAsync();

@@ -8,6 +8,14 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["PontiApp.EventPlace.Api/PontiApp.EventPlace.Api.csproj", "PontiApp.EventPlace.Api/"]
+COPY ["PontiApp.EntityValidators/PontiApp.Validators.csproj", "PontiApp.EntityValidators/"]
+COPY ["PontiApp.Data/PontiApp.Data.csproj", "PontiApp.Data/"]
+COPY ["PontiApp.Models/PontiApp.Models.csproj", "PontiApp.Models/"]
+COPY ["PontiApp.MessageSender/PontiApp.MessageSender.csproj", "PontiApp.MessageSender/"]
+COPY ["PontiApp.Utilities/PontiApp.Utilities.csproj", "PontiApp.Utilities/"]
+COPY ["PontiApp.Repository/PontiApp.Ponti.Repository.csproj", "PontiApp.Repository/"]
+COPY ["PontiApp.Mappings/PontiApp.Mappings.csproj", "PontiApp.Mappings/"]
+COPY ["PontiApp.EventPlace.Services/PontiApp.EventPlace.Services.csproj", "PontiApp.EventPlace.Services/"]
 RUN dotnet restore "PontiApp.EventPlace.Api/PontiApp.EventPlace.Api.csproj"
 COPY . .
 WORKDIR "/src/PontiApp.EventPlace.Api"

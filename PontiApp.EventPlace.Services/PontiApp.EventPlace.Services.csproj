@@ -8,6 +8,7 @@
     <ProjectReference Include="..\PontiApp.Data\PontiApp.Data.csproj" />
     <ProjectReference Include="..\PontiApp.EntityValidators\PontiApp.Validators.csproj" />
     <ProjectReference Include="..\PontiApp.Mappings\PontiApp.Mappings.csproj" />
+    <ProjectReference Include="..\PontiApp.MessageSender\PontiApp.MessageSender.csproj" />
     <ProjectReference Include="..\PontiApp.Models\PontiApp.Models.csproj" />
     <ProjectReference Include="..\PontiApp.Repository\PontiApp.Ponti.Repository.csproj" />
   </ItemGroup>
@@ -18,6 +19,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
