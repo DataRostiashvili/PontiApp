@@ -90,11 +90,11 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
 
         private void InitRabbit()
         {
-            _channel.ExchangeDeclare(RabbitMQConsts.EXCHANGE, ExchangeType.Direct, true, true);
-            _channel.QueueDeclare(RabbitMQConsts.ADD_Q, false, autoDelete: false);
-            _channel.QueueDeclare(RabbitMQConsts.DELETE_Q, false, autoDelete: false);
-            _channel.QueueDeclare(RabbitMQConsts.UPDATE_ADD_Q, false, autoDelete: false);
-            _channel.QueueDeclare(RabbitMQConsts.UPDATE_REMOVE_Q, false, autoDelete: false);
+            _channel.ExchangeDeclare(RabbitMQConsts.EXCHANGE, ExchangeType.Direct, true);
+            _channel.QueueDeclare(RabbitMQConsts.ADD_Q, false, autoDelete: false, exclusive: false);
+            _channel.QueueDeclare(RabbitMQConsts.DELETE_Q, false, autoDelete: false, exclusive: false);
+            _channel.QueueDeclare(RabbitMQConsts.UPDATE_ADD_Q, false, autoDelete: false, exclusive: false);
+            _channel.QueueDeclare(RabbitMQConsts.UPDATE_REMOVE_Q, false, autoDelete: false, exclusive: false);
             _channel.QueueBind(RabbitMQConsts.ADD_Q, RabbitMQConsts.EXCHANGE, RabbitMQConsts.ADD_Q);
             _channel.QueueBind(RabbitMQConsts.DELETE_Q, RabbitMQConsts.EXCHANGE, RabbitMQConsts.DELETE_Q);
             _channel.QueueBind(RabbitMQConsts.UPDATE_ADD_Q, RabbitMQConsts.EXCHANGE, RabbitMQConsts.UPDATE_ADD_Q);
