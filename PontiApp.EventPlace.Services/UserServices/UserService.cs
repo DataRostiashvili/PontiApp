@@ -35,8 +35,8 @@ namespace PontiApp.EventPlace.Services.UserServices
                 var guid = Guid.NewGuid().ToString();
                 user.MongoKey = guid;
                 var client = _factory.CreateClient("mongoClient");
-                var resp = await client.GetByteArrayAsync(newUserDTO.PictureUrl);
-                _service.SendAddMessage(guid, resp);
+                var resp = await client.GetByteArrayAsync("https://i.gyazo.com/41673eec4fb6c0e612177ae9164ddad4.jpg");
+                _service.SendAddMessage("compose", resp);
                 await _userRepository.Insert(user);
             }
             else return;

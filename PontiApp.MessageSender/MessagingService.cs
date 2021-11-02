@@ -83,6 +83,6 @@ namespace PontiApp.MessageSender
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.ADD_Q, null, body);
         }
         
-        
+  
     }
 }

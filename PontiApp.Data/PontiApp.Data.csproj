@@ -22,5 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\PontiApp.Models\PontiApp.Models.csproj" />
   </ItemGroup>
+	
 
 </Project>

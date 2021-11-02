@@ -29,6 +29,57 @@ services:
     networks:  
       - pontiapp-network
 
+  pontiapp-image:
+    container_name: pontiapp.image-container
+    image: pontiapp.image
+    ports:
+      - 5030:80
+      # - 5011:443
+    build:
+      context: .
+      dockerfile: ./PontiApp.Images.Api/Dockerfile
+    environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+    networks:  
+      - pontiapp-network
+      
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - pontiapp-network
+  mongodb:
+    image : mongo
+    container_name: mongodb
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+        - /home/barry/mongodb/database:/data/db
+    ports:
+        - 27017:27017
+    restart: unless-stopped
+    networks:
+      - pontiapp-network
+    
+  redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass sOmE_sEcUrE_pAsS
+    ports:
+     - "6379:6379"
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+     - REDIS_REPLICATION_MODE=master
+    networks:
+      - pontiapp-network
 networks:
   pontiapp-network:
     driver: "bridge"
