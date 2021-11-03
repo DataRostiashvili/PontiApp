@@ -18,6 +18,9 @@ namespace PontiApp.Data.DatabaseSeeder
             FillUsersTable();
             FillPlacesTable();
             FillEventsTable();
+            FillCategoriesTable();
+            //FillPlaceCategoriesTable();
+            //FillEventCategoriesTable();
         }
 
         private void FillUsersTable()
@@ -46,5 +49,32 @@ namespace PontiApp.Data.DatabaseSeeder
                 _appDbContext.Database.ExecuteSqlRaw(eventsSqlData);
             }
         }
+
+        private void FillCategoriesTable()
+        {
+            if (!_appDbContext.Categories.Any())
+            {
+                var categoriesSqlData = File.ReadAllText(@"..\PontiApp.Data\DatabaseSeeder\InsertCategories.sql");
+                _appDbContext.Database.ExecuteSqlRaw(categoriesSqlData);
+            }
+        }
+
+        //private void FillPlaceCategoriesTable()
+        //{
+        //    if (!_appDbContext.PlaceCategories.Any())
+        //    {
+        //        var placeCategoriesSqlData = File.ReadAllText(@"..\PontiApp.Data\DatabaseSeeder\InsertPlaceCategories.sql");
+        //        _appDbContext.Database.ExecuteSqlRaw(placeCategoriesSqlData);
+        //    }
+        //}
+
+        //private void FillEventCategoriesTable()
+        //{
+        //    if (!_appDbContext.EventCategories.Any())
+        //    {
+        //        var eventCategoriesSqlData = File.ReadAllText(@"..\PontiApp.Data\DatabaseSeeder\InsertEventCategories.sql");
+        //        _appDbContext.Database.ExecuteSqlRaw(eventCategoriesSqlData);
+        //    }
+        //}
     }
 }

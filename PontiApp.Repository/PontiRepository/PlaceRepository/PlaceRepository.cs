@@ -79,21 +79,6 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             currPlace.Reviews.Add(currReview);
             await _applicationDbContext.SaveChangesAsync();
         }
-
-        public async Task<List<PlaceListingResponseDTO>> GetPlaceSearchResult(SearchBaseDTO searchBaseDTO)
-        {
-            var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
-            var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
-
-
-            var places = (await (from place in _applicationDbContext.Places
-                                where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
-                                where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id)) 
-                                select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
-
-            return new List<PlaceListingResponseDTO>();
-        }
-
         private bool PlaceHasCategories(IEnumerable<int> placeCategoryIds, IEnumerable<int> searchPlaceCategoryIds)
         {
             return !searchPlaceCategoryIds.Except(placeCategoryIds).Any();
@@ -107,7 +92,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             if (searchedDate == DateTime.MaxValue)
                 searchedDate = DateTime.Today.AddDays(7);
 
-            while (currentDate < searchedDate)
+            while (currentDate <= searchedDate)
             {
                 if (!weekScheduleList[(int)currentDate.DayOfWeek].IsWorking)
                 {
@@ -118,6 +103,23 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
             return true;
         }
+        public async Task<List<PlaceEntity>> GetPlaceSearchResult(SearchBaseDTO searchBaseDTO)
+        {
+            var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
+            var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
+
+
+            var places = (await (from place in _applicationDbContext.Places
+                                where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
+                                 //where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id)) 
+                                 //where searchForEveryCategory ? true : (!(searchBaseDTO.Categories.Select(category => category.Id)).Except(place.PlaceCategories.Select(category => category.Id)).Any())
+                                 //where searchForEveryCategory ? true : (!(new []{ 1, 5, 7, 9, 12, 33}).Except(new[] { 1, 5, 7, 9, 12, 33 }).Any())
+                                 select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
+
+            return (places.ToList());
+        }
+
+        
 
         private DateTime GetWorkingDays(TimeFilterEnum searchedPlaceTime)
         {

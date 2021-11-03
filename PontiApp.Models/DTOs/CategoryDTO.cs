@@ -9,7 +9,7 @@ namespace PontiApp.Models.DTOs
 {
     public class CategoryDTO : IdDTO
     {
-        public string Cetegory { get; set; }
+        public string Category { get; set; }
 
         public bool IsDeleted { get; set; }
     }
