@@ -35,11 +35,13 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
                 mongoService = scope.ServiceProvider.GetRequiredService<IMongoService>();
             }
             _cFac = cFac;
-            _cFac.HostName = _config.GetSection("RabbitMQ").GetSection("HostName").Value;
-            _cFac.UserName = _config.GetSection("RabbitMQ").GetSection("UserName").Value;
-            _cFac.Password = _config.GetSection("RabbitMQ").GetSection("PassWord").Value; ;
-            _cFac.Port = Convert.ToInt16(_config.GetSection("RabbitMQ").GetSection("Port").Value);
-            ;
+            _cFac.HostName = "rabbitmq";
+            _cFac.UserName = "user";
+            _cFac.Password = "pass";
+            _cFac.Port =5672;
+            _cFac.VirtualHost = "/";
+
+            
             _conn = _cFac.CreateConnection();
             _channel = _conn.CreateModel();
             InitRabbit();
@@ -67,6 +69,7 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             var body = e.Body.ToArray();
             var jsonStr = Encoding.UTF8.GetString(body);
             var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonStr);
+            _logger.LogInformation($"Message is {Convert.ToString(dict[RabbitMQConsts.LIST])} ///debug ");
             switch (e.RoutingKey)
             {
                 case RabbitMQConsts.UPDATE_ADD_Q:
@@ -78,8 +81,8 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
                     _logger.LogInformation($"Message consummed from {RabbitMQConsts.UPDATE_REMOVE_Q} queue at {DateTime.Now}");
                     break;
                 case RabbitMQConsts.ADD_Q:
-                    await mongoService.PostImage((string)dict[RabbitMQConsts.GUID], JsonConvert.DeserializeObject<List<byte[]>>(Convert.ToString(dict[RabbitMQConsts.LIST])));
-                    _logger.LogInformation($"Message consummed from {RabbitMQConsts.ADD_Q} queue at {DateTime.Now}");
+                    await mongoService.PostImage((string)dict[RabbitMQConsts.GUID], new List<byte[]>() { Convert.FromBase64String(Convert.ToString(dict[RabbitMQConsts.LIST]))});
+                    _logger.LogInformation($"\n\n\n\n\n\n\n\nMessage Sent\n\n\n\n\n\n\n");
                     break;
                 case RabbitMQConsts.DELETE_Q:
                     await mongoService.DeleteImage((string)dict[RabbitMQConsts.GUID]);

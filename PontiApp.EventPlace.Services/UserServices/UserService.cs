@@ -27,7 +27,7 @@ namespace PontiApp.EventPlace.Services.UserServices
             _factory = factory;
             _service = service;
         }
-        public async Task Add(UserCreationDTO newUserDTO)
+        public async Task Add(UserCreationDTO newUserDTO,string url)
         {
             UserEntity user = _mapper.Map<UserCreationDTO, UserEntity>(newUserDTO);
             if (!UserExists(user.FbKey))
@@ -35,8 +35,8 @@ namespace PontiApp.EventPlace.Services.UserServices
                 var guid = Guid.NewGuid().ToString();
                 user.MongoKey = guid;
                 var client = _factory.CreateClient("mongoClient");
-                var resp = await client.GetByteArrayAsync("https://i.gyazo.com/41673eec4fb6c0e612177ae9164ddad4.jpg");
-                _service.SendAddMessage("compose", resp);
+                var resp = await client.GetByteArrayAsync(url);
+                _service.SendAddMessage("sirbiladze", resp);
                 await _userRepository.Insert(user);
             }
             else return;
@@ -69,6 +69,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         public async Task<bool> UserExists(int id) => await _userRepository.GetByID(id) is null;
 
         public async Task<UserEntity> GetUser(long id) => await _userRepository.GetByID(id);
+        public void DeleteImage(string guid) => _service.SendDeleteMessage(guid);
 
     }
 }

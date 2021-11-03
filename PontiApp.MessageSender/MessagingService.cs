@@ -29,8 +29,9 @@ namespace PontiApp.MessageSender
             //_factory.Password = _config.GetSection("RabbitMQ").GetSection("PassWord").Value;
             //_factory.Port = Convert.ToInt16(_config.GetSection("RabbitMQ").GetSection("Port").Value);
             _factory.HostName = "rabbitmq";
-            _factory.UserName = "guest";
-            _factory.Password = "guest";
+            _factory.UserName = "user";
+            _factory.Password = "pass";
+            _factory.VirtualHost = "/";
             _factory.Port = 5672;
             Conn = factory.CreateConnection();
             Channel = Conn.CreateModel();

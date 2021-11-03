@@ -32,9 +32,13 @@ services:
   pontiapp-image:
     container_name: pontiapp.image-container
     image: pontiapp.image
+    restart: on-failure
     ports:
       - 5030:80
       # - 5011:443
+    depends_on: 
+          - rabbitmq
+          
     build:
       context: .
       dockerfile: ./PontiApp.Images.Api/Dockerfile
@@ -42,18 +46,20 @@ services:
             - ASPNETCORE_ENVIRONMENT=Development
     networks:  
       - pontiapp-network
-      
+    
   rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: 'rabbitmq'
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
     ports:
-        - 5672:5672
-        - 15672:15672
-    volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-    networks:
-        - pontiapp-network
+      - 15672:15672
+      - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=pass
+    networks: 
+      - pontiapp-network
+
   mongodb:
     image : mongo
     container_name: mongodb
@@ -80,6 +86,17 @@ services:
      - REDIS_REPLICATION_MODE=master
     networks:
       - pontiapp-network
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - pontiapp-network
+      
 networks:
   pontiapp-network:
     driver: "bridge"

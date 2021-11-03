@@ -22,11 +22,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreateUser))]
-        public async Task<ActionResult> CreateUser([FromBody] UserCreationDTO userDTO)
+        public async Task<ActionResult> CreateUser([FromBody] UserCreationDTO userDTO, string url)
         {
             try
             {
-                await _userService.Add(userDTO);
+                await _userService.Add(userDTO, url);
                 return Ok();
             }
             catch (Exception e)
@@ -95,13 +95,21 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route("Process-User")]
-        public async Task<ActionResult<UserDTO>> ProcessUser(UserCreationDTO user)
+        public async Task<ActionResult<UserDTO>> ProcessUser(UserCreationDTO user, string url)
         {
-            if(!_userService.UserExists(user.FbKey))
+            if (!_userService.UserExists(user.FbKey))
             {
-                await _userService.Add(user);
+                await _userService.Add(user, url);
             }
             return Ok(await _userService.GetUser(user.FbKey));
+        }
+
+        [HttpGet]
+        [Route("Test")]
+        public ActionResult Test(string guid)
+        {
+            _userService.DeleteImage(guid);
+            return Ok();
         }
     }
 }

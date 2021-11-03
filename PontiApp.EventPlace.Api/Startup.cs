@@ -74,8 +74,8 @@ namespace PontiApp.EventPlace.Api
             services.AddScoped<PlaceRepository>();
             services.AddScoped<EventDTOValidator>();
             services.AddScoped<PlaceDTOValidator>();
-            services.AddScoped<MessagingService>();
-            services.AddScoped<ConnectionFactory>();
+            services.AddSingleton<MessagingService>();
+            services.AddSingleton<ConnectionFactory>();
             services.AddHttpClient();
 
 
