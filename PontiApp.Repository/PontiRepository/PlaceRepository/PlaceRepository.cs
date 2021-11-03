@@ -82,14 +82,19 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task<List<PlaceListingResponseDTO>> GetPlaceSearchResult(SearchBaseDTO searchBaseDTO)
         {
-            var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
-            var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
+            //var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
+            //var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
 
-
-            var places = (await (from place in _applicationDbContext.Places
-                                where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
-                                where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id)) 
-                                select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
+            //var places = (await (from place in _applicationDbContext.Places
+            //                     let ss = place.PlaceCategories.Select(category => category.Id)
+            //                     let searchCategoryIds = searchBaseDTO.Categories.Select(searchCat => searchCat.Id)
+            //                     let placeCategoryList = _applicationDbContext.Places.Select(place => place.PlaceCategories.Select(placeCat => placeCat.Id))
+            //                     where placeCategoryList.Where(placeCatIds => placeCatIds.Select(catId ) pl searchCategoryIds.ToList().Contains(placeCatId.Select())
+            //                     //where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
+            //                     //where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id)) 
+            //                     //  where searchForEveryCategory ? true : !(searchBaseDTO.Categories.Select(category => category.Id).Except(place.PlaceCategories.Select(category => category.Id)).Any())
+            //                     // where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id)) 
+            //                     select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
 
             return new List<PlaceListingResponseDTO>();
         }
