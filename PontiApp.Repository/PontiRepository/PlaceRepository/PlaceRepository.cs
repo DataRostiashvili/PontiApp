@@ -79,10 +79,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             currPlace.Reviews.Add(currReview);
             await _applicationDbContext.SaveChangesAsync();
         }
-        private bool PlaceHasCategories(IEnumerable<int> placeCategoryIds, IEnumerable<int> searchPlaceCategoryIds)
-        {
-            return !searchPlaceCategoryIds.Except(placeCategoryIds).Any();
-        }
+    
 
         private bool IsWorkingInTimeRange(List<WeekEntity> weekScheduleList, TimeFilterEnum searchedPlaceTime)
         {
@@ -94,14 +91,14 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
             while (currentDate <= searchedDate)
             {
-                if (!weekScheduleList[(int)currentDate.DayOfWeek].IsWorking)
+                if (weekScheduleList[(int)currentDate.DayOfWeek].IsWorking)
                 {
-                    return false;
+                    return true;
                 }
                 currentDate = currentDate.AddDays(1);
             }
 
-            return true;
+            return false;
         }
         public async Task<List<PlaceEntity>> GetPlaceSearchResult(SearchBaseDTO searchBaseDTO)
         {
@@ -110,11 +107,13 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
 
             var places = (await (from place in _applicationDbContext.Places
-                                where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
-                                 //where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id)) 
-                                 //where searchForEveryCategory ? true : (!(searchBaseDTO.Categories.Select(category => category.Id)).Except(place.PlaceCategories.Select(category => category.Id)).Any())
+                                 let placeCategoryIds = place.PlaceCategories.Select(category => category.Id)
+                                 let searchCategoryIds = searchBaseDTO.Categories.Select(category => category.Id)
+                                 where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
+                                 where IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time)
+                                 //where searchForEveryCategory ? true : !((searchCategoryIds).Except(placeCategoryIds)).Any()
                                  //where searchForEveryCategory ? true : (!(new []{ 1, 5, 7, 9, 12, 33}).Except(new[] { 1, 5, 7, 9, 12, 33 }).Any())
-                                 select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
+                                 select place).ToListAsync());
 
             return (places.ToList());
         }
