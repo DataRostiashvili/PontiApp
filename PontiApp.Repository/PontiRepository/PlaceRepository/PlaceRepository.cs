@@ -18,7 +18,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         {
 
         }
-        
+
         public async Task InsertGuesting(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
             PlaceEntity currPlace = await GetByID(currPlaceGuestDTO.PlaceId);
@@ -40,7 +40,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlace.UserEntityId);
 
             UserGuestPlace currBond = await _applicationDbContext.UserGuestPlaces.Where(o => o.PlaceEntityId == currPlace.Id && o.UserEntityId == currUser.Id).FirstAsync();
-            
+
             _applicationDbContext.UserGuestPlaces.Remove(currBond);
             await _applicationDbContext.SaveChangesAsync();
         }
@@ -88,7 +88,24 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             var places = (await (from place in _applicationDbContext.Places
                                  let ss = place.PlaceCategories.Select(category => category.Id)
                                  let searchCategoryIds = searchBaseDTO.Categories.Select(searchCat => searchCat.Id)
-                                 let placeCategoryList = _applicationDbContext.Places.SelectMany(place => place.PlaceCategories.Select(placeCat => placeCat.Id)).Where(cat => !searchCategoryIds.Contains(cat))
+                                 let placeCategoryList = _applicationDbContext.Places
+                                 .SelectMany(place => place.PlaceCategories
+                                    .Select(placeCat => placeCat.Id))
+                                    .Where(cat => !searchCategoryIds.Contains(cat))
+
+
+                                 let TestCategories= _applicationDbContext.Places
+                                 .Select(s=>s.PlaceCategories
+                                    .Select(pc=>searchCategoryIds.Contains(pc.CategoryEntityId)))
+                                 .ToList()
+                                 //.Select(s => new
+                                 //{
+                                 //    intList = s.PlaceCategories.Select(s => s.CategoryEntityId),
+                                 //    plc = s
+                                 //}
+
+
+
                                  //where placeCategoryList.Where(placeCatIds => placeCatIds.Select(catId) pl searchCategoryIds.ToList().Contains(placeCatId.Select())
                                  //where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
                                  //where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id)) 
