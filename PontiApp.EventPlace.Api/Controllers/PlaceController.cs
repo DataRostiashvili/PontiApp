@@ -183,8 +183,8 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpPost("SearchPlace")]
-        public async Task<IActionResult> SearchPlace(PontiTypeEnum PontiType, List<CategoryDTO> Categories, TimeFilterEnum Time, string SearchKeyWord)
-        {
+        public async Task<IActionResult> SearchPlace(PontiTypeEnum PontiType = PontiTypeEnum.Place, List<CategoryDTO> Categories = null, TimeFilterEnum Time = 0, string SearchKeyWord = "")
+        { 
             if (PontiType != PontiTypeEnum.Place)
             {
                 return BadRequest();
@@ -196,6 +196,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
                 Time = Time,
                 SearchKeyWord = SearchKeyWord
             };
+
             searchDto.Categories = new List<CategoryDTO>();
             foreach (var cat in Categories)
             {
