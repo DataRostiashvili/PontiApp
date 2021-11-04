@@ -14,6 +14,7 @@ namespace PontiApp.Mappings
         public WeekDayMapper()
         {
             CreateMap<WeekScheduleDTO, WeekEntity>().ReverseMap();
+            CreateMap<List<WeekScheduleDTO>, List<WeekEntity>>().ReverseMap();
         }
     }
 }
