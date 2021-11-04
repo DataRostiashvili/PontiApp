@@ -96,8 +96,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
                                  let TestCategories= _applicationDbContext.Places
                                  .Select(s=>s.PlaceCategories
-                                    .Select(pc=>searchCategoryIds.Contains(pc.CategoryEntityId)))
-                                 .ToList()
+                                    .Where(pc=>searchCategoryIds.Contains(pc.CategoryEntityId)))
                                  //.Select(s => new
                                  //{
                                  //    intList = s.PlaceCategories.Select(s => s.CategoryEntityId),
