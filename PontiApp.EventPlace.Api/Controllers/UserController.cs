@@ -110,6 +110,7 @@ namespace PontiApp.EventPlace.Api.Controllers
             if (!_userService.UserExists(fbkey))
             {
                 user = await _fbClient.GetUser(accessToken, fbkey);
+                user.MongoKey = Guid.NewGuid().ToString();
                 await _service.SendAddMessage(user.MongoKey, user.PictureUrl);
                 await _userService.Add(user);
             }

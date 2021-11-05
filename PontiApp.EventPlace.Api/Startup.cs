@@ -82,8 +82,8 @@ namespace PontiApp.EventPlace.Api
             services.AddSingleton<MessagingService>();
             services.AddScoped<IJwtProcessor,JwtProcessor>();
             services.AddSingleton<JwtConfig>();
-            services.AddSingleton<IHttpClientFactory>();
-            services.AddScoped<IFbClient>();
+            services.AddHttpClient();
+            services.AddScoped<IFbClient,FbClient>();
             services.AddHttpClient();
 
 
