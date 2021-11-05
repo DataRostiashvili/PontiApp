@@ -33,6 +33,10 @@ using System.Reflection;
 using System.Text;
 using PontiApp.MessageSender;
 using RabbitMQ.Client;
+using PontiApp.AuthService;
+using PontiApp.Models.Entities.AuthEntities;
+using System.Net.Http;
+using PontiApp.GraphAPICalls;
 
 namespace PontiApp.EventPlace.Api
 {
@@ -74,8 +78,12 @@ namespace PontiApp.EventPlace.Api
             services.AddScoped<PlaceRepository>();
             services.AddScoped<EventDTOValidator>();
             services.AddScoped<PlaceDTOValidator>();
-            services.AddSingleton<MessagingService>();
             services.AddSingleton<ConnectionFactory>();
+            services.AddSingleton<MessagingService>();
+            services.AddScoped<IJwtProcessor,JwtProcessor>();
+            services.AddSingleton<JwtConfig>();
+            services.AddSingleton<IHttpClientFactory>();
+            services.AddScoped<IFbClient>();
             services.AddHttpClient();
 
 

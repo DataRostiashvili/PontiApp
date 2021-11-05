@@ -10,14 +10,15 @@ namespace PontiApp.EventPlace.Services.UserServices
 {
     public interface IUserService
     {
-        Task Add(UserCreationDTO newUserDTO,string url);
+        Task Add(UserCreationDTO newUserDTO);
         Task Update(UserDTO currUserDTO);
         Task<UserDTO> Get(int id);
         Task Delete(UserDTO currUserDTO);
         Task<List<UserDTO>> GetAllUser();
         Task<bool> UserExists(int id);
         bool UserExists(long FbKey);
-        Task<UserEntity> GetUser(long id);
+        Task<UserEntity> GetUser(int id);
+        UserEntity GetUser(long id);
         void DeleteImage(string guid);
     }
 }
