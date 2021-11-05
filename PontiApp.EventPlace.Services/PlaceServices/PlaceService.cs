@@ -90,6 +90,10 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         {
             var searchResult = await _placeRepo.GetPlaceSearchResult(searchBaseDTO);
             var searchResultDto = _mapper.Map<List<PlaceListingResponseDTO>>(searchResult);
+            foreach(var place in searchResultDto)
+            {
+                place.WeekSchedules = _mapper.Map<List<WeekEntity>, List<WeekScheduleDTO>>(searchResult.Select(place => place.WeekSchedule).FirstOrDefault());
+            }
             return searchResultDto;
         }
 

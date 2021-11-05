@@ -181,7 +181,7 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("SearchEvent")]
+        [HttpPost("SearchEvent")]
         public async Task<IActionResult> SearchEvent(PontiTypeEnum PontiType, List<CategoryDTO> Categories, TimeFilterEnum Time, string SearchKeyWord)
         {
             if (PontiType != PontiTypeEnum.Event)
@@ -196,6 +196,7 @@ namespace PontiApp.EventPlace.Api.Controllers
                 SearchKeyWord = SearchKeyWord
             };
 
+            searchDto.Categories = new List<CategoryDTO>();
             foreach(var cat in Categories)
             {
                 searchDto.Categories.Add(cat);

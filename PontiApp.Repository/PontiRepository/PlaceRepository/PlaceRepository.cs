@@ -88,7 +88,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             var places = (await (from place in _applicationDbContext.Places
                                  where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
                                  let searchCategoryIds = searchBaseDTO.Categories.Select(searchCat => searchCat.Id)
-                                 let TestCategories= _applicationDbContext.Places
+                                 let testCategories= _applicationDbContext.Places
                                  .Select(s=>s.PlaceCategories
                                     .Where(pc=>searchCategoryIds.Contains(pc.CategoryEntityId))).AsEnumerable()                                
                                  select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
