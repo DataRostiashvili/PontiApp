@@ -99,7 +99,7 @@ namespace PontiApp.EventPlace.Api
             services.AddAutoMapper(typeof(CategoryMapper));
             services.AddAutoMapper(typeof(WeekDayMapper));
             services.AddAutoMapper(typeof(ReviewMapper));
-            //services.AddCustomAuth(Configuration);
+            services.AddCustomAuth(Configuration);
 
         }
 

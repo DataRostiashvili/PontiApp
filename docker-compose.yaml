@@ -1,6 +1,20 @@
 version: '3.4'
 
 services:
+  # pontiapp.gateway.api:
+  #   container_name: pontiapp.gateway.api-container
+  #   image: pontiapp.gateway.api
+  #   build:
+  #     context: .
+  #     dockerfile: ./PontiApp.Gateway.Api/Dockerfile
+  #   environment:
+  #           - ASPNETCORE_ENVIRONMENT=Development
+  #   ports:
+  #     - 5040:80
+  #     # - 5001:443
+  #   networks: 
+  #      - pontiapp-network
+
   pontiapp.eventplace.api:
     container_name: pontiapp.eventplace.api-container
     image: pontiapp.eventplace.api
