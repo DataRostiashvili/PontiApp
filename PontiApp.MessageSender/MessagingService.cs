@@ -15,16 +15,20 @@ namespace PontiApp.MessageSender
 {
     public class MessagingService
     {
-        private readonly IConfiguration _config;
+        public IConfigurationRoot Configuration { get; set; }
         private readonly ConnectionFactory _factory;
         private readonly ILogger<MessagingService> _logger;
         public IConnection Conn { get; set; }
         public IModel Channel { get; set; }
-        public MessagingService(IConfiguration config, ConnectionFactory factory, ILogger<MessagingService> logger)
+        public MessagingService(ConnectionFactory factory, ILogger<MessagingService> logger)
         {
-            _config = config;
+
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
             _factory = factory;
             //_logger = logger;
+            //var RabbitConfig = Configuration.GetSection("RabbitMQ");
             _factory.HostName = "rabbitmq";
             _factory.UserName = "user";
             _factory.Password = "pass";
