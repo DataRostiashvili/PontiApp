@@ -65,7 +65,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         public async Task<bool> UserExists(int id) => await _userRepository.GetByID(id) is null;
 
         public async Task<UserEntity> GetUser(int id) => await _userRepository.GetByID(id);
-        public UserEntity GetUser(long id) =>  _userRepository.GetByPredicate(f => f.FbKey == id).FirstOrDefault();
+        public UserCreationDTO GetUser(long id) => _mapper.Map<UserCreationDTO>(_userRepository.GetByPredicate(f => f.FbKey == id).FirstOrDefault());
         public void DeleteImage(string guid) => _service.SendDeleteMessage(guid);
 
         

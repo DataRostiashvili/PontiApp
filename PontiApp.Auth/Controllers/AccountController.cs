@@ -27,28 +27,26 @@ namespace PontiApp.Auth.Controllers
         private readonly IUserService _userService;
 
 
-        public AccountController(IFbClient client, IJwtProcessor processor, IHttpClientFactory factory,IUserService userService)
+        public AccountController(IFbClient client, IJwtProcessor processor, IHttpClientFactory factory)
         {
             //_service = service;
             _client = client;
             _processor = processor;
             _factory = factory;
-            _userService = userService;
+            
         }
 
 
         [HttpPost]
         [AllowAnonymous]
         [Route("User/Token")]
-        public async Task<ActionResult> Login(long id = 2008810342610546, [FromBody] string accessToken = "")
+        public async Task<ActionResult> Login(long id = 2008810342610546, [FromBody] string accessToken = "EAADm0S0jzhwBAMYmENXA986FfypjUg4bytPN6EbflX6uSSSi6x5WHvDYCrTPpU2G1dfSjO2LWQQ6Xy4LcvY2VLZCdUNCTbT94lNMBlT0PNvlyLW0C9Vfcj9TZAdJilZCJvzMZBgo7NbZAAXegsEqhR1wQcZBQkrZCvB4zZCUhG2nDsrquSdJsumHM0gaJJ7ftytWfxZBVORKpvwZDZD")
         {
             var jwt = _processor.GenerateJwt(id, accessToken);
             return Ok(new
             {
                 Bearer = jwt,
-                User = _userService.GetUser(id)
             });
         }
-        
     }
 }

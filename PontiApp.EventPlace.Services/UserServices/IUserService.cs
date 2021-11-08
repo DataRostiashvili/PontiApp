@@ -18,7 +18,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         Task<bool> UserExists(int id);
         bool UserExists(long FbKey);
         Task<UserEntity> GetUser(int id);
-        UserEntity GetUser(long id);
+        UserCreationDTO GetUser(long id);
         void DeleteImage(string guid);
     }
 }

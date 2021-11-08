@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PontiApp.AuthService;
 using PontiApp.EventPlace.Services.UserServices;
@@ -88,6 +89,8 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
+
+        [Authorize]
         [HttpGet("GetAllUser")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUser()
         {
@@ -102,11 +105,11 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Process-User")]
         public async Task<ActionResult> ProcessUser(long fbkey,string accessToken)
         {
-            UserCreationDTO user=new UserCreationDTO();
-            
+            UserCreationDTO user = new UserCreationDTO();
             if (!_userService.UserExists(fbkey))
             {
                 user = await _fbClient.GetUser(accessToken, fbkey);
@@ -116,7 +119,7 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
             return Ok(new
             {
-                Token = _jwtProcessor.GenerateJwt(fbkey, user.Name),
+                Token = _jwtProcessor.GenerateJwt(fbkey, accessToken),
                 Data = _userService.GetUser(fbkey)
             });
         }
