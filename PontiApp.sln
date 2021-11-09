@@ -50,6 +50,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingAPI", "TestingAPI\Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Images.Cache", "PontiApp.Images.Cache\PontiApp.Images.Cache.csproj", "{CAFED595-B803-472C-930E-843D9448C436}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1D5E5971-5025-401B-B4B5-51C3666A87C7}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
