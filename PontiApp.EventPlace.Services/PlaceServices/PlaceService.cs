@@ -86,9 +86,15 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             return allPlaceDTOs;
         }
 
-        public Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
+        public async Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO)
         {
-            throw new NotImplementedException();
+            var searchResult = await _placeRepo.GetPlaceSearchResult(searchBaseDTO);
+            var searchResultDto = _mapper.Map<List<PlaceListingResponseDTO>>(searchResult);
+            foreach(var place in searchResultDto)
+            {
+                place.WeekSchedules = _mapper.Map<List<WeekEntity>, List<WeekScheduleDTO>>(searchResult.Select(place => place.WeekSchedule).FirstOrDefault());
+            }
+            return searchResultDto;
         }
 
         public async Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId)

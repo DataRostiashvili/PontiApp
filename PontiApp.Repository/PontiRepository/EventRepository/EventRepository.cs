@@ -82,19 +82,22 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
         public async Task<List<EventEntity>> GetEventSearchResult(SearchBaseDTO searchBaseDTO)
         {
+
             var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
             var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
+
             var events = await (from @event in _applicationDbContext.Events
                                 where searchForEveryTitle ? true : @event.Name.Contains(searchBaseDTO.SearchKeyWord)
-                                where searchForEveryCategory ? true : EventHasCategories(@event.EventCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id))
+                                let searchCategoryIds = searchBaseDTO.Categories.Select(searchCat => searchCat.Id)
+                                let testCategories = _applicationDbContext.Events
+                                .Select(e => e.EventCategories 
+                                        .Where(ct => searchCategoryIds.Contains(ct.CategoryEntityId))).AsEnumerable()
                                 where @event.EndTime < GetDeadline(searchBaseDTO.Time)
                                 select @event).ToListAsync();
+
             return events;
         }
-        private bool EventHasCategories(IEnumerable<int> eventCategoryIds, IEnumerable<int> searchEventCategoryIds)
-        {
-            return !searchEventCategoryIds.Except(eventCategoryIds).Any();
-        }
+
         private DateTime GetDeadline(TimeFilterEnum searchedEventTime)
         {
             DateTime deadline;

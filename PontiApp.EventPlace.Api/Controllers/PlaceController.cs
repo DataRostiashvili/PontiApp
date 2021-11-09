@@ -182,14 +182,29 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpGet("SearchPlace")]
-        public async Task<IActionResult> SearchPlace(SearchBaseDTO searchDto)
-        {
-            if (searchDto.PontiType != PontiTypeEnum.Place)
+        [HttpPost("SearchPlace")]
+        public async Task<IActionResult> SearchPlace(PontiTypeEnum PontiType, List<CategoryDTO> Categories, TimeFilterEnum Time, string SearchKeyWord)
+        { 
+            if (PontiType != PontiTypeEnum.Place)
             {
                 return BadRequest();
             }
+
+            var searchDto = new SearchBaseDTO
+            {
+                PontiType = PontiType,
+                Time = Time,
+                SearchKeyWord = SearchKeyWord
+            };
+
+            searchDto.Categories = new List<CategoryDTO>();
+            foreach (var cat in Categories)
+            {
+                searchDto.Categories.Add(cat);
+            }
+
             var searchResult = await _placeService.GetSearchedPlaces(searchDto);
+
             return Ok(searchResult);
         }
     }

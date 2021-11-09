@@ -52,6 +52,16 @@ namespace PontiApp.EventPlace.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                  "CorsPolicy",
+                  builder => builder
+                  .AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader());
+            });
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -99,7 +109,7 @@ namespace PontiApp.EventPlace.Api
             services.AddAutoMapper(typeof(CategoryMapper));
             services.AddAutoMapper(typeof(WeekDayMapper));
             services.AddAutoMapper(typeof(ReviewMapper));
-            services.AddCustomAuth(Configuration);
+            //services.AddCustomAuth();
 
         }
 
@@ -107,14 +117,20 @@ namespace PontiApp.EventPlace.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PontiApp.Auth v1"));
             }
+
             app.UseHttpsRedirection();
             app.UseRouting();
+
+           
+
 
             app.UseAuthentication();
 
