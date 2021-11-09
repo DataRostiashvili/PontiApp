@@ -31,7 +31,7 @@ namespace PontiApp.Images.Api
             services.ConfigureImageServices(Configuration);
             services.AddHostedService<ImageReceiverService>();
             services.AddScoped<IMongoService,MongoService>();
-            services.AddTransient<ConnectionFactory,ConnectionFactory>();
+            services.AddSingleton<ConnectionFactory>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

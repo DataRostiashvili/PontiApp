@@ -8,10 +8,10 @@ namespace PontiApp.Models.DTOs
 {
     public class UserCreationDTO
     {
-        public string First_Name { get; set; }
-        public string Last_Name { get; set; }
-        public string Email { get; set; }
-        public string HomeTown { get; set; }
+        public string Name{ get; set; }
+        public string Surename { get; set; }
+        public string Mail { get; set; }
+        public string MongoKey { get; set; }
         public string PictureUrl { get; set; }
         public long FbKey { get; set; }
     }

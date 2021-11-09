@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Text.Encodings;
 using System.Text.Json;
 using System.Text;
+using PontiApp.EventPlace.Services.UserServices;
 
 namespace PontiApp.Auth.Controllers
 {
@@ -23,6 +24,8 @@ namespace PontiApp.Auth.Controllers
 
         private readonly IHttpClientFactory _factory;
 
+        private readonly IUserService _userService;
+
 
         public AccountController(IFbClient client, IJwtProcessor processor, IHttpClientFactory factory)
         {
@@ -30,33 +33,20 @@ namespace PontiApp.Auth.Controllers
             _client = client;
             _processor = processor;
             _factory = factory;
+            
         }
 
 
         [HttpPost]
         [AllowAnonymous]
         [Route("User/Token")]
-        public async Task<ActionResult> Login(long id = 2008810342610546, [FromBody] string accessToken = "")
+        public async Task<ActionResult> Login(long id = 2008810342610546, [FromBody] string accessToken = "EAADm0S0jzhwBAMYmENXA986FfypjUg4bytPN6EbflX6uSSSi6x5WHvDYCrTPpU2G1dfSjO2LWQQ6Xy4LcvY2VLZCdUNCTbT94lNMBlT0PNvlyLW0C9Vfcj9TZAdJilZCJvzMZBgo7NbZAAXegsEqhR1wQcZBQkrZCvB4zZCUhG2nDsrquSdJsumHM0gaJJ7ftytWfxZBVORKpvwZDZD")
         {
-            var userData = await _client.GetUser(id, accessToken);
-            var apiClient = _factory.CreateClient("API");
-            var json = JsonSerializer.Serialize(userData);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var resp = await apiClient.PostAsync("http://pontiapp.eventplace.api/80/api/User/Process-User", content);
             var jwt = _processor.GenerateJwt(id, accessToken);
             return Ok(new
             {
                 Bearer = jwt,
-                User = json
             });
-        }
-        //[Authorize]
-        [HttpPost]
-        [Route("Test")]
-        public async Task<ActionResult> getdata(long id = 2008810342610546, [FromBody] string access_token = "EAADm0S0jzhwBAM1srd2QTmAYI3Wd6syoYYFWEUDrQKjGT6sQH6tZCpBLJ9CucndzEkiyMKTtvOz6EPUZC2uj4mqR3jFE70DPcpmfMUAr3qZAdoSgFo11Tvcf2nzNw4q9IqSmZA4ZABjL8gIiVQeIfd35T9KgEjRu5gfhZAnhiIciYaF56TbmpvxwPvlXeOnYfQCaZCyd5eWoy7mUEGzYv6GPIcXvJfYYODVWpZC4GDoViBULdElv3138")
-        {
-            var user = await _client.GetUser(id, access_token);
-            return Ok(user);
         }
     }
 }

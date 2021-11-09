@@ -1,9 +1,6 @@
 ﻿using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PontiApp.EventPlace.Services.UserServices
@@ -11,12 +8,14 @@ namespace PontiApp.EventPlace.Services.UserServices
     public interface IUserService
     {
         Task Add(UserCreationDTO newUserDTO);
-        Task Update(UserDTO currUserDTO);
+        Task Delete(int id);
+        void DeleteImage(string guid);
         Task<UserDTO> Get(int id);
-        Task Delete(UserDTO currUserDTO);
         Task<List<UserDTO>> GetAllUser();
+        Task<UserEntity> GetUser(int id);
+        UserCreationDTO GetUser(long id);
+        Task Update(UserUpdateDTO currUserDTO);
         Task<bool> UserExists(int id);
-        Task<bool> UserExists(long id);
-        Task<UserEntity> GetUser(long id);
+        bool UserExists(long FbKey);
     }
 }

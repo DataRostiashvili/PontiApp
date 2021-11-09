@@ -20,7 +20,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         private readonly IMapper _mapper;
         private readonly MessagingService _service;
 
-        public UserService(IMapper mapper, BaseRepository<UserEntity> userRepository, IHttpClientFactory factory,MessagingService service)
+        public UserService(IMapper mapper, BaseRepository<UserEntity> userRepository, IHttpClientFactory factory, MessagingService service)
         {
             _userRepository = userRepository;
             _mapper = mapper;
@@ -30,21 +30,17 @@ namespace PontiApp.EventPlace.Services.UserServices
         public async Task Add(UserCreationDTO newUserDTO)
         {
             UserEntity user = _mapper.Map<UserCreationDTO, UserEntity>(newUserDTO);
-            if (!await UserExists(user.Id))
+            if (!UserExists(user.FbKey))
             {
-                var guid = Guid.NewGuid().ToString();
-                user.MongoKey = guid;
-                var client = _factory.CreateClient("mongoClient");
-                var resp = await client.GetByteArrayAsync(newUserDTO.PictureUrl);
-                _service.SendAddMessage(guid, resp);
+
                 await _userRepository.Insert(user);
             }
             else return;
         }
 
-        public async Task Delete(UserDTO currUserDTO)
+        public async Task Delete(int id)
         {
-            UserEntity user = _mapper.Map<UserEntity>(currUserDTO);
+            UserEntity user = await _userRepository.GetByID(id);
             await _userRepository.Delete(user);
         }
 
@@ -58,17 +54,20 @@ namespace PontiApp.EventPlace.Services.UserServices
             return _mapper.Map<List<UserDTO>>(await _userRepository.GetAll());
         }
 
-        public async Task Update(UserDTO currUserDTO)
+        public async Task Update(UserUpdateDTO currUserDTO)
         {
             UserEntity user = _mapper.Map<UserEntity>(currUserDTO);
             await _userRepository.Update(user);
         }
 
-        public async Task<bool> UserExists(long id) => await _userRepository.GetByID(id) is null;
+        public bool UserExists(long FbKey) => _userRepository.GetByPredicate(user => user.FbKey == FbKey).Any();
 
         public async Task<bool> UserExists(int id) => await _userRepository.GetByID(id) is null;
 
-        public async Task<UserEntity> GetUser(long id) => await _userRepository.GetByID(id);
+        public async Task<UserEntity> GetUser(int id) => await _userRepository.GetByID(id);
+        public UserCreationDTO GetUser(long id) => _mapper.Map<UserCreationDTO>(_userRepository.GetByPredicate(f => f.FbKey == id).FirstOrDefault());
+        public void DeleteImage(string guid) => _service.SendDeleteMessage(guid);
+
 
     }
 }

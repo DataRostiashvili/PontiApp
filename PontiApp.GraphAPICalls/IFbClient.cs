@@ -10,6 +10,6 @@ namespace PontiApp.GraphAPICalls
 {
     public interface IFbClient
     {
-        Task<UserCreationDTO> GetUser (long userID,string accessToken);
+        Task<UserCreationDTO> GetUser (string accessToken,long userID);
     }
 }

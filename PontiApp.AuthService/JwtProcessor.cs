@@ -17,10 +17,10 @@ namespace PontiApp.AuthService
         private readonly IConfiguration _config;
         private readonly JwtConfig _jwtconfig;
 
-        public JwtProcessor(IConfiguration config, JwtConfig jwtConfig)
+        public JwtProcessor(IConfiguration config, JwtConfig jwtconfig)
         {
             _config = config;
-            _jwtconfig = jwtConfig;
+            _jwtconfig = jwtconfig;
         }
         public string GenerateJwt(long userID, string userName)
         {

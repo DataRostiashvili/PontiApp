@@ -19,7 +19,7 @@ namespace PontiApp.Utilities
         
         public static IServiceCollection AddCustomAuth(this IServiceCollection services, IConfiguration config)
         {
-            
+                
             var jwtConfig = config.GetSection("JwtConfig").Get<JwtConfig>();
 
             services.AddAuthentication(x =>

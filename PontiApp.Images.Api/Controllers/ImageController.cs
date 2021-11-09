@@ -28,13 +28,13 @@ namespace PontiApp.Images.Api.Controllers
 
         //[FromHeader(Name = "ApiKey")] public string ApiKey { get; set; }
         
-        private readonly ICachingService _cachingService;
+        //private readonly ICachingService _cachingService;
         private readonly IMongoService _service;
 
         public ImageController(IMongoService service,ICachingService cachingService)
         {
             _service = service;
-            _cachingService = cachingService;
+            //_cachingService = cachingService;
         }
 
         [HttpGet]
@@ -44,12 +44,7 @@ namespace PontiApp.Images.Api.Controllers
         public async Task<ActionResult> Get(string guid)
         {
             var cacheKey = "Get_Profile_Pic";
-            var image = await _cachingService.GetRecordAsync<List<byte[]>>(cacheKey);
-            if (image is null)
-            {
-                image = await _service.GetImage(guid);
-                await _cachingService.SetRecordAsync<List<byte[]>>(cacheKey, image, TimeSpan.FromMinutes(60), TimeSpan.FromMinutes(30));
-            }
+            var image = await _service.GetImage(guid);
             return File(image[0], "image/jpeg");
         }
 
@@ -58,12 +53,7 @@ namespace PontiApp.Images.Api.Controllers
         public async Task<IActionResult> Get(string guid, int id)
         {
             var cacheKey = "GET_IMAGE_BY_INDEX";
-            var image =await _cachingService.GetRecordAsync<List<byte[]>>(cacheKey);
-            if (image is null)
-            {
-                image = await _service.GetImage(guid);
-                await _cachingService.SetRecordAsync<List<byte[]>>(cacheKey, image, TimeSpan.FromMinutes(60), TimeSpan.FromMinutes(30));
-            }
+            var image = await _service.GetImage(guid);
             return File(image[id], "image/jpeg");
         }
 
