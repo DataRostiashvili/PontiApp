@@ -101,7 +101,7 @@ services:
     networks:
       - pontiapp-network
   db:
-    image: postgres
+    image: postgres:latest
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:

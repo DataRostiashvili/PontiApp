@@ -38,9 +38,9 @@ namespace PontiApp.EventPlace.Services.UserServices
             else return;
         }
 
-        public async Task Delete(UserDTO currUserDTO)
+        public async Task Delete(int id)
         {
-            UserEntity user = _mapper.Map<UserEntity>(currUserDTO);
+            UserEntity user = await _userRepository.GetByID(id);
             await _userRepository.Delete(user);
         }
 
@@ -54,7 +54,7 @@ namespace PontiApp.EventPlace.Services.UserServices
             return _mapper.Map<List<UserDTO>>(await _userRepository.GetAll());
         }
 
-        public async Task Update(UserDTO currUserDTO)
+        public async Task Update(UserUpdateDTO currUserDTO)
         {
             UserEntity user = _mapper.Map<UserEntity>(currUserDTO);
             await _userRepository.Update(user);
