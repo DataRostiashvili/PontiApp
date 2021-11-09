@@ -20,7 +20,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         private readonly IMapper _mapper;
         private readonly MessagingService _service;
 
-        public UserService(IMapper mapper, BaseRepository<UserEntity> userRepository, IHttpClientFactory factory,MessagingService service)
+        public UserService(IMapper mapper, BaseRepository<UserEntity> userRepository, IHttpClientFactory factory, MessagingService service)
         {
             _userRepository = userRepository;
             _mapper = mapper;
@@ -32,7 +32,7 @@ namespace PontiApp.EventPlace.Services.UserServices
             UserEntity user = _mapper.Map<UserCreationDTO, UserEntity>(newUserDTO);
             if (!UserExists(user.FbKey))
             {
-                
+
                 await _userRepository.Insert(user);
             }
             else return;
@@ -60,7 +60,7 @@ namespace PontiApp.EventPlace.Services.UserServices
             await _userRepository.Update(user);
         }
 
-        public  bool UserExists(long FbKey) =>  _userRepository.GetByPredicate(user => user.FbKey == FbKey).Any();
+        public bool UserExists(long FbKey) => _userRepository.GetByPredicate(user => user.FbKey == FbKey).Any();
 
         public async Task<bool> UserExists(int id) => await _userRepository.GetByID(id) is null;
 
@@ -68,6 +68,6 @@ namespace PontiApp.EventPlace.Services.UserServices
         public UserCreationDTO GetUser(long id) => _mapper.Map<UserCreationDTO>(_userRepository.GetByPredicate(f => f.FbKey == id).FirstOrDefault());
         public void DeleteImage(string guid) => _service.SendDeleteMessage(guid);
 
-        
+
     }
 }

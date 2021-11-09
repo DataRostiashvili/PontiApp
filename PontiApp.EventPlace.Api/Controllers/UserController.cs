@@ -48,7 +48,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateUser))]
-        public async Task<ActionResult> UpdateUser([FromBody] UserDTO userDTO)
+        public async Task<ActionResult> UpdateUser([FromBody] UserUpdateDTO userDTO)
         {
             try
             {
@@ -63,11 +63,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpDelete]
         [Route(nameof(DeleteUser))]
-        public async Task<ActionResult> DeleteUser([FromBody] UserDTO userDTO)
+        public async Task<ActionResult> DeleteUser([FromBody] int userId)
         {
             try
             {
-                await _userService.Delete(userDTO);
+                await _userService.Delete(userId);
                 return Ok();
             }
             catch (Exception e)
