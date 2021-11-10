@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PontiApp.EventPlace.Services.EventServices;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.DTOs.Enums;
+using PontiApp.Models.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -182,21 +183,21 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpPost("SearchEvent")]
-        public async Task<IActionResult> SearchEvent(PontiTypeEnum PontiType, List<CategoryDTO> Categories, TimeFilterEnum Time, string SearchKeyWord)
+        public async Task<IActionResult> SearchEvent(PontiTypeEnum PontiType, List<CategoryRequest> Categories, TimeFilterEnum Time, string SearchKeyWord)
         {
             if (PontiType != PontiTypeEnum.Event)
             {
                 return BadRequest();
             }
 
-            var searchDto = new SearchBaseDTO
+            var searchDto = new SearchFilter
             {
                 PontiType = PontiType,
                 Time = Time,
                 SearchKeyWord = SearchKeyWord
             };
 
-            searchDto.Categories = new List<CategoryDTO>();
+            searchDto.Categories = new();
             foreach(var cat in Categories)
             {
                 searchDto.Categories.Add(cat);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PontiApp.Models.DTOs;
+using PontiApp.Models.Request;
 using PontiApp.Models.DTOs.Enums;
 using PontiApp.PlacePlace.Services.PlaceServices;
 using System;
@@ -183,21 +184,22 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpPost("SearchPlace")]
-        public async Task<IActionResult> SearchPlace(PontiTypeEnum PontiType, List<CategoryDTO> Categories, TimeFilterEnum Time, string SearchKeyWord)
+        public async Task<IActionResult> SearchPlace(PontiTypeEnum PontiType, List<CategoryRequest> Categories, TimeFilterEnum Time, string SearchKeyWord)
         { 
             if (PontiType != PontiTypeEnum.Place)
             {
                 return BadRequest();
             }
 
-            var searchDto = new SearchBaseDTO
+            var searchDto = new SearchFilter
             {
                 PontiType = PontiType,
                 Time = Time,
                 SearchKeyWord = SearchKeyWord
             };
 
-            searchDto.Categories = new List<CategoryDTO>();
+            searchDto.Categories = new();
+
             foreach (var cat in Categories)
             {
                 searchDto.Categories.Add(cat);
