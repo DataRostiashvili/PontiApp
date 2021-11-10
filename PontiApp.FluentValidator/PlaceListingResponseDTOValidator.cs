@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace PontiApp.FluentValidator
 {
-    public class EventHostRequestDTOValidator:AbstractValidator<EventHostRequestDTO>
+    public class PlaceListingResponseDTOValidator:AbstractValidator<PlaceListingResponseDTO>
     {
-        public EventHostRequestDTOValidator()
+        public PlaceListingResponseDTOValidator()
         {
-            RuleFor(x => x.Mail).EmailAddress();
+            RuleFor(x => x.Id).NotNull();
         }
     }
 }
