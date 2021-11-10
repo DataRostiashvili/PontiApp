@@ -14,6 +14,7 @@ namespace PontiApp.FluentValidator
         {
             RuleFor(x => x.Id).NotNull();
             RuleFor(x => x.Start).NotNull();
+            RuleFor(x => x.Day).Must(x => x.GetType() == typeof(DayOfWeek));
         }
     }
 }
