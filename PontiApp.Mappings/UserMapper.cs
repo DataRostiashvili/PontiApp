@@ -16,7 +16,7 @@ namespace PontiApp.Mappings
             CreateMap<UserEntity, UserCreationDTO>().ReverseMap();
             CreateMap<UserEntity, UserDTO>().ReverseMap();
             CreateMap<UserEntity, UserUpdateDTO>().ReverseMap();
-            //CreateMap<UserEntity>
+            CreateMap<UserEntity, UserListingDTO>().ReverseMap();
         }
     }
 }
