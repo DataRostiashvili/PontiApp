@@ -7,11 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PontiApp.EventPlace.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
@@ -169,6 +171,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetAllEvent")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<EventListingResponseDTO>>> GetAllEvent()
         {
             try

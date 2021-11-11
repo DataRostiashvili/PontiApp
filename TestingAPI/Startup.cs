@@ -2,11 +2,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PontiApp.Data.DatabaseSeeder;
+using PontiApp.Data.DbContexts;
 using PontiApp.MessageSender;
 using RabbitMQ.Client;
 using System;
@@ -39,8 +42,14 @@ namespace TestingAPI
                 var xmlPath = Path.Combine(AppContext.BaseDirectory,xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("DbConnection"));
+            });
             services.AddScoped<ConnectionFactory,ConnectionFactory>();
             services.AddScoped<MessagingService,MessagingService>();
+            services.AddScoped<DatabaseSeeder>();
+            
 
         }
 

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PontiApp.Data\PontiApp.Data.csproj" />
     <ProjectReference Include="..\PontiApp.MessageSender\PontiApp.MessageSender.csproj" />
   </ItemGroup>
 

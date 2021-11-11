@@ -8,7 +8,7 @@ namespace PontiApp.Models.Entities
 {
     public class CategoryEntity : BaseEntity
     {
-        public string Cetegory { get; set; }
+        public string Category { get; set; }
         public ICollection<EventCategory> EventsCategories { get; set; }
 
         public ICollection<PlaceCategory> PlaceCategories{ get; set; }

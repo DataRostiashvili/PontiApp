@@ -23,6 +23,9 @@ namespace PontiApp.EventPlace.Services.CategoryServices
         {
             CategoryEntity newCategory = _mapper.Map<CategoryEntity>(newCategoryDTO);
             await _categoryRepository.Insert(newCategory);
+
+            var newCategoryEntity = _mapper.Map<CategoryEntity>(newCategory);
+            await _categoryRepository.Insert(new CategoryEntity { Category = newCategory.Category });
         }
 
         public async Task Delete(CategoryDTO currCategoryDTO)
