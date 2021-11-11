@@ -98,13 +98,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             return events;
         }
 
->>>>>>>>> Temporary merge branch 2
         private bool EventHasCategories(IEnumerable<int> eventCategoryIds, IEnumerable<int> searchEventCategoryIds)
         {
             return !searchEventCategoryIds.Except(eventCategoryIds).Any();
         }
-<<<<<<<<< Temporary merge branch 1
-=========
 
         private DateTime GetDeadline(TimeFilterEnum searchedEventTime)
         {
