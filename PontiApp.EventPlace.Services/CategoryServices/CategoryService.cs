@@ -23,7 +23,7 @@ namespace PontiApp.EventPlace.Services.CategoryServices
         }
         public async Task Add(CategoryRequest newCategory)
         {
-            var newCategoryEntity = _mapper.Map<CategoryEntity>(newCategory);
+             var newCategoryEntity = _mapper.Map<CategoryEntity>(newCategory);
             await _categoryRepository.Insert(newCategoryEntity);
         }
 
