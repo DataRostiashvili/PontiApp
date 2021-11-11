@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
+using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using PontiApp.Ponti.Repository.BaseRepository;
 using System;
 using System.Collections.Generic;
@@ -19,27 +21,37 @@ namespace PontiApp.EventPlace.Services.CategoryServices
             _mapper = mapper;
             _categoryRepository = categoryRepository;
         }
-        public async Task Add(CategoryDTO newCategoryDTO)
+        public async Task Add(CategoryRequest newCategory)
         {
-            CategoryEntity newCategory = _mapper.Map<CategoryEntity>(newCategoryDTO);
-            await _categoryRepository.Insert(newCategory);
-
             var newCategoryEntity = _mapper.Map<CategoryEntity>(newCategory);
-            await _categoryRepository.Insert(new CategoryEntity { Category = newCategory.Category });
+            await _categoryRepository.Insert(newCategoryEntity);
         }
 
-        public async Task Delete(CategoryDTO currCategoryDTO)
+        public async Task Delete(CategoryRequest category)
         {
-            CategoryEntity currCategory = _mapper.Map<CategoryEntity>(currCategoryDTO);
-            await _categoryRepository.Delete(currCategory);
+            var entity = GetEntity(category);
+
+            await _categoryRepository.Delete(entity);
         }
 
-        public async Task<List<CategoryDTO>> GetAll()
+      
+
+        public async Task<List<CategoryResponse>> GetAll()
         {
-            List<CategoryEntity> allCategory = await _categoryRepository.GetAll();
-            List<CategoryDTO> allCategoryDTOs = _mapper.Map<List<CategoryEntity>, List<CategoryDTO>>(allCategory);
+            var allCategory = await _categoryRepository.GetAll();
+            var allCategoryDTOs = _mapper.Map<List<CategoryEntity>, List<CategoryResponse>>(allCategory);
 
             return allCategoryDTOs;
         }
+
+
+        #region private methods
+
+        private CategoryEntity GetEntity(CategoryRequest category)
+        {
+            return _categoryRepository.GetByPredicate(cat => cat.Category == category.Category).FirstOrDefault();
+        }
+
+        #endregion  
     }
 }

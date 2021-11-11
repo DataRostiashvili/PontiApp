@@ -80,24 +80,33 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<PlaceEntity>> GetPlaceSearchResult(SearchBaseDTO searchBaseDTO)
+        public async Task<List<PlaceEntity>> GetPlaceSearchResult(SearchFilter searchBaseDTO)
         {
+            //prepare input
+            var rawCategories = searchBaseDTO.Categories.Select(cat=> cat.Category).ToList();
+            var categoryEntities = _applicationDbContext.Categories.Where(cat => rawCategories.Contains(cat.Category))
+                .AsEnumerable();
+
+
+
             var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
             var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
 
-
             var places = (await (from place in _applicationDbContext.Places
-                                where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
-                                where searchForEveryCategory ? true : PlaceHasCategories(place.PlaceCategories.Select(category => category.Id), searchBaseDTO.Categories.Select(category => category.Id)) 
-                                select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
+                                 where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
+                                 let searchCategoryIds = categoryEntities.Select(searchCat => searchCat.Id)
+                                 let testCategories= _applicationDbContext.Places
+                                 .Select(s=>s.PlaceCategories
+                                    .Where(pc=>searchCategoryIds.Contains(pc.CategoryEntityId))).AsEnumerable()                                
+                                 select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
 
-            return new List<PlaceListingResponseDTO>();
+            return places.ToList();
         }
 
-        private bool PlaceHasCategories(IEnumerable<int> placeCategoryIds, IEnumerable<int> searchPlaceCategoryIds)
-        {
-            return !searchPlaceCategoryIds.Except(placeCategoryIds).Any();
-        }
+        //private bool PlaceHasCategories(IEnumerable<int> placeCategoryIds, IEnumerable<int> searchPlaceCategoryIds)
+        //{
+        //    return !searchPlaceCategoryIds.Except(placeCategoryIds).Any();
+        //}
 
         private bool IsWorkingInTimeRange(List<WeekEntity> weekScheduleList, TimeFilterEnum searchedPlaceTime)
         {
@@ -107,40 +116,48 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             //if (searchedDate == DateTime.MaxValue)
             //    searchedDate = DateTime.Today.AddDays(7);
 
-            while (currentDate < searchedDate)
+            if (searchedPlaceTime == TimeFilterEnum.today)
+                return weekScheduleList[(int)currentDate.DayOfWeek].IsWorking;
+            else if(searchedPlaceTime == TimeFilterEnum.tomorrow)
+                return weekScheduleList[(int)currentDate.AddDays(1).DayOfWeek].IsWorking;
+            else
             {
-                if (!weekScheduleList[(int)currentDate.DayOfWeek].IsWorking)
+                var searchedDate = DateTime.Today.AddDays(7);
+                while (currentDate < searchedDate)
                 {
-                    return false;
+                    if (!weekScheduleList[(int)currentDate.DayOfWeek].IsWorking)
+                    {
+                        return false;
+                    }
+                    currentDate = currentDate.AddDays(1);
                 }
-                currentDate = currentDate.AddDays(1);
             }
 
-            return (places.ToList());
+            return true;
         }
 
-        private DateTime GetWorkingDays(TimeFilterEnum searchedPlaceTime)
-        {
-            DateTime workingDays;
-            switch (searchedPlaceTime)
-            {
-                case TimeFilterEnum.today:
-                    workingDays = DateTime.Today;
-                    break;
-                case TimeFilterEnum.tomorrow:
-                    workingDays = DateTime.Today.AddDays(1);
-                    break;
-                case TimeFilterEnum.currentWeek:
-                    workingDays = DateTime.Today.AddDays(7);
-                    break;
-                case TimeFilterEnum.upcomming:
-                    workingDays = DateTime.MaxValue;
-                    break;
-                default:
-                    workingDays = DateTime.MaxValue;
-                    break;
-            }
-            return workingDays;
-        }
+        //private DateTime GetWorkingDays(TimeFilterEnum searchedPlaceTime)
+        //{
+        //    DateTime workingDays;
+        //    switch (searchedPlaceTime)
+        //    {
+        //        case TimeFilterEnum.today:
+        //            workingDays = DateTime.Today;
+        //            break;
+        //        case TimeFilterEnum.tomorrow:
+        //            workingDays = DateTime.Today.AddDays(1);
+        //            break;
+        //        case TimeFilterEnum.currentWeek:
+        //            workingDays = DateTime.Today.AddDays(7);
+        //            break;
+        //        case TimeFilterEnum.upcomming:
+        //            workingDays = DateTime.MaxValue;
+        //            break;
+        //        default:
+        //            workingDays = DateTime.MaxValue;
+        //            break;
+        //    }
+        //    return workingDays;
+        //}
     }
 }

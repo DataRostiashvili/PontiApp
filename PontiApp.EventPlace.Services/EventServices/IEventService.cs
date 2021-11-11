@@ -18,7 +18,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId);
         Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest);
         Task<List<EventListingResponseDTO>> GetAllEvent();
-        Task<List<EventListingResponseDTO>> GetSearchedEvents(SearchBaseDTO searchBaseDTO);
+        Task<List<EventListingResponseDTO>> GetSearchedEvents(SearchFilter searchBaseDTO);
         Task<List<EventListingResponseDTO>> GetAllHsotingEvent(int userHostId);
         Task<List<EventListingResponseDTO>> GetAllGuestingEvent(int userGuestId);
 

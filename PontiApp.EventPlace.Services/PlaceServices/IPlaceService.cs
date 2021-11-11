@@ -18,7 +18,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId);
         Task<PlaceGuestResponseDTO> GetDetailedGuestingPlace(PlaceGuestRequestDTO placeGuest);
         Task<List<PlaceListingResponseDTO>> GetAllPlace();
-        Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO);
+        Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchFilter searchBaseDTO);
         Task<List<PlaceListingResponseDTO>> GetAllHsotingPlace(int userHostId);
         Task<List<PlaceListingResponseDTO>> GetAllGuestingPlace(int userGuestId);
     }

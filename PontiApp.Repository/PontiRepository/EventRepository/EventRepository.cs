@@ -83,15 +83,20 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<EventEntity>> GetEventSearchResult(SearchBaseDTO searchBaseDTO)
+        public async Task<List<EventEntity>> GetEventSearchResult(SearchFilter searchBaseDTO)
         {
+            //prepare input
+            var rawCategories = searchBaseDTO.Categories.Select(cat => cat.Category).ToList();
+            var categoryEntities = _applicationDbContext.Categories.Where(cat => rawCategories.Contains(cat.Category))
+                .AsEnumerable();
+
 
             var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
             var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
 
             var events = await (from @event in _applicationDbContext.Events
                                 where searchForEveryTitle ? true : @event.Name.Contains(searchBaseDTO.SearchKeyWord)
-                                let searchCategoryIds = searchBaseDTO.Categories.Select(searchCat => searchCat.Id)
+                                let searchCategoryIds = categoryEntities.Select(searchCat => searchCat.Id)
                                 let testCategories = _applicationDbContext.Events
                                 .Select(e => e.EventCategories 
                                         .Where(ct => searchCategoryIds.Contains(ct.CategoryEntityId))).AsEnumerable()
