@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 {
     public class EventRepository : BaseRepository<EventEntity>
@@ -21,6 +23,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
         public async Task InsertGuesting(EventGuestRequestDTO currEventGuestDTO)
         {
+
             EventEntity currEvent = await GetByID(currEventGuestDTO.EventId);
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currEventGuestDTO.UserGuestId);
 
