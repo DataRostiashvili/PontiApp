@@ -2,6 +2,8 @@
 using PontiApp.Models;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
+using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,10 @@ namespace PontiApp.Mappings
             CreateMap<PlaceCategoryDTO, PlaceCategory>().ReverseMap();
 
             CreateMap<CategoryDTO, CategoryEntity>().ReverseMap();
+
+            CreateMap<CategoryRequest, CategoryEntity>().ReverseMap();
+
+            CreateMap<CategoryResponse, CategoryEntity>().ReverseMap();
         }
     }
 }

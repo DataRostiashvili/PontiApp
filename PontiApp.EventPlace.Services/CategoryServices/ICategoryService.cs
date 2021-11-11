@@ -1,4 +1,6 @@
 ﻿using PontiApp.Models.DTOs;
+using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,9 @@ namespace PontiApp.EventPlace.Services.CategoryServices
 {
     public interface ICategoryService
     {
-        Task Add(CategoryDTO newCategoryDTO);
-        Task Delete(CategoryDTO currCategoryDTO);
-        Task<List<CategoryDTO>> GetAll();
+        Task Add(CategoryRequest newCategoryDTO);
+        Task Delete(CategoryRequest currCategoryDTO);
+        Task<List<CategoryResponse>> GetAll();
 
     }
 }

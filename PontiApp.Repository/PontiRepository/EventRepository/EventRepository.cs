@@ -84,7 +84,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
         {
             //prepare input
             var rawCategories = searchBaseDTO.Categories.Select(cat => cat.Category).ToList();
-            var categoryEntities = _applicationDbContext.Categories.Where(cat => rawCategories.Contains(cat.Cetegory))
+            var categoryEntities = _applicationDbContext.Categories.Where(cat => rawCategories.Contains(cat.Category))
                 .AsEnumerable();
 
 
