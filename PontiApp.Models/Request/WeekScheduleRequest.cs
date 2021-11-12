@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PontiApp.Models.Response
+namespace PontiApp.Models.Request
 {
-    public  class WeekScheduleResponse
+    public class WeekScheduleRequest
     {
         public DateTime Start { get; set; }
         public DateTime End { get; set; }

@@ -1,5 +1,6 @@
 ﻿using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
+using PontiApp.Models.Request;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         Task<List<UserDTO>> GetAllUser();
         Task<UserEntity> GetUser(int id);
         UserCreationDTO GetUser(long id);
-        Task Update(UserUpdateDTO currUserDTO);
+        Task Update(UserRequest currUserDTO);
         Task<bool> UserExists(int id);
         bool UserExists(long FbKey);
     }
