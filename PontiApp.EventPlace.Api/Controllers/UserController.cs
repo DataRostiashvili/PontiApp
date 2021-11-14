@@ -50,11 +50,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateUser))]
-        public async Task<ActionResult> UpdateUser([FromBody] UserRequest userDTO)
+        public async Task<ActionResult> UpdateUser([FromBody] UserRequest userRequest)
         {
             try
             {
-                await _userService.Update(userDTO);
+                await _userService.Update(userRequest);
                 return Ok();
             }
             catch (Exception e)

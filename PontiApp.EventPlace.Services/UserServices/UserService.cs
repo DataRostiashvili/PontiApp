@@ -61,7 +61,14 @@ namespace PontiApp.EventPlace.Services.UserServices
 
         public async Task Update(UserRequest userRequest)
         {
-            UserEntity user = _mapper.Map<UserEntity>(userRequest);
+            var user = _userRepository.GetByPredicate(user => user.FbKey == userRequest.fbId).First(); 
+            user.Address = userRequest.Address;
+            user.AverageRanking = userRequest.AverageRanking;
+            user.Mail = userRequest.Mail;
+            user.Name = userRequest.Name;
+            user.PhoneNumber = userRequest.PhoneNumber;
+            user.Surename = userRequest.Surename;
+
             await _userRepository.Update(user);
         }
 

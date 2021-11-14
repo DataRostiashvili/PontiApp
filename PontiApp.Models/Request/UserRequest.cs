@@ -19,5 +19,6 @@ namespace PontiApp.Models.Request
 
         public string Address { get; set; }
 
+        public float AverageRanking { get; set; }
     }
 }
