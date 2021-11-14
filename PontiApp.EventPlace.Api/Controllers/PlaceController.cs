@@ -22,11 +22,11 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreatePlace))]
-        public async Task<ActionResult> CreatePlace([FromBody] PlaceHostRequestDTO PlaceDTO)
+        public async Task<ActionResult> CreatePlace([FromBody] PlaceRequest placeRequest)
         {
             try
             {
-                await _placeService.AddHostingPlace(PlaceDTO);
+                await _placeService.AddHostingPlace(placeRequest);
                 return Ok();
             }
             catch (Exception e)

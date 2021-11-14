@@ -92,19 +92,19 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
 
-        [Authorize]
-        [HttpGet("GetAllUser")]
-        public async Task<ActionResult<IEnumerable<UserResponse>>> GetAllUser()
-        {
-            try
-            {
-                return Ok(await _userService.GetAllUser());
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
+        //[Authorize]
+        //[HttpGet("GetAllUser")]
+        //public async Task<ActionResult<IEnumerable<UserResponse>>> GetAllUser()
+        //{
+        //    try
+        //    {
+        //        return Ok(await _userService.GetAllUser());
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         [HttpPost]
         [AllowAnonymous]

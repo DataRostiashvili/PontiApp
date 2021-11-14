@@ -1,4 +1,5 @@
 ﻿using PontiApp.Models.DTOs;
+using PontiApp.Models.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 {
     public interface IPlaceService
     {
-        Task AddHostingPlace(PlaceHostRequestDTO newPlaceDTO);
+        Task AddHostingPlace(PlaceRequest newPlaceDTO);
         Task AddGusestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO);
         Task UpdateHostingPlace(PlaceHostRequestDTO currPlaceHostDTO);
         Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO);

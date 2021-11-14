@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
+using PontiApp.Models.Request;
 using PontiApp.PlacePlace.Services.PlaceServices;
 using PontiApp.Ponti.Repository.PontiRepository;
 using PontiApp.Validators.EntityValidators;
@@ -31,25 +32,13 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.InsertGuesting(currPlaceGuestDTO);
         }
 
-        public async Task AddHostingPlace(PlaceHostRequestDTO newPlaceDTO)
+        public async Task AddHostingPlace(PlaceRequest newPlaceDTO)
         {
-            PlaceEntity newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
+            var newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
+
             await _placeRepo.Insert(newPlace);
         }
 
-        //private void AddImagesInfo(ref PlaceEntity newPlace, PlaceDTO newPlaceDTO)
-        //{
-        //    foreach (var p in newPlaceDTO.Pictures)
-        //    {
-        //        PlacePicEntity PlacePic = new()
-        //        {
-        //            MongoKey = Guid.NewGuid().ToString()
-        //        };
-
-        //        newPlace.Pictures.Add(PlacePic);
-        //        //awaitable Throw {bytes, guid} with rabbitMQ
-        //    }
-        //}
 
         public async Task DeleteGuestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO)
         {

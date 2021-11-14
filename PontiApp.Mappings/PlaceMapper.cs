@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
+using PontiApp.Models.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace PontiApp.Mappings
             CreateMap<PlaceEntity, PlaceHostResponseDTO>();
             CreateMap<PlaceEntity, PlaceGuestResponseDTO>();
             CreateMap<PlaceEntity, PlaceListingResponseDTO>();
+
+            CreateMap<PlaceRequest, PlaceEntity>().ReverseMap();
         }
     }
 }
