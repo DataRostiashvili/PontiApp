@@ -12,7 +12,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         Task Add(UserCreationDTO newUserDTO);
         Task Delete(long id);
         void DeleteImage(string guid);
-        Task<UserDTO> Get(int id);
+        Task<UserResponse> Get(long id);
         Task<List<UserResponse>> GetAllUser();
         Task<UserEntity> GetUser(int id);
         UserCreationDTO GetUser(long fbId);

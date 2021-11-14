@@ -49,9 +49,9 @@ namespace PontiApp.EventPlace.Services.UserServices
             await _userRepository.Delete(user);
         }
 
-        public async Task<UserDTO> Get(int id)
+        public async Task<UserResponse> Get(long FbId)
         {
-            return _mapper.Map<UserDTO>(await _userRepository.GetByID(id));
+            return _mapper.Map<UserResponse>(_userRepository.GetByPredicate(user => user.FbKey == FbId).FirstOrDefault());
         }
 
         public async Task<List<UserResponse>> GetAllUser()

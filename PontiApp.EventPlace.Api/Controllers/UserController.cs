@@ -78,12 +78,12 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetEvent(int id)
+        [HttpGet(nameof(GetUser))]
+        public async Task<ActionResult<UserResponse>> GetUser(long FbId)
         {
             try
             {
-                return Ok(await _userService.Get(id));
+                return Ok(await _userService.Get(FbId));
             }
             catch (Exception e)
             {
@@ -97,7 +97,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         //public async Task<ActionResult<IEnumerable<UserResponse>>> GetAllUser()
         //{
         //    try
-        //    {
+        //    {                       
         //        return Ok(await _userService.GetAllUser());
         //    }
         //    catch (Exception e)
@@ -126,13 +126,15 @@ namespace PontiApp.EventPlace.Api.Controllers
             });
         }
 
-        [HttpGet]
-        [Route("Test")]
-        public ActionResult Test(string guid)
-        {
-            _userService.DeleteImage(guid);
-            return Ok();
-        }
+        //[HttpGet]
+        //[Route("Test")]
+        //public ActionResult Test(string guid)
+        //{
+        //    _userService.DeleteImage(guid);
+        //    return Ok();
+        //}
+
+
         [HttpPost]
         [Route("UploadImages")]
         public async Task<ActionResult> Upload(long fbId, IFormFileCollection files)
