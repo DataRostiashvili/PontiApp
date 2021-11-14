@@ -15,7 +15,10 @@ using PontiApp.Models.Response;
 
 namespace PontiApp.EventPlace.Services.UserServices
 {
+   
+
     public class UserService : IUserService
+    // : IUserService
     {
         private readonly IHttpClientFactory _factory;
         private readonly BaseRepository<UserEntity> _userRepository;
@@ -42,7 +45,7 @@ namespace PontiApp.EventPlace.Services.UserServices
 
         public async Task Delete(long id)
         {
-            var user = _userRepository.GetByPredicate(user => user.FbKey == id).FirstOrDefault(); 
+            var user = _userRepository.GetByPredicate(user => user.FbKey == id).FirstOrDefault();
             await _userRepository.Delete(user);
         }
 

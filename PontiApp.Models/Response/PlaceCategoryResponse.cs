@@ -15,4 +15,4 @@ namespace PontiApp.Models.Response
         public bool IsDeleted { get; set; }
     }
 }
-}
+

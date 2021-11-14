@@ -65,7 +65,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpDelete]
         [Route(nameof(DeleteUser))]
-        public async Task<ActionResult> DeleteUser([FromBody] int fbId)
+        public async Task<ActionResult> DeleteUser(long fbId)
         {
             try
             {
