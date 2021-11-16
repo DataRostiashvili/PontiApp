@@ -15,23 +15,24 @@ namespace PontiApp.MessageSender
 {
     public class MessagingService
     {
-        public IConfiguration Configuration { get; set; }
+        private IConfiguration Configuration;
+        private readonly IHttpClientFactory _clientFactory;
         private readonly ConnectionFactory _factory;
-        private readonly ILogger<MessagingService> _logger;
         public IConnection Conn { get; set; }
         public IModel Channel { get; set; }
-        public MessagingService(ConnectionFactory factory,IConfiguration _Configuration /*ILogger<MessagingService> logger,*/)
+        public MessagingService(ConnectionFactory factory, IConfiguration _Configuration, IHttpClientFactory clientFactory)
         {
             Configuration = _Configuration;
             _factory = factory;
-            
+            _clientFactory = clientFactory;
+
+
             var rabbitconfig = Configuration.GetSection("RabbitMQ");
             _factory.HostName = rabbitconfig.GetSection("HostName").Value;
             _factory.UserName = rabbitconfig.GetSection("UserName").Value;
             _factory.Password = rabbitconfig.GetSection("PassWord").Value;
             _factory.VirtualHost = rabbitconfig.GetSection("VirtualHost").Value;
             _factory.Port = Convert.ToInt32(rabbitconfig.GetSection("Port").Value);
-            File.WriteAllText("./FixLogs.txt", _factory.HostName);
             Conn = factory.CreateConnection();
             Channel = Conn.CreateModel();
         }
@@ -43,7 +44,6 @@ namespace PontiApp.MessageSender
             dict.Add(RabbitMQConsts.LIST, BytesList);
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.UPDATE_ADD_Q, null, body);
-            // _logger.LogInformation($"Message sent to {RabbitMQConsts.UPDATE_ADD_Q} at {DateTime.Now}");
         }
 
         public void SendUpdateMessage(string guid, int[] indices)
@@ -53,7 +53,6 @@ namespace PontiApp.MessageSender
             dict.Add(RabbitMQConsts.INDICES, indices);
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.UPDATE_REMOVE_Q, null, body);
-            //_logger.LogInformation($"Message sent to {RabbitMQConsts.UPDATE_REMOVE_Q} at {DateTime.Now}");
         }
         public async Task SendAddMessage(string guid, IFormFileCollection files)
         {
@@ -63,7 +62,6 @@ namespace PontiApp.MessageSender
             dict.Add(RabbitMQConsts.LIST, BytesList);
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.ADD_Q, null, body);
-            //_logger.LogInformation($"Message sent to {RabbitMQConsts.ADD_Q} at {DateTime.Now}");
         }
         public void SendDeleteMessage(string guid)
         {
@@ -71,33 +69,23 @@ namespace PontiApp.MessageSender
             dict.Add(RabbitMQConsts.GUID, guid);
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.DELETE_Q, null, body);
-            //logger.LogInformation($"Message sent to {RabbitMQConsts.DELETE_Q} at {DateTime.Now}");
         }
 
         public async Task SendAddMessage(string guid, string url)
         {
-            try
+
+            var client = _clientFactory.CreateClient("Facebook");
+            var image = await client.GetByteArrayAsync(url);
+            var list = new List<byte[]>()
             {
-                var client = new HttpClient();
-                var image = await client.GetByteArrayAsync(url);
-                var list = new List<byte[]>()
-                {
-                    image
-                };
-                var dict = new Dictionary<string, object>();
-                dict.Add(RabbitMQConsts.GUID, guid);
-                dict.Add(RabbitMQConsts.LIST, list);
-                var body = dict.GetJsonBytes();
-                Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.ADD_Q, null, body);
-            }
-            catch
-            {
-                string[] str = new string[2];
-                str[0] = url;
-                str[1] = $"{DateTime.Now}";
-                var file = "./Logs.txt";
-                File.WriteAllLines(file,str);
-            }
+                image
+            };
+            var dict = new Dictionary<string, object>();
+            dict.Add(RabbitMQConsts.GUID, guid);
+            dict.Add(RabbitMQConsts.LIST, list);
+            var body = dict.GetJsonBytes();
+            Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.ADD_Q, null, body);
+
         }
 
 
