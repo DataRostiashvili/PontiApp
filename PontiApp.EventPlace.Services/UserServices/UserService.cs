@@ -35,7 +35,7 @@ namespace PontiApp.EventPlace.Services.UserServices
         public async Task Add(UserCreationDTO newUserDTO)
         {
             UserEntity user = _mapper.Map<UserCreationDTO, UserEntity>(newUserDTO);
-            if (!UserExists(user.FbKey))
+            if (UserExists(user.FbKey))
             {
 
                 await _userRepository.Insert(user);
