@@ -17,9 +17,6 @@ namespace PontiApp.Data.EntityConfiguration
             builder.Property(e => e.Id).
                 HasIdentityOptions(startValue: 200);
 
-            builder
-            .HasIndex(u => u.Category)
-            .IsUnique();
         }
     }
 }

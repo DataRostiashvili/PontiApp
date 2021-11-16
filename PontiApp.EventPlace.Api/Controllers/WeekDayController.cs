@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using PontiApp.EventPlace.Services.WeekDayServices;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
+using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +25,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(AddWeekDay))]
-        public async Task<ActionResult> AddWeekDay([FromBody] List<WeekScheduleDTO> weekDayDTOs)
+        public async Task<ActionResult> AddWeekDay([FromBody] List<WeekScheduleRequest> weekSchedule)
         {
             try
             {
-                await _weekDayService.AddWeekDays(weekDayDTOs);
+                await _weekDayService.AddWeekDays(weekSchedule);
                 return Ok();
             }
             catch (Exception e)
@@ -38,11 +40,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateWeekDay))]
-        public async Task<ActionResult> UpdateWeekDay([FromBody] List<WeekScheduleDTO> weekDayDTOs)
+        public async Task<ActionResult> UpdateWeekDay([FromBody] List<WeekScheduleRequest> weekSchedule)
         {
             try
             {
-                await _weekDayService.UpdateWeekDays(weekDayDTOs);
+                await _weekDayService.UpdateWeekDays(weekSchedule);
                 return Ok();
             }
             catch (Exception e)
@@ -52,11 +54,11 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetAllWeekDays")]
-        public async Task<ActionResult<IEnumerable<WeekScheduleDTO>>> GetAllWeekDays()
+        public async Task<ActionResult<IEnumerable<WeekScheduleResponse>>> GetAllWeekDays()
         {
             try
             {
-                List<WeekScheduleDTO> weekDays = await _weekDayService.GetWeekSchedules();
+                var weekDays = await _weekDayService.GetWeekSchedules();
                 return Ok(weekDays);
             }
             catch (Exception e)

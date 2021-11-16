@@ -29,7 +29,7 @@ namespace PontiApp.MessageSender
             _factory = factory;
             //_logger = logger;
             //var RabbitConfig = Configuration.GetSection("RabbitMQ");
-            _factory.HostName = "rabbitmq";
+            _factory.HostName = "localhost";
             _factory.UserName = "user";
             _factory.Password = "pass";
             _factory.VirtualHost = "/";

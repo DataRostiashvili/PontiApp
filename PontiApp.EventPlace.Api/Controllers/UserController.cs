@@ -6,6 +6,8 @@ using PontiApp.EventPlace.Services.UserServices;
 using PontiApp.GraphAPICalls;
 using PontiApp.MessageSender;
 using PontiApp.Models.DTOs;
+using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,29 +32,29 @@ namespace PontiApp.EventPlace.Api.Controllers
             _fbClient = fbClient;
         }
 
-        [HttpPost]
-        [Route(nameof(Create))]
-        public async Task<ActionResult> Create(UserCreationDTO user)
-        {
-            try
-            {
-                await _userService.Add(user);
-                await _service.SendAddMessage(user.MongoKey, user.PictureUrl);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
+        //[HttpPost]
+        //[Route(nameof(Create))]
+        //public async Task<ActionResult> Create(UserCreationDTO user)
+        //{
+        //    try
+        //    {
+        //        await _userService.Add(user);
+        //        await _service.SendAddMessage(user.MongoKey, user.PictureUrl);
+        //        return Ok();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         [HttpPut]
         [Route(nameof(UpdateUser))]
-        public async Task<ActionResult> UpdateUser([FromBody] UserUpdateDTO userDTO)
+        public async Task<ActionResult> UpdateUser([FromBody] UserRequest userRequest)
         {
             try
             {
-                await _userService.Update(userDTO);
+                await _userService.Update(userRequest);
                 return Ok();
             }
             catch (Exception e)
@@ -63,11 +65,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpDelete]
         [Route(nameof(DeleteUser))]
-        public async Task<ActionResult> DeleteUser([FromBody] int userId)
+        public async Task<ActionResult> DeleteUser(long fbId)
         {
             try
             {
-                await _userService.Delete(userId);
+                await _userService.Delete(fbId);
                 return Ok();
             }
             catch (Exception e)
@@ -76,12 +78,12 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetEvent(int id)
+        [HttpGet(nameof(GetUser))]
+        public async Task<ActionResult<UserResponse>> GetUser(long FbId)
         {
             try
             {
-                return Ok(await _userService.Get(id));
+                return Ok(await _userService.Get(FbId));
             }
             catch (Exception e)
             {
@@ -90,24 +92,24 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
 
-        [Authorize]
-        [HttpGet("GetAllUser")]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUser()
-        {
-            try
-            {
-                return Ok(await _userService.GetAllUser());
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
+        //[Authorize]
+        //[HttpGet("GetAllUser")]
+        //public async Task<ActionResult<IEnumerable<UserResponse>>> GetAllUser()
+        //{
+        //    try
+        //    {                       
+        //        return Ok(await _userService.GetAllUser());
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("Process-User")]
-        public async Task<ActionResult> ProcessUser(long fbkey,string accessToken)
+        [Route(nameof(CreateUser))]
+        public async Task<ActionResult> CreateUser(long fbkey,string accessToken)
         {
             UserCreationDTO user = new UserCreationDTO();
             if (!_userService.UserExists(fbkey))
@@ -124,18 +126,20 @@ namespace PontiApp.EventPlace.Api.Controllers
             });
         }
 
-        [HttpGet]
-        [Route("Test")]
-        public ActionResult Test(string guid)
-        {
-            _userService.DeleteImage(guid);
-            return Ok();
-        }
+        //[HttpGet]
+        //[Route("Test")]
+        //public ActionResult Test(string guid)
+        //{
+        //    _userService.DeleteImage(guid);
+        //    return Ok();
+        //}
+
+
         [HttpPost]
         [Route("UploadImages")]
-        public async Task<ActionResult> Upload(int id, IFormFileCollection files)
+        public async Task<ActionResult> Upload(long fbId, IFormFileCollection files)
         {
-            var user = await _userService.GetUser(id);
+            var user = _userService.GetUser(fbId);
             await _service.SendUpdateMessage(user.MongoKey, files);
             return Ok();
         }
