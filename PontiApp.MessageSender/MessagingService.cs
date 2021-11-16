@@ -10,31 +10,30 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Net.Http;
-using PontiApp.Utilities;
 
 namespace PontiApp.MessageSender
 {
     public class MessagingService
     {
-        private IConfiguration _config;
-
-        private readonly Utilities.RabbitMQ _rabbitConf;
-
+        public IConfigurationRoot Configuration { get; set; }
         private readonly ConnectionFactory _factory;
-        //private readonly ILogger<MessagingService> _logger;
+        private readonly ILogger<MessagingService> _logger;
         public IConnection Conn { get; set; }
         public IModel Channel { get; set; }
-        public MessagingService(ConnectionFactory factory,Utilities.RabbitMQ rabbitConf)
+        public MessagingService(ConnectionFactory factory, ILogger<MessagingService> logger)
         {
 
-            _rabbitConf = rabbitConf ;
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
             _factory = factory;
-            File.WriteAllText("./loggers.txt", $"{_rabbitConf.HostName} {_rabbitConf.Port}");
-            _factory.HostName = _rabbitConf.HostName;
-            _factory.UserName = _rabbitConf.UserName;
-            _factory.Password = _rabbitConf.PassWord;
-            _factory.VirtualHost = _rabbitConf.VirtualHost;
-            _factory.Port = _rabbitConf.Port;
+            //_logger = logger;
+            //var RabbitConfig = Configuration.GetSection("RabbitMQ");
+            _factory.HostName = "rabbitmq";
+            _factory.UserName = "user";
+            _factory.Password = "pass";
+            _factory.VirtualHost = "/";
+            _factory.Port = 5672;
             Conn = factory.CreateConnection();
             Channel = Conn.CreateModel();
         }

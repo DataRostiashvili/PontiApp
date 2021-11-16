@@ -102,12 +102,12 @@ services:
       - pontiapp-network
   db:
     image: postgres:latest
-    # volumes:
-    #   - ./data/db:/var/lib/postgresql/data
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_PASSWORD=postgres
     networks:
       - pontiapp-network
       

@@ -37,7 +37,6 @@ using PontiApp.AuthService;
 using PontiApp.Models.Entities.AuthEntities;
 using System.Net.Http;
 using PontiApp.GraphAPICalls;
-using Microsoft.Extensions.Options;
 
 namespace PontiApp.EventPlace.Api
 {
@@ -68,7 +67,7 @@ namespace PontiApp.EventPlace.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.EventPlace.Api", Version = "v1" });
-
+                
             });
 
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -91,12 +90,12 @@ namespace PontiApp.EventPlace.Api
             services.AddScoped<PlaceDTOValidator>();
             services.AddSingleton<ConnectionFactory>();
             services.AddSingleton<MessagingService>();
-            services.AddScoped<IJwtProcessor, JwtProcessor>();
+            services.AddScoped<IJwtProcessor,JwtProcessor>();
             services.AddSingleton<JwtConfig>();
-            services.Configure<Utilities.RabbitMQ>(Configuration.GetSection("RabbitMQ"))
-                .AddSingleton(sp => sp.GetRequiredService<IOptions<Utilities.RabbitMQ>>().Value);
             services.AddHttpClient();
-            services.AddScoped<IFbClient, FbClient>();
+            services.AddScoped<IFbClient,FbClient>();
+            services.AddHttpClient();
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -129,7 +128,7 @@ namespace PontiApp.EventPlace.Api
             app.UseHttpsRedirection();
             app.UseRouting();
 
-
+           
 
 
             app.UseAuthentication();
