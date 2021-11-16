@@ -9,7 +9,7 @@ namespace PontiApp.EventPlace.Services.UserServices
 {
     public interface IUserService
     {
-        Task Add(UserCreationDTO newUserDTO);
+        //Task Add(UserCreationDTO newUserDTO);
         Task Delete(long id);
         void DeleteImage(string guid);
         Task<UserResponse> Get(long id);
@@ -19,5 +19,6 @@ namespace PontiApp.EventPlace.Services.UserServices
         Task Update(UserRequest userRequest);
         Task<bool> UserExists(int id);
         bool UserExists(long FbKey);
+        Task<(string, UserCreationDTO)> AddUser(long fbkey, string accessToken);
     }
 }

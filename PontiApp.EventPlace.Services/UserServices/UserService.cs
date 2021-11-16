@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using PontiApp.MessageSender;
 using PontiApp.Models.Request;
 using PontiApp.Models.Response;
+using PontiApp.GraphAPICalls;
+using PontiApp.AuthService;
 
 namespace PontiApp.EventPlace.Services.UserServices
 {
@@ -24,23 +26,44 @@ namespace PontiApp.EventPlace.Services.UserServices
         private readonly BaseRepository<UserEntity> _userRepository;
         private readonly IMapper _mapper;
         private readonly MessagingService _service;
+        private readonly IFbClient _fbClient;
+        private readonly IJwtProcessor _jwtProcessor;
 
-        public UserService(IMapper mapper, BaseRepository<UserEntity> userRepository, IHttpClientFactory factory, MessagingService service)
+        public UserService(IMapper mapper, BaseRepository<UserEntity> userRepository, IHttpClientFactory factory, MessagingService service,
+            IFbClient fbClient, IJwtProcessor jwtProcessor)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _factory = factory;
             _service = service;
+            _fbClient = fbClient;
+            _jwtProcessor = jwtProcessor;
         }
-        public async Task Add(UserCreationDTO newUserDTO)
-        {
-            UserEntity user = _mapper.Map<UserCreationDTO, UserEntity>(newUserDTO);
-            if (UserExists(user.FbKey))
-            {
+        //public async Task Add(UserCreationDTO newUserDTO)
+        //{
+        //    UserEntity user = _mapper.Map<UserCreationDTO, UserEntity>(newUserDTO);
+        //    if (!UserExists(user.FbKey))
+        //    {
+        //        await _userRepository.Insert(user);
+        //    }
+        //    else return;
+        //}
 
-                await _userRepository.Insert(user);
+        public async Task<(string, UserCreationDTO)> AddUser(long fbkey, string accessToken)
+        {
+            UserCreationDTO user = new UserCreationDTO();
+            if (!UserExists(fbkey))
+            {
+                user = await _fbClient.GetUser(accessToken, fbkey);
+                user.MongoKey = Guid.NewGuid().ToString();
+                await _service.SendAddMessage(user.MongoKey, user.PictureUrl);
+                await _userRepository.Insert(_mapper.Map<UserCreationDTO, UserEntity>(user));
             }
-            else return;
+            var token = _jwtProcessor.GenerateJwt(fbkey, accessToken);
+            user = _mapper.Map< UserEntity, UserCreationDTO>(await _userRepository.GetByFbKey(fbkey));
+            return  (token, user);
+            
+
         }
 
         public async Task Delete(long id)

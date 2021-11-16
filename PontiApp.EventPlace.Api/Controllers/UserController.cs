@@ -111,19 +111,8 @@ namespace PontiApp.EventPlace.Api.Controllers
         [Route(nameof(CreateUser))]
         public async Task<ActionResult> CreateUser(long fbkey,string accessToken)
         {
-            UserCreationDTO user = new UserCreationDTO();
-            if (!_userService.UserExists(fbkey))
-            {
-                user = await _fbClient.GetUser(accessToken, fbkey);
-                user.MongoKey = Guid.NewGuid().ToString();
-                await _service.SendAddMessage(user.MongoKey, user.PictureUrl);
-                await _userService.Add(user);
-            }
-            return Ok(new
-            {
-                Token = _jwtProcessor.GenerateJwt(fbkey, accessToken),
-                Data = _userService.GetUser(fbkey)
-            });
+            var result = await _userService.AddUser(fbkey, accessToken);
+            return Ok(result);
         }
 
         //[HttpGet]
