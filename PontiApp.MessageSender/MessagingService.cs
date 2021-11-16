@@ -15,25 +15,23 @@ namespace PontiApp.MessageSender
 {
     public class MessagingService
     {
-        public IConfigurationRoot Configuration { get; set; }
+        public IConfiguration Configuration { get; set; }
         private readonly ConnectionFactory _factory;
         private readonly ILogger<MessagingService> _logger;
         public IConnection Conn { get; set; }
         public IModel Channel { get; set; }
-        public MessagingService(ConnectionFactory factory, ILogger<MessagingService> logger)
+        public MessagingService(ConnectionFactory factory,IConfiguration _Configuration /*ILogger<MessagingService> logger,*/)
         {
-
-            Configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+            Configuration = _Configuration;
             _factory = factory;
-            //_logger = logger;
-            //var RabbitConfig = Configuration.GetSection("RabbitMQ");
-            _factory.HostName = "localhost";
-            _factory.UserName = "user";
-            _factory.Password = "pass";
-            _factory.VirtualHost = "/";
-            _factory.Port = 5672;
+            
+            var rabbitconfig = Configuration.GetSection("RabbitMQ");
+            _factory.HostName = rabbitconfig.GetSection("HostName").Value;
+            _factory.UserName = rabbitconfig.GetSection("UserName").Value;
+            _factory.Password = rabbitconfig.GetSection("PassWord").Value;
+            _factory.VirtualHost = rabbitconfig.GetSection("VirtualHost").Value;
+            _factory.Port = Convert.ToInt32(rabbitconfig.GetSection("Port").Value);
+            File.WriteAllText("./FixLogs.txt", _factory.HostName);
             Conn = factory.CreateConnection();
             Channel = Conn.CreateModel();
         }

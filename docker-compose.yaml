@@ -22,12 +22,12 @@ services:
       context: .
       dockerfile: ./PontiApp.EventPlace.Api/Dockerfile
     environment:
-            - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - 5000:80
       # - 5001:443
-    networks: 
-       - pontiapp-network
+    networks:
+      - pontiapp-network
 
   pontiapp-auth:
     container_name: pontiapp.auth-container
@@ -39,8 +39,8 @@ services:
       context: .
       dockerfile: ./PontiApp.Auth/Dockerfile
     environment:
-            - ASPNETCORE_ENVIRONMENT=Development
-    networks:  
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
       - pontiapp-network
 
   pontiapp-image:
@@ -50,20 +50,19 @@ services:
     ports:
       - 5030:80
       # - 5011:443
-    depends_on: 
-          - rabbitmq
-          
+    depends_on:
+      - rabbitmq
     build:
       context: .
       dockerfile: ./PontiApp.Images.Api/Dockerfile
     environment:
-            - ASPNETCORE_ENVIRONMENT=Development
-    networks:  
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
       - pontiapp-network
-    
+
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: rabbitmq
+    container_name: ponti_rabbit
     hostname: rabbitmq
     ports:
       - 15672:15672
@@ -71,46 +70,43 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=pass
-    networks: 
+    networks:
       - pontiapp-network
 
   mongodb:
-    image : mongo
-    container_name: mongodb
+    image: mongo
+    container_name: ponti_mongo
     environment:
       - PUID=1000
       - PGID=1000
-    volumes:
-        - /home/barry/mongodb/database:/data/db
     ports:
-        - 27017:27017
+      - 27017:27017
     restart: unless-stopped
     networks:
       - pontiapp-network
-    
+
   redis:
     image: "redis:alpine"
     command: redis-server --requirepass sOmE_sEcUrE_pAsS
     ports:
-     - "6379:6379"
-    volumes:
-      - $PWD/redis-data:/var/lib/redis
-      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+      - "6379:6379"
     environment:
-     - REDIS_REPLICATION_MODE=master
+      - REDIS_REPLICATION_MODE=master
     networks:
       - pontiapp-network
-  db:
+
+  postgres:
     image: postgres:latest
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
+    container_name: ponti_postgres
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
     networks:
       - pontiapp-network
-      
+
 networks:
   pontiapp-network:
     driver: "bridge"

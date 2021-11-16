@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace PontiApp.FluentValidator
 {
-    public class SearchBaseDTOValidator : AbstractValidator<SearchBaseDTO>
-    {
-        public SearchBaseDTOValidator()
-        {
-            RuleFor(x => x.PontiType).Must(x => x.GetType() == typeof(PontiTypeEnum));
-            RuleFor(x => x.Time).Must(x => x.GetType() == typeof(TimeFilterEnum));
-        }
-    }
+    //public class SearchBaseDTOValidator : AbstractValidator<SearchBaseDTO>
+    //{
+    //    public SearchBaseDTOValidator()
+    //    {
+    //        RuleFor(x => x.PontiType).Must(x => x.GetType() == typeof(PontiTypeEnum));
+    //        RuleFor(x => x.Time).Must(x => x.GetType() == typeof(TimeFilterEnum));
+    //    }
+    //}
 }

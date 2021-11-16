@@ -12,7 +12,7 @@ namespace PontiApp.FluentValidator
     {
         public CategoryDTOValidator()
         {
-            RuleFor(x => x.Cetegory).NotNull();
+            RuleFor(x => x.Category).NotNull();
         }
     }
 }

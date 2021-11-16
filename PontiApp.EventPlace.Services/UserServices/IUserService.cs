@@ -19,5 +19,6 @@ namespace PontiApp.EventPlace.Services.UserServices
         Task Update(UserRequest userRequest);
         Task<bool> UserExists(int id);
         bool UserExists(long FbKey);
+        //Task Update(UserUpdateDTO userDTO);
     }
 }
