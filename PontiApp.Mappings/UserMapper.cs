@@ -21,7 +21,10 @@ namespace PontiApp.Mappings
             CreateMap<UserEntity, UserListingDTO>().ReverseMap();
 
             CreateMap<UserEntity, UserRequest>().ReverseMap();
-            CreateMap<UserEntity, UserResponse>().ReverseMap();
+            CreateMap<UserEntity, UserResponse>()
+                .ForMember(response => response.fbId, entity => entity
+                .MapFrom(u => u.FbKey))
+                .ReverseMap();
         }
     }
 }
