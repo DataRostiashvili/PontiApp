@@ -54,8 +54,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task<List<PlaceEntity>> GetAllHosting(long hostFbId)
         {
-            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostPlaces).SingleAsync(u => u.FbKey == hostFbId);
-            var q = _applicationDbContext.Users.Include(u => u.UserHostPlaces);
+            var currUser = await _applicationDbContext.Users.Where(user => user.FbKey == hostFbId).Include(u => u.UserHostPlaces).SingleAsync();
             return currUser.UserHostPlaces;
         }
 
