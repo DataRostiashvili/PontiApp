@@ -52,10 +52,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             return await _applicationDbContext.UserGuestPlaces.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.PlaceEntity).ToListAsync();
         }
 
-        public async Task<List<PlaceEntity>> GetAllHosting(int userId)
+        public async Task<List<PlaceEntity>> GetAllHosting(long hostFbId)
         {
-            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostPlaces).SingleAsync(u => u.Id == userId);
-
+            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostPlaces).SingleAsync(u => u.FbKey == hostFbId);
+            var q = _applicationDbContext.Users.Include(u => u.UserHostPlaces);
             return currUser.UserHostPlaces;
         }
 

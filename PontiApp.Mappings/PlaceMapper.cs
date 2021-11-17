@@ -2,6 +2,7 @@
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,10 @@ namespace PontiApp.Mappings
             CreateMap<PlaceEntity, PlaceListingResponseDTO>();
 
             CreateMap<PlaceRequest, PlaceEntity>().ReverseMap();
+            CreateMap<PlaceEntity, PlaceHostingResponse>()
+                .ForMember(response => response.TodayWeekSchedule,
+                entity => entity.MapFrom(ent => ent.WeekSchedule
+                .Where(day => (DayOfWeek)day.Day == DateTime.Now.DayOfWeek))).ReverseMap(); 
         }
     }
 }
