@@ -7,6 +7,7 @@ using AutoMapper;
 using PontiApp.Models;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
+using PontiApp.Models.Response;
 
 namespace PontiApp.Mappings
 {
@@ -18,6 +19,8 @@ namespace PontiApp.Mappings
             CreateMap<EventEntity, EventHostResponseDTO>();
             CreateMap<EventEntity, EventGuestResponseDTO>();
             CreateMap<EventEntity, EventListingResponseDTO>();
+
+            CreateMap<EventEntity, EventHostingResponse>().ReverseMap(); 
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using PontiApp.Models.Response;
 
 namespace PontiApp.EventPlace.Api.Controllers
 {
@@ -100,12 +101,12 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
 
-        [HttpGet("GetHostingEvents/{userHostId}")]
-        public async Task<ActionResult<IEnumerable<EventListingResponseDTO>>> GetHostingEvents(int userHostId)
+        [HttpGet(nameof(GetHostingEvents))]
+        public async Task<ActionResult<IEnumerable<EventHostingResponse>>> GetHostingEvents(long  hostFbId)
         {
             try
             {
-                return Ok(await _eventService.GetAllHsotingEvent(userHostId));
+                return Ok(await _eventService.GetAllHsotingEvent(hostFbId));
             }
             catch (Exception e)
             {

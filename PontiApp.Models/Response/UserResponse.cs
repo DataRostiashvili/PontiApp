@@ -20,5 +20,10 @@ namespace PontiApp.Models.Response
         public string Address { get; set; }
 
         public string ProfilePictureUri { get; set; }
+
+        public float AverageRanking { get; set; }
+        public int TotalReviewerCount { get; set; } 
+        public bool IsVerifiedUser { get; set; }
+
     }
 }

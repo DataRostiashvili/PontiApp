@@ -3,6 +3,7 @@ using PontiApp.Data.DbContexts;
 using PontiApp.EventEvent.Services.EventCategoryServices;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
+using PontiApp.Models.Response;
 using PontiApp.Ponti.Repository.PontiRepository;
 using PontiApp.Ponti.Repository.PontiRepository.EventRepository;
 using PontiApp.Validators.EntityValidators;
@@ -82,10 +83,10 @@ namespace PontiApp.EventPlace.Services.EventServices
             return guestingEventDTOs;
         }
 
-        public async Task<List<EventListingResponseDTO>> GetAllHsotingEvent(int userHostId)
+        public async Task<List<EventHostingResponse>> GetAllHsotingEvent(long hostFbId)
         {
-            List<EventEntity> hostingEvents = await _eventRepo.GetAllHosting(userHostId);
-            List<EventListingResponseDTO> hostingEventDTOs = _mapper.Map<List<EventListingResponseDTO>>(hostingEvents);
+            var hostingEvents = await _eventRepo.GetAllHosting(hostFbId);
+            var hostingEventDTOs = _mapper.Map<List<EventHostingResponse>>(hostingEvents);
 
             return hostingEventDTOs;
         }

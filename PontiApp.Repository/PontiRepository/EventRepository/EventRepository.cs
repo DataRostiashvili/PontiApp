@@ -55,9 +55,9 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             return await _applicationDbContext.UserGuestEvents.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.EventEntity).ToListAsync();
         }
 
-        public async Task<List<EventEntity>> GetAllHosting(int userId)
+        public async Task<List<EventEntity>> GetAllHosting(long hostFbId)
         {
-            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostEvents).SingleAsync(u => u.Id == userId);
+            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostEvents).SingleAsync(u => u.FbKey == hostFbId);
 
             return currUser.UserHostEvents;
         }
