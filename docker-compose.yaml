@@ -29,20 +29,6 @@ services:
     networks:
       - pontiapp-network
 
-  pontiapp-auth:
-    container_name: pontiapp.auth-container
-    image: pontiapp.auth
-    ports:
-      - 5010:80
-      # - 5011:443
-    build:
-      context: .
-      dockerfile: ./PontiApp.Auth/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    networks:
-      - pontiapp-network
-
   pontiapp-image:
     container_name: pontiapp.image-container
     image: pontiapp.image

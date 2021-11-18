@@ -15,13 +15,15 @@ namespace PontiApp.MessageSender
 {
     public class MessagingService
     {
-        private IConfiguration Configuration;
+        private readonly IConfiguration Configuration;
         private readonly IHttpClientFactory _clientFactory;
+        private readonly ILogger<MessagingService> _logger;
         private readonly ConnectionFactory _factory;
         public IConnection Conn { get; set; }
         public IModel Channel { get; set; }
-        public MessagingService(ConnectionFactory factory, IConfiguration _Configuration, IHttpClientFactory clientFactory)
+        public MessagingService(ConnectionFactory factory, IConfiguration _Configuration, IHttpClientFactory clientFactory, ILogger<MessagingService> logger)
         {
+            _logger = logger;
             Configuration = _Configuration;
             _factory = factory;
             _clientFactory = clientFactory;
@@ -35,6 +37,7 @@ namespace PontiApp.MessageSender
             _factory.Port = Convert.ToInt32(rabbitconfig.GetSection("Port").Value);
             Conn = factory.CreateConnection();
             Channel = Conn.CreateModel();
+            _logger.LogInformation($"Application Started at {DateTime.Now}");
         }
         public async Task SendUpdateMessage(string guid, IFormFileCollection files)
         {
@@ -44,6 +47,8 @@ namespace PontiApp.MessageSender
             dict.Add(RabbitMQConsts.LIST, BytesList);
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.UPDATE_ADD_Q, null, body);
+            _logger.LogInformation($"Sent Image to the update(Adding to the existing data) command at {DateTime.Now}"); //add more info?
+
         }
 
         public void SendUpdateMessage(string guid, int[] indices)
@@ -53,6 +58,7 @@ namespace PontiApp.MessageSender
             dict.Add(RabbitMQConsts.INDICES, indices);
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.UPDATE_REMOVE_Q, null, body);
+            _logger.LogInformation($"Sent Image to the update(Deleting from existing data) command at {DateTime.Now}");
         }
         public async Task SendAddMessage(string guid, IFormFileCollection files)
         {
@@ -62,6 +68,7 @@ namespace PontiApp.MessageSender
             dict.Add(RabbitMQConsts.LIST, BytesList);
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.ADD_Q, null, body);
+            _logger.LogInformation($"Sent Image to the Add command at {DateTime.Now}");
         }
         public void SendDeleteMessage(string guid)
         {
@@ -69,6 +76,7 @@ namespace PontiApp.MessageSender
             dict.Add(RabbitMQConsts.GUID, guid);
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.DELETE_Q, null, body);
+            _logger.LogInformation($"Sent Image to the Delete command at {DateTime.Now}");
         }
 
         public async Task SendAddMessage(string guid, string url)
@@ -85,6 +93,7 @@ namespace PontiApp.MessageSender
             dict.Add(RabbitMQConsts.LIST, list);
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.ADD_Q, null, body);
+            _logger.LogInformation($"Sent Image to the Add command at {DateTime.Now}");
 
         }
 
