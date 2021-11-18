@@ -24,6 +24,7 @@ namespace PontiApp.Mappings
             CreateMap<UserEntity, UserResponse>()
                 .ForMember(response => response.fbId, entity => entity
                 .MapFrom(u => u.FbKey))
+                .ForMember(response => response.ProfilePictureUri, entity=> entity.MapFrom(ent => $"http://{ent.MongoKey}"))
                 .ReverseMap();
         }
     }
