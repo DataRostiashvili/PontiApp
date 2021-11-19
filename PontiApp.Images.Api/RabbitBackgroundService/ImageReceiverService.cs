@@ -42,7 +42,6 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             _cFac.VirtualHost = _config.GetSection("RabbitMQ").GetSection("VirtualHost").Value;
             _logger.LogInformation($"Message Receiver Service Started At {DateTime.Now}!");
 
-
             _conn = _cFac.CreateConnection();
             _channel = _conn.CreateModel();
             InitRabbit();

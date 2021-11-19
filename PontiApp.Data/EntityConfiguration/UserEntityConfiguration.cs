@@ -16,7 +16,11 @@ namespace PontiApp.Data.EntityConfiguration
                     .WithOne(p => p.HostUser)
                     .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasIndex(u => u.FbKey)
+                   .IsUnique();
+
             builder.Property<bool>("IsDeleted");
+
             builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
     }

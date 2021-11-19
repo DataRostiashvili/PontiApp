@@ -23,7 +23,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         private readonly IJwtProcessor _jwtProcessor;
         private readonly IFbClient _fbClient;
 
-        public UserController(IUserService userService, MessagingService service,IJwtProcessor jwtProcessor,IFbClient fbClient)
+        public UserController(IUserService userService, MessagingService service, IJwtProcessor jwtProcessor, IFbClient fbClient)
         {
             _service = service;
             _userService = userService;
@@ -91,7 +91,6 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
 
-        [Authorize]
         [HttpGet("GetAllUser")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUser()
         {
@@ -108,7 +107,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("Process-User")]
-        public async Task<ActionResult> ProcessUser(long fbkey,string accessToken)
+        public async Task<ActionResult> ProcessUser(long fbkey, string accessToken)
         {
             UserCreationDTO user = new UserCreationDTO();
             if (!_userService.UserExists(fbkey))
