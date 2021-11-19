@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PontiApp.Data.DbContexts;
+using PontiApp.Exceptions;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.DTOs.Enums;
 using PontiApp.Models.Entities;

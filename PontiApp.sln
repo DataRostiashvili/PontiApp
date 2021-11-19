@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.31903.286
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{D90FF853-BC55-4808-B213-2FA4C8F28E2D}"
 EndProject
@@ -56,7 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.Exceptions", "PontiApp.Exceptions\PontiApp.Exceptions.csproj", "{248FC269-B187-4683-AE2C-DAB3CA9AA0CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Exceptions", "PontiApp.Exceptions\PontiApp.Exceptions.csproj", "{248FC269-B187-4683-AE2C-DAB3CA9AA0CA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.FluentValidator", "PontiApp.FluentValidator\PontiApp.FluentValidator.csproj", "{CC4115A5-E5E0-46DE-83E8-05541AA2CA89}"
 EndProject
@@ -142,6 +142,14 @@ Global
 		{CAFED595-B803-472C-930E-843D9448C436}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAFED595-B803-472C-930E-843D9448C436}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAFED595-B803-472C-930E-843D9448C436}.Release|Any CPU.Build.0 = Release|Any CPU
+		{248FC269-B187-4683-AE2C-DAB3CA9AA0CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{248FC269-B187-4683-AE2C-DAB3CA9AA0CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{248FC269-B187-4683-AE2C-DAB3CA9AA0CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{248FC269-B187-4683-AE2C-DAB3CA9AA0CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC4115A5-E5E0-46DE-83E8-05541AA2CA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC4115A5-E5E0-46DE-83E8-05541AA2CA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC4115A5-E5E0-46DE-83E8-05541AA2CA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC4115A5-E5E0-46DE-83E8-05541AA2CA89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

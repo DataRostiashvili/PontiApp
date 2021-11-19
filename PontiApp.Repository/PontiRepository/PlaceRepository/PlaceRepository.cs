@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PontiApp.Data.DbContexts;
+using PontiApp.Exceptions;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.DTOs.Enums;
 using PontiApp.Models.Entities;
@@ -22,7 +23,11 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         public async Task InsertGuesting(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
             PlaceEntity currPlace = await GetByID(currPlaceGuestDTO.PlaceId);
+            if (currPlace == null)
+                throw new DoesNotExistsException("Such Place Does Not Exists!");
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == currPlaceGuestDTO.UserGuestId);
+            if (currUser == null)
+                throw new DoesNotExistsException("Such User Does Not Exists!");
 
             UserGuestPlace guestOnPlace = new UserGuestPlace()
             {
@@ -48,8 +53,9 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         public async Task<List<PlaceEntity>> GetAllGuesting(int userId)
         {
             UserEntity currUser = await _applicationDbContext.Users.SingleAsync(u => u.Id == userId);
+            var allGuests = await _applicationDbContext.UserGuestPlaces.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.PlaceEntity).ToListAsync();
 
-            return await _applicationDbContext.UserGuestPlaces.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.PlaceEntity).ToListAsync();
+            return allGuests;
         }
 
         public async Task<List<PlaceEntity>> GetAllHosting(int userId)
@@ -62,6 +68,9 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         public async Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO)
         {
             PlaceEntity currPlace = await entities.Include(p => p.Reviews).SingleAsync(p => p.Id == placeReviewDTO.PlaceEntityId);
+            if (currPlace == null)
+                throw new DoesNotExistsException();
+
             PlaceReviewEntity currReview = new()
             {
                 ReviewRanking = placeReviewDTO.ReviewRanking,
@@ -87,8 +96,6 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             var categoryEntities = _applicationDbContext.Categories.Where(cat => rawCategories.Contains(cat.Category))
                 .AsEnumerable();
 
-
-
             var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
             var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
 
@@ -99,6 +106,9 @@ namespace PontiApp.Ponti.Repository.PontiRepository
                                  .Select(s=>s.PlaceCategories
                                     .Where(pc=>searchCategoryIds.Contains(pc.CategoryEntityId))).AsEnumerable()                                
                                  select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
+
+            if (places.Count() == 0 || places == null)
+                throw new DoesNotExistsException();
 
             return places.ToList();
         }

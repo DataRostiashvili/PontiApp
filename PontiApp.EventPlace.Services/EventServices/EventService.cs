@@ -70,7 +70,6 @@ namespace PontiApp.EventPlace.Services.EventServices
             List<EventEntity> allEvent = await _eventRepo.GetAll();
             List<EventListingResponseDTO> allEventDTOs = _mapper.Map<List<EventListingResponseDTO>>(allEvent);
 
-
             return allEventDTOs;
         }
 
