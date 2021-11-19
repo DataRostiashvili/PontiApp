@@ -2,6 +2,7 @@
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using PontiApp.PlacePlace.Services.PlaceServices;
 using PontiApp.Ponti.Repository.PontiRepository;
 using PontiApp.Validators.EntityValidators;
@@ -59,10 +60,10 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             return guestingPlaceDTOs;
         }
 
-        public async Task<List<PlaceListingResponseDTO>> GetAllHsotingPlace(long hostFbId)
+        public async Task<List<PlaceHostingResponse>> GetAllHsotingPlace(long hostFbId)
         {
             var hostingPlaces = await _placeRepo.GetAllHosting(hostFbId);
-            var hostingPlacesResponse = _mapper.Map<List<PlaceListingResponseDTO>>(hostingPlaces);
+            var hostingPlacesResponse = _mapper.Map<List<PlaceHostingResponse>>(hostingPlaces);
 
             return hostingPlacesResponse;
         }

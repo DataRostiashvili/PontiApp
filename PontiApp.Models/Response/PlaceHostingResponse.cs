@@ -12,6 +12,7 @@ namespace PontiApp.Models.Response
             public string Name { get; set; }
 
             public string Address { get; set; }
+            public HostResponse Host { get; set; }
 
             public WeekScheduleResponse TodayWeekSchedule { get; set; }
         }

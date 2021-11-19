@@ -20,7 +20,18 @@ namespace PontiApp.Mappings
             CreateMap<EventEntity, EventGuestResponseDTO>();
             CreateMap<EventEntity, EventListingResponseDTO>();
 
-            CreateMap<EventEntity, EventHostingResponse>().ReverseMap(); 
+            CreateMap<EventEntity, EventHostingResponse>()
+                .ForMember(response => response.Host, entity => entity
+                                                          .MapFrom(e => new HostResponse
+                                                          {
+                                                              fbId = e.UserEntity.FbKey,
+                                                              Name = e.UserEntity.Name,
+                                                              ProfilePictureUri = Helpers.ConvertToPictureUri(e.UserEntity.MongoKey),
+                                                              Surename = e.UserEntity.Surename
+                                                          })).ReverseMap();
+
+
+
         }
     }
 }

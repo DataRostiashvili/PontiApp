@@ -23,8 +23,16 @@ namespace PontiApp.Mappings
             CreateMap<PlaceRequest, PlaceEntity>().ReverseMap();
             CreateMap<PlaceEntity, PlaceHostingResponse>()
                 .ForMember(response => response.TodayWeekSchedule,
-                entity => entity.MapFrom(ent => ent.WeekSchedule
-                .Where(day => (DayOfWeek)day.Day == DateTime.Now.DayOfWeek))).ReverseMap(); 
+                entity => entity.MapFrom(ent => Helpers.TakeCurrentDay( ent.WeekSchedule)))
+                .ForMember(response => response.Host, entity => entity
+                .MapFrom(e => new HostResponse
+                {
+                    fbId = e.HostUser.FbKey,
+                    Name = e.HostUser.Name,
+                    ProfilePictureUri = Helpers.ConvertToPictureUri(e.HostUser.MongoKey),
+                    Surename = e.HostUser.Surename
+                }))
+            .ReverseMap(); 
         }
     }
 }
