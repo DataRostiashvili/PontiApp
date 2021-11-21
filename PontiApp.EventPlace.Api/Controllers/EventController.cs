@@ -102,7 +102,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet(nameof(GetHostingEvents))]
-        public async Task<ActionResult<IEnumerable<EventHostingResponse>>> GetHostingEvents(long  hostFbId)
+        public async Task<ActionResult<IEnumerable<EventBriefResponse>>> GetHostingEvents(long  hostFbId)
         {
             try
             {
@@ -174,7 +174,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpGet("GetAllEvent")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<EventListingResponseDTO>>> GetAllEvent()
+        public async Task<ActionResult<IEnumerable<EventBriefResponse>>> GetAllEvent()
         {
             try
             {

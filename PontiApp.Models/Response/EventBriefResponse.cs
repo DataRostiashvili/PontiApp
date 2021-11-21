@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Response
 {
-    public class EventHostingResponse
+    public class EventBriefResponse
     {
         public string Name { get; set; }
 
@@ -15,6 +15,5 @@ namespace PontiApp.Models.Response
         public HostResponse Host { get; set; }
 
         public DateTime StartTime { get; set; }
-
     }
 }

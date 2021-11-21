@@ -134,5 +134,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             }
             return deadline;
         }
+
+        public async Task<IEnumerable<EventEntity>> GetAllEvent()
+        {
+            return await _applicationDbContext.Events.Include(e => e.UserEntity).ToListAsync();
+        }
     }
 }

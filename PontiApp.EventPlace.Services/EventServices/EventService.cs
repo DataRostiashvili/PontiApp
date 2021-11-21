@@ -66,11 +66,10 @@ namespace PontiApp.EventPlace.Services.EventServices
             await _eventRepo.DeleteGuesting(currEventGuestDTO);
         }
 
-        public async Task<List<EventListingResponseDTO>> GetAllEvent()
+        public async Task<List<EventBriefResponse>> GetAllEvent()
         {
-            List<EventEntity> allEvent = await _eventRepo.GetAll();
-            List<EventListingResponseDTO> allEventDTOs = _mapper.Map<List<EventListingResponseDTO>>(allEvent);
-
+            var allEvent = await _eventRepo.GetAllEvent();
+            var allEventDTOs = _mapper.Map<List<EventBriefResponse>>(allEvent);
 
             return allEventDTOs;
         }
@@ -83,10 +82,10 @@ namespace PontiApp.EventPlace.Services.EventServices
             return guestingEventDTOs;
         }
 
-        public async Task<List<EventHostingResponse>> GetAllHsotingEvent(long hostFbId)
+        public async Task<List<EventBriefResponse>> GetAllHsotingEvent(long hostFbId)
         {
             var hostingEvents = await _eventRepo.GetAllHosting(hostFbId);
-            var hostingEventDTOs = _mapper.Map<List<EventHostingResponse>>(hostingEvents);
+            var hostingEventDTOs = _mapper.Map<List<EventBriefResponse>>(hostingEvents);
 
             return hostingEventDTOs;
         }
