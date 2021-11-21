@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PontiApp.Models.Response
 {
    
-        public class PlaceHostingResponse
+        public class PlaceBriefResponse
         {
             public string Name { get; set; }
 

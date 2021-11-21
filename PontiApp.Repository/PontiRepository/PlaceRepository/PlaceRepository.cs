@@ -102,10 +102,6 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             return places.ToList();
         }
 
-        //private bool PlaceHasCategories(IEnumerable<int> placeCategoryIds, IEnumerable<int> searchPlaceCategoryIds)
-        //{
-        //    return !searchPlaceCategoryIds.Except(placeCategoryIds).Any();
-        //}
 
         private bool IsWorkingInTimeRange(List<WeekEntity> weekScheduleList, TimeFilterEnum searchedPlaceTime)
         {
@@ -135,28 +131,9 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             return true;
         }
 
-        //private DateTime GetWorkingDays(TimeFilterEnum searchedPlaceTime)
-        //{
-        //    DateTime workingDays;
-        //    switch (searchedPlaceTime)
-        //    {
-        //        case TimeFilterEnum.today:
-        //            workingDays = DateTime.Today;
-        //            break;
-        //        case TimeFilterEnum.tomorrow:
-        //            workingDays = DateTime.Today.AddDays(1);
-        //            break;
-        //        case TimeFilterEnum.currentWeek:
-        //            workingDays = DateTime.Today.AddDays(7);
-        //            break;
-        //        case TimeFilterEnum.upcomming:
-        //            workingDays = DateTime.MaxValue;
-        //            break;
-        //        default:
-        //            workingDays = DateTime.MaxValue;
-        //            break;
-        //    }
-        //    return workingDays;
-        //}
+        public async Task<IEnumerable<PlaceEntity>> GetAllPlaceAsync()
+        {
+            return await _applicationDbContext.Places.Include(place => place.HostUser).ToListAsync();
+        }
     }
 }

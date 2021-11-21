@@ -21,7 +21,7 @@ namespace PontiApp.Mappings
             CreateMap<PlaceEntity, PlaceListingResponseDTO>();
 
             CreateMap<PlaceRequest, PlaceEntity>().ReverseMap();
-            CreateMap<PlaceEntity, PlaceHostingResponse>()
+            CreateMap<PlaceEntity, PlaceBriefResponse>()
                 .ForMember(response => response.TodayWeekSchedule,
                 entity => entity.MapFrom(ent => ent.WeekSchedule
                 .Where(day => (int)day.Day == (int)DateTime.Now.DayOfWeek).First()))

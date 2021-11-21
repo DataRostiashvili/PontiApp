@@ -101,7 +101,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetHostingPlaces")]
-        public async Task<ActionResult<IEnumerable<PlaceHostingResponse>>> GetHostingPlaces(long hostFbId)
+        public async Task<ActionResult<IEnumerable<PlaceBriefResponse>>> GetHostingPlaces(long hostFbId)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetAllPlace")]
-        public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetAllPlace()
+        public async Task<ActionResult<IEnumerable<PlaceBriefResponse>>> GetAllPlace()
         {
             try
             {

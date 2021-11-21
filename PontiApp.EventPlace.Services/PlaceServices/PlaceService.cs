@@ -60,18 +60,18 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             return guestingPlaceDTOs;
         }
 
-        public async Task<List<PlaceHostingResponse>> GetAllHsotingPlace(long hostFbId)
+        public async Task<List<PlaceBriefResponse>> GetAllHsotingPlace(long hostFbId)
         {
             var hostingPlaces = await _placeRepo.GetAllHosting(hostFbId);
-            var hostingPlacesResponse = _mapper.Map<List<PlaceHostingResponse>>(hostingPlaces);
+            var hostingPlacesResponse = _mapper.Map<List<PlaceBriefResponse>>(hostingPlaces);
 
             return hostingPlacesResponse;
         }
 
-        public async Task<List<PlaceListingResponseDTO>> GetAllPlace()
+        public async Task<List<PlaceBriefResponse>> GetAllPlace()
         {
-            List<PlaceEntity> allPlace = await _placeRepo.GetAll();
-            List<PlaceListingResponseDTO> allPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(allPlace);
+            var  allPlace = await _placeRepo.GetAllPlaceAsync();
+            var allPlaceDTOs = _mapper.Map<List<PlaceBriefResponse>>(allPlace);
 
             return allPlaceDTOs;
         }
