@@ -43,7 +43,6 @@ namespace PontiApp.Data.DatabaseSeeder
             var docList = BsonSerializer.Deserialize<List<BsonDocument>>(jsonData);
             DB.DropCollection("PicRepo");
             Coll.InsertMany(docList);
-            Console.WriteLine("-------------------------DONE----------------------");
 
         }
     }

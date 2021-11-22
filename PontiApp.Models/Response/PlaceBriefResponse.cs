@@ -9,6 +9,7 @@ namespace PontiApp.Models.Response
    
         public class PlaceBriefResponse
         {
+            public int PlaceId { get; set; }
             public string Name { get; set; }
 
             public string Address { get; set; }
