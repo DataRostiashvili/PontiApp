@@ -9,6 +9,5 @@ namespace PontiApp.Models.Entities.Interfaces
     public interface IReviewEntity
     {
         public float ReviewRanking { get; set; }
-        public int ReviewCount { get; set; }
     }
 }

@@ -8,5 +8,7 @@ namespace PontiApp.Models.Response
 {
     public class ReviewResponse
     {
+        public float AverageReviewRanking { get; set; }
+        public int TotalReviewCount { get; set; }
     }
 }

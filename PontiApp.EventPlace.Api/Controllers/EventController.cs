@@ -87,7 +87,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         {
             try
             {
-                return Ok(await _eventService.GetDetailedHostingEvent(id));
+                return Ok(await _eventService.GetDetailedEvent(id));
             }
             catch (Exception e)
             {

@@ -10,7 +10,6 @@ namespace PontiApp.Models.Entities
     public class UserReviewEntity : BaseEntity, IReviewEntity
     {
         public float ReviewRanking { get; set; }
-        public int ReviewCount { get; set; }
 
 
         public int UserEntityId { get; set; }

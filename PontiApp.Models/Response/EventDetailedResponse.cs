@@ -28,10 +28,8 @@ namespace PontiApp.Models.Response
         public int? PlaceId { get; set; }
 
         public PictureCollectionResponse Pictures { get; set; }
-        public List<EventReviewEntity> Reviews { get; set; }
+        public ReviewResponse Review { get; set; }
 
-        //Many to many
-        public List<UserGuestEvent> UserGuests { get; set; }
-        public List<EventCategory> EventCategories { get; set; }
+        public List<CategoryResponse> Categories { get; set; }
     }
 }

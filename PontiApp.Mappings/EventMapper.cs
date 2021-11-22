@@ -21,7 +21,7 @@ namespace PontiApp.Mappings
             CreateMap<EventEntity, EventListingResponseDTO>();
 
             CreateMap<EventEntity, EventBriefResponse>()
-                 .ForMember(response => response.Host, entity => entity
+                 .ForMember(response => response.Host, config => config
                                                           .MapFrom(e => new HostResponse
                                                           {
                                                               fbId = e.UserEntity.FbKey,
@@ -33,7 +33,7 @@ namespace PontiApp.Mappings
                  .ReverseMap();
 
             CreateMap<EventEntity, EventDetailedResponse>()
-                .ForMember(response => response.Host, entity => entity
+                .ForMember(response => response.Host, config => config
                                                          .MapFrom(e => new HostResponse
                                                          {
                                                              fbId = e.UserEntity.FbKey,
@@ -42,9 +42,18 @@ namespace PontiApp.Mappings
                                                              Surename = e.UserEntity.Surename
                                                          }))
                 .ForMember(response => response.EventId, entity => entity.MapFrom(e => e.Id))
+                .ForMember(response => response.Review, config => config
+                .MapFrom(e => new ReviewResponse
+                {
+                    AverageReviewRanking = e.Reviews.Average(review => review.ReviewRanking),
+                    TotalReviewCount = e.Reviews.Count
+                }))
+                .ForMember(response => response.Pictures, config => config.MapFrom(entity => new PictureCollectionResponse
+                {
+                    Pictures = entity.Pictures.Select(pic => Helpers.ConvertToPictureUri(pic.MongoKey))
+                }))
+                .ForMember(response => response.PlaceId, config=> config.MapFrom(entity => entity.PlaceEntityId))
                 .ReverseMap();
-
-
 
         }
     }
