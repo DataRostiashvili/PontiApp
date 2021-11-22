@@ -24,7 +24,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         private readonly IJwtProcessor _jwtProcessor;
         private readonly IFbClient _fbClient;
 
-        public UserController(IUserService userService, MessagingService service,IJwtProcessor jwtProcessor,IFbClient fbClient)
+        public UserController(IUserService userService, MessagingService service, IJwtProcessor jwtProcessor, IFbClient fbClient)
         {
             _service = service;
             _userService = userService;
@@ -32,63 +32,32 @@ namespace PontiApp.EventPlace.Api.Controllers
             _fbClient = fbClient;
         }
 
-        //[HttpPost]
-        //[Route(nameof(Create))]
-        //public async Task<ActionResult> Create(UserCreationDTO user)
-        //{
-        //    try
-        //    {
-        //        await _userService.Add(user);
-        //        await _service.SendAddMessage(user.MongoKey, user.PictureUrl);
-        //        return Ok();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw;
-        //    }
-        //}
-
         [HttpPut]
         [Route(nameof(UpdateUser))]
         public async Task<ActionResult> UpdateUser([FromBody] UserRequest userRequest)
         {
-            try
-            {
-                await _userService.Update(userRequest);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _userService.Update(userRequest);
+            return Ok();
+
         }
 
         [HttpDelete]
         [Route(nameof(DeleteUser))]
         public async Task<ActionResult> DeleteUser(long fbId)
         {
-            try
-            {
-                await _userService.Delete(fbId);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _userService.Delete(fbId);
+            return Ok();
+
         }
 
         [HttpGet(nameof(GetUser))]
         public async Task<ActionResult<UserResponse>> GetUser(long FbId)
         {
-            try
-            {
-                return Ok(await _userService.Get(FbId));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _userService.Get(FbId));
+
         }
 
 
@@ -109,7 +78,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route(nameof(CreateUser))]
-        public async Task<ActionResult> CreateUser(long fbkey,string accessToken)
+        public async Task<ActionResult> CreateUser(long fbkey, string accessToken)
         {
             var result = await _userService.AddUser(fbkey, accessToken);
             return Ok(result);

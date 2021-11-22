@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PontiApp.Models\PontiApp.Models.csproj" />
+  </ItemGroup>
+
 </Project>

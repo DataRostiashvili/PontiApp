@@ -25,168 +25,114 @@ namespace PontiApp.PlacePlace.Api.Controllers
         [Route(nameof(CreatePlace))]
         public async Task<ActionResult> CreatePlace([FromBody] PlaceRequest placeRequest)
         {
-            try
-            {
-                await _placeService.AddHostingPlace(placeRequest);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _placeService.AddHostingPlace(placeRequest);
+            return Ok();
+
         }
 
         [HttpPut]
         [Route(nameof(UpdatePlace))]
         public async Task<ActionResult> UpdatePlace([FromBody] PlaceHostRequestDTO hostPlaceDTO)
         {
-            try
-            {
-                await _placeService.UpdateHostingPlace(hostPlaceDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _placeService.UpdateHostingPlace(hostPlaceDTO);
+            return Ok();
+
         }
 
         [HttpDelete]
         [Route(nameof(DeletePlace))]
         public async Task<ActionResult> DeletePlace(int hostPlaceId)
         {
-            try
-            {
-                await _placeService.DeleteHostingPlace(hostPlaceId);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _placeService.DeleteHostingPlace(hostPlaceId);
+            return Ok();
+
         }
 
         //Should be separated
         [HttpGet("GetDetailedHostingPlace/{id}")]
         public async Task<ActionResult<PlaceHostResponseDTO>> GetDetailedHostingPlace(int id)
         {
-            try
-            {
-                
-                return Ok(await _placeService.GetDetailedHostingPlace(id));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+
+            return Ok(await _placeService.GetDetailedHostingPlace(id));
+
         }
 
         [HttpGet("GetGuestingPlace/{place}/{guestId}")]
         public async Task<ActionResult<PlaceGuestResponseDTO>> GetGuestingPlace(int placeId, int guestId)
         {
-            try
-            {
-                PlaceGuestRequestDTO guestRequestDTO = new PlaceGuestRequestDTO()
-                {
-                    PlaceId = placeId,
-                    UserGuestId = guestId
-                };
 
-                return Ok(await _placeService.GetDetailedGuestingPlace(guestRequestDTO));
-            }
-            catch (Exception e)
+            PlaceGuestRequestDTO guestRequestDTO = new PlaceGuestRequestDTO()
             {
-                throw;
-            }
+                PlaceId = placeId,
+                UserGuestId = guestId
+            };
+
+            return Ok(await _placeService.GetDetailedGuestingPlace(guestRequestDTO));
+
         }
 
         [HttpGet("GetHostingPlaces")]
         public async Task<ActionResult<IEnumerable<PlaceBriefResponse>>> GetHostingPlaces(long hostFbId)
         {
-            try
-            {
-                return Ok(await _placeService.GetAllHsotingPlace(hostFbId));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _placeService.GetAllHsotingPlace(hostFbId));
+
         }
 
         [HttpPost]
         [Route(nameof(AddInGuestingPlaces))]
         public async Task<ActionResult> AddInGuestingPlaces([FromBody] PlaceGuestRequestDTO guestPlaceDTO)
         {
-            try
-            {
-                await _placeService.AddGusestingPlace(guestPlaceDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _placeService.AddGusestingPlace(guestPlaceDTO);
+            return Ok();
+
         }
 
         [HttpPut]
         [Route(nameof(UpdateInGuestingPlaces))]
         public async Task<ActionResult> UpdateInGuestingPlaces([FromBody] PlaceReviewDTO placeReviewDTO)
         {
-            try
-            {
-                await _placeService.UpdateGuestingPlace(placeReviewDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _placeService.UpdateGuestingPlace(placeReviewDTO);
+            return Ok();
+
         }
 
         [HttpPut]
         [Route(nameof(RemoveFromGuestingPlaces))]
         public async Task<ActionResult> RemoveFromGuestingPlaces([FromBody] PlaceGuestRequestDTO guestPlaceDTO)
         {
-            try
-            {
-                await _placeService.DeleteGuestingPlace(guestPlaceDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _placeService.DeleteGuestingPlace(guestPlaceDTO);
+            return Ok();
+
         }
 
         [HttpGet("GuestingPlaces/{userGuestId}")]
         public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetGuestingPlaces(int userGuestId)
         {
-            try
-            {
-                return Ok(await _placeService.GetAllGuestingPlace(userGuestId));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _placeService.GetAllGuestingPlace(userGuestId));
+
         }
 
         [HttpGet("GetAllPlace")]
         public async Task<ActionResult<IEnumerable<PlaceBriefResponse>>> GetAllPlace()
         {
-            try
-            {
-                return Ok(await _placeService.GetAllPlace());
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _placeService.GetAllPlace());
+
+
         }
 
         [HttpPost("SearchPlace")]
         public async Task<IActionResult> SearchPlace(PontiTypeEnum PontiType, List<CategoryRequest> Categories, TimeFilterEnum Time, string SearchKeyWord)
-        { 
+        {
             if (PontiType != PontiTypeEnum.Place)
             {
                 return BadRequest();

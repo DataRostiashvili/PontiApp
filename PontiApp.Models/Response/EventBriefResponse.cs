@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Response
 {
-    public class EventBriefResponse
+    public class EventBriefResponse :GenericResponse
     {
         public string Name { get; set; }
 

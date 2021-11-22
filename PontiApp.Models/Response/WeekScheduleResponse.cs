@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Response
 {
-    public  class WeekScheduleResponse
+    public class WeekScheduleResponse : GenericResponse
     {
         public DateTime Start { get; set; }
         public DateTime End { get; set; }

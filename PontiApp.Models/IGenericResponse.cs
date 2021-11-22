@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Response
 {
-    public class CategoryResponse :GenericResponse
+    public interface IGenericResponse
     {
-        public string Category { get; set; }
+        public bool IsSuccess { get; set; }
     }
 }

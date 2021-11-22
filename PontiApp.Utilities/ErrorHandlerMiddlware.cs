@@ -28,14 +28,14 @@ namespace PontiApp.Utilities
             catch(Exception exception)
             {
                 var response = context.Response;
-                response.ContentType = "text/Json";
+                response.ContentType = "text/json";
 
                 if (exception is BaseCustomException)
                     response.StatusCode = (int)HttpStatusCode.BadRequest;
                 else
-                    response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
 
-                var result = JsonSerializer.Serialize(new { message = exception?.Message });
+                var result = JsonSerializer.Serialize(new { isSuccess = false, message = exception.Message }); ;
                 await response.WriteAsync(result);
             }
         }

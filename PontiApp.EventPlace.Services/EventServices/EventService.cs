@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PontiApp.Data.DbContexts;
 using PontiApp.EventEvent.Services.EventCategoryServices;
+using PontiApp.Exceptions;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Models.Response;
@@ -69,6 +70,8 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task<List<EventBriefResponse>> GetAllEvent()
         {
             var allEvent = await _eventRepo.GetAllEvent();
+            if (allEvent == null || allEvent.Count() == 0)
+                throw new DoesNotExistsException("No Events Exists!");
             var allEventDTOs = _mapper.Map<List<EventBriefResponse>>(allEvent);
 
             return allEventDTOs;
@@ -77,6 +80,8 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task<List<EventListingResponseDTO>> GetAllGuestingEvent(int userGuestId)
         {
             List<EventEntity> guestingEvents = await _eventRepo.GetAllGuesting(userGuestId);
+            if (guestingEvents == null || guestingEvents.Count() == 0)
+                throw new DoesNotExistsException();
             List<EventListingResponseDTO> guestingEventDTOs = _mapper.Map<List<EventListingResponseDTO>>(guestingEvents);
 
             return guestingEventDTOs;
@@ -85,6 +90,8 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task<List<EventBriefResponse>> GetAllHsotingEvent(long hostFbId)
         {
             var hostingEvents = await _eventRepo.GetAllHosting(hostFbId);
+            if (hostingEvents == null)
+                throw new DoesNotExistsException("");
             var hostingEventDTOs = _mapper.Map<List<EventBriefResponse>>(hostingEvents);
 
             return hostingEventDTOs;
@@ -93,6 +100,8 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task<List<EventListingResponseDTO>> GetSearchedEvents(SearchFilter searchBaseDTO)
         {
             var searchResult = await _eventRepo.GetEventSearchResult(searchBaseDTO);
+            if (searchResult.Count == 0 || searchResult == null)
+                throw new DoesNotExistsException("No Event Was Found!");
             var searchResultDto = _mapper.Map<List<EventListingResponseDTO>>(searchResult);
             return searchResultDto;
         }
@@ -100,6 +109,8 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId)
         {
             EventEntity currEvent = await _eventRepo.GetByID(eventId);
+            if (currEvent == null)
+                throw new DoesNotExistsException();
             return _mapper.Map<EventHostResponseDTO>(currEvent);
         }
 
@@ -116,6 +127,8 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task UpdateHostingEvent(EventHostRequestDTO currEventDTO)
         {
             EventEntity currEvent = _mapper.Map<EventEntity>(currEventDTO);
+            if (currEvent == null)
+                throw new DoesNotExistsException("Coudn't Find Such Event!");
             await _eventRepo.Update(currEvent);
         }
     }

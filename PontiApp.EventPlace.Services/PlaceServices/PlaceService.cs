@@ -76,6 +76,9 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         public async Task<List<PlaceBriefResponse>> GetAllPlace()
         {
             var  allPlace = await _placeRepo.GetAllPlaceAsync();
+            if (allPlace == null || allPlace.Count() == 0)
+                throw new DoesNotExistsException("No Place Exists!");
+
             var allPlaceDTOs = _mapper.Map<List<PlaceBriefResponse>>(allPlace);
 
             return allPlaceDTOs;

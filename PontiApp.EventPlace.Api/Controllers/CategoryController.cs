@@ -26,45 +26,28 @@ namespace PontiApp.EventPlace.Api.Controllers
         [Route(nameof(CreateCategory))]
         public async Task<ActionResult> CreateCategory([FromBody] CategoryRequest categoryRequest)
         {
-            try
-            {
-                await _categoryService.Add(categoryRequest);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            await _categoryService.Add(categoryRequest);
+            return Ok();
         }
 
         [HttpDelete]
         [Route(nameof(DeleteCategory))]
         public async Task<ActionResult> DeleteCategory([FromBody] CategoryRequest categoryRequest)
         {
-            try
-            {
-                await _categoryService.Delete(categoryRequest);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _categoryService.Delete(categoryRequest);
+            return Ok();
+
         }
 
         [HttpGet]
         [Route(nameof(GetAllCategory))]
         public async Task<ActionResult<IEnumerable<CategoryResponse>>> GetAllCategory()
         {
-            try
-            {
-                var categoryDTOs = await _categoryService.GetAll();
-                return Ok(categoryDTOs);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            var categoryDTOs = await _categoryService.GetAll();
+            return Ok(categoryDTOs);
+
         }
     }
 }
