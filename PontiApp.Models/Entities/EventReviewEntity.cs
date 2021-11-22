@@ -1,13 +1,14 @@
-﻿namespace PontiApp.Models.Entities
-{
-    public class EventReviewEntity : BaseEntity
-    {
-        public int EventReviewEntityId { get; set; }
-        public float ReviewRanking { get; set; }
+﻿using PontiApp.Models.Entities.Interfaces;
 
-        public int UserEntityId { get; set; }
+namespace PontiApp.Models.Entities
+{
+    public class EventReviewEntity : BaseEntity , IReviewEntity
+    {
+        public float ReviewRanking { get; set; }
+        public int ReviewCount { get; set; }
+
+
         public int EventEntityId { get; set; }
-        public UserEntity UserEntity { get; set; }
         public EventEntity EventEntity { get; set; }
     }
 }

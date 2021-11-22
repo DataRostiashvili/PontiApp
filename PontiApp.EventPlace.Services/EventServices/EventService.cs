@@ -102,6 +102,11 @@ namespace PontiApp.EventPlace.Services.EventServices
             EventEntity currEvent = await _eventRepo.GetByID(eventId);
             return _mapper.Map<EventHostResponseDTO>(currEvent);
         }
+        public async Task<EventDetailedResponse> GetDetailedEvent(int eventId)
+        {
+            var @event = await _eventRepo.GetByID(eventId);
+            return _mapper.Map<EventDetailedResponse>(@event);
+        }
 
         public async Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest)
         {

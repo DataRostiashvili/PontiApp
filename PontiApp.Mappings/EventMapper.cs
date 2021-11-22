@@ -20,17 +20,6 @@ namespace PontiApp.Mappings
             CreateMap<EventEntity, EventGuestResponseDTO>();
             CreateMap<EventEntity, EventListingResponseDTO>();
 
-            //CreateMap<EventEntity, EventHostingResponse>()
-            //    .ForMember(response => response.Host, entity => entity
-            //                                              .MapFrom(e => new HostResponse
-            //                                              {
-            //                                                  fbId = e.UserEntity.FbKey,
-            //                                                  Name = e.UserEntity.Name,
-            //                                                  ProfilePictureUri = Helpers.ConvertToPictureUri(e.UserEntity.MongoKey),
-            //                                                  Surename = e.UserEntity.Surename
-            //                                              })).ReverseMap();
-
-
             CreateMap<EventEntity, EventBriefResponse>()
                  .ForMember(response => response.Host, entity => entity
                                                           .MapFrom(e => new HostResponse
@@ -39,7 +28,21 @@ namespace PontiApp.Mappings
                                                               Name = e.UserEntity.Name,
                                                               ProfilePictureUri = Helpers.ConvertToPictureUri(e.UserEntity.MongoKey),
                                                               Surename = e.UserEntity.Surename
-                                                          })).ReverseMap();
+                                                          }))
+                 .ForMember(response => response.EventId, entity => entity.MapFrom(e => e.Id))
+                 .ReverseMap();
+
+            CreateMap<EventEntity, EventDetailedResponse>()
+                .ForMember(response => response.Host, entity => entity
+                                                         .MapFrom(e => new HostResponse
+                                                         {
+                                                             fbId = e.UserEntity.FbKey,
+                                                             Name = e.UserEntity.Name,
+                                                             ProfilePictureUri = Helpers.ConvertToPictureUri(e.UserEntity.MongoKey),
+                                                             Surename = e.UserEntity.Surename
+                                                         }))
+                .ForMember(response => response.EventId, entity => entity.MapFrom(e => e.Id))
+                .ReverseMap();
 
 
 
