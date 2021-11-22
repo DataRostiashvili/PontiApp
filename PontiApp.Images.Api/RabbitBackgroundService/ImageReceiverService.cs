@@ -34,7 +34,14 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
                 mongoService = scope.ServiceProvider.GetRequiredService<IMongoService>();
                 _cFac = scope.ServiceProvider.GetRequiredService<ConnectionFactory>();
             }
-
+#if DOCKER_COMPOSE
+                   _cFac.HostName = _config.GetSection("RabbitMQ_DockerCompose").GetSection("HostName").Value;
+            _cFac.UserName = _config.GetSection("RabbitMQ_DockerCompose").GetSection("UserName").Value;
+            _cFac.Password = _config.GetSection("RabbitMQ_DockerCompose").GetSection("PassWord").Value;
+            _cFac.Port = Convert.ToInt32(_config.GetSection("RabbitMQ_DockerCompose").GetSection("Port").Value);
+            _cFac.VirtualHost = _config.GetSection("RabbitMQ_DockerCompose").GetSection("VirtualHost").Value;
+            _logger.LogInformation($"\n\n\n\n\n\n\n\n\n\n\n\n\n\n{_cFac.HostName}\n\n\n\n\n\n");
+#elif DOCKER_COMPOSE_MINIMAL
             _cFac.HostName = _config.GetSection("RabbitMQ").GetSection("HostName").Value;
             _cFac.UserName = _config.GetSection("RabbitMQ").GetSection("UserName").Value;
             _cFac.Password = _config.GetSection("RabbitMQ").GetSection("PassWord").Value;
@@ -42,7 +49,10 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             _cFac.VirtualHost = _config.GetSection("RabbitMQ").GetSection("VirtualHost").Value;
             _logger.LogInformation($"\n\n\n\n\n\n\n\n\n\n\n\n\n\n{_cFac.HostName}\n\n\n\n\n\n");
 
-            
+#endif
+
+
+
             _conn = _cFac.CreateConnection();
             _channel = _conn.CreateModel();
             InitRabbit();

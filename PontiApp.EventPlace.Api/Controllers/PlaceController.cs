@@ -6,6 +6,7 @@ using PontiApp.PlacePlace.Services.PlaceServices;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PontiApp.Models.Response;
 
 namespace PontiApp.PlacePlace.Api.Controllers
 {
@@ -99,12 +100,12 @@ namespace PontiApp.PlacePlace.Api.Controllers
             }
         }
 
-        [HttpGet("GetHostingPlaces/{userHostId}")]
-        public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetHostingPlaces(int userHostId)
+        [HttpGet("GetHostingPlaces")]
+        public async Task<ActionResult<IEnumerable<PlaceBriefResponse>>> GetHostingPlaces(long hostFbId)
         {
             try
             {
-                return Ok(await _placeService.GetAllHsotingPlace(userHostId));
+                return Ok(await _placeService.GetAllHsotingPlace(hostFbId));
             }
             catch (Exception e)
             {
@@ -171,7 +172,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         [HttpGet("GetAllPlace")]
-        public async Task<ActionResult<IEnumerable<PlaceListingResponseDTO>>> GetAllPlace()
+        public async Task<ActionResult<IEnumerable<PlaceBriefResponse>>> GetAllPlace()
         {
             try
             {

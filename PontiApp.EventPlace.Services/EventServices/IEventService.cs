@@ -1,4 +1,5 @@
 ﻿using PontiApp.Models.DTOs;
+using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,9 @@ namespace PontiApp.EventPlace.Services.EventServices
         Task DeleteGuestingEvent(EventGuestRequestDTO currEventGuestDTO);
         Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId);
         Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest);
-        Task<List<EventListingResponseDTO>> GetAllEvent();
+        Task<List<EventBriefResponse>> GetAllEvent();
         Task<List<EventListingResponseDTO>> GetSearchedEvents(SearchFilter searchBaseDTO);
-        Task<List<EventListingResponseDTO>> GetAllHsotingEvent(int userHostId);
+        Task<List<EventBriefResponse>> GetAllHsotingEvent(long userHostId);
         Task<List<EventListingResponseDTO>> GetAllGuestingEvent(int userGuestId);
 
     }

@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Response
 {
-    public class UserListingResponse
+    public class HostResponse
     {
+
+        public long fbId { get; set; }
         public string Name { get; set; }
+
         public string Surename { get; set; }
+
+        public string ProfilePictureUri { get; set; }
+
     }
 }
