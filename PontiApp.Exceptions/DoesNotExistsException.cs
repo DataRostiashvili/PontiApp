@@ -8,7 +8,7 @@ namespace PontiApp.Exceptions
 {
     public class DoesNotExistsException : BaseCustomException
     {
-        public DoesNotExistsException() : base()
+        public DoesNotExistsException() : base("Such Entity Does Not Exists")
         {
 
         }

@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using PontiApp.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace PontiApp.Utilities
@@ -22,9 +25,18 @@ namespace PontiApp.Utilities
             {
                 await _request(context);
             }
-            catch(Exception ex)
+            catch(Exception exception)
             {
+                var response = context.Response;
+                response.ContentType = "text/Json";
 
+                if (exception is BaseCustomException)
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
+                else
+                    response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+                var result = JsonSerializer.Serialize(new { message = exception?.Message });
+                await response.WriteAsync(result);
             }
         }
     }

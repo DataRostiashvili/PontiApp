@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Exceptions
 {
-    public class AlreadyExistsException :BaseCustomException
+
+    public class AlreadyExistsException : BaseCustomException
     {
-        public AlreadyExistsException() : base()
+        public AlreadyExistsException() : base("Such Entity Already Exists!")
         {
 
         }
@@ -18,4 +19,6 @@ namespace PontiApp.Exceptions
 
         }
     }
+
 }
+
