@@ -65,14 +65,9 @@ namespace PontiApp.EventPlace.Api.Controllers
         [HttpGet(nameof(GetDetailedEvent))]
         public async Task<ActionResult<EventDetailedResponse>> GetDetailedEvent(int id)
         {
-            try
-            {
-                return Ok(await _eventService.GetDetailedEvent(id));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _eventService.GetDetailedEvent(id));
+
         }
 
         [HttpGet("GetGuestingEvent/{eventId}/{guestId}")]
