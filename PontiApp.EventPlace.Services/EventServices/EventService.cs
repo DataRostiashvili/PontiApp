@@ -118,6 +118,11 @@ namespace PontiApp.EventPlace.Services.EventServices
                 throw new DoesNotExistsException();
             return _mapper.Map<EventHostResponseDTO>(currEvent);
         }
+        public async Task<EventDetailedResponse> GetDetailedEvent(int eventId)
+        {
+            var @event = await _eventRepo.GetDetailedEventAsync(eventId);
+            return _mapper.Map<EventDetailedResponse>(@event);
+        }
 
         public async Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest)
         {

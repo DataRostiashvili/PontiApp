@@ -71,8 +71,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
                 ReviewRanking = eventReviewDTO.ReviewRanking,
                 EventEntity = currEvent,
                 EventEntityId = eventReviewDTO.EventEntityId,
-                UserEntityId = eventReviewDTO.UserEntityId,
-                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == eventReviewDTO.UserEntityId)
+                //UserEntityId = eventReviewDTO.UserEntityId,
+                //UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == eventReviewDTO.UserEntityId)
             };
 
             if (currEvent.Reviews.Contains(currReview))
@@ -139,6 +139,16 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
         public async Task<IEnumerable<EventEntity>> GetAllEvent()
         {
             return await _applicationDbContext.Events.Include(e => e.UserEntity).ToListAsync();
+        }
+        public async Task<EventEntity> GetDetailedEventAsync(int eventId)
+        {
+            var query =  _applicationDbContext.Events.Include(e => e.PlaceEntity).Include(e => e.UserEntity).Include(e => e.Reviews).Include(e => e.Pictures);
+            return await _applicationDbContext.Events
+                .Include(e=>e.PlaceEntity)
+                .Include(e => e.UserEntity)
+                .Include(e=>e.Reviews)
+                .Include(e=>e.Pictures)
+                .SingleAsync(e => e.Id == eventId);
         }
     }
 }
