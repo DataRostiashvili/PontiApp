@@ -83,7 +83,7 @@ namespace PontiApp.EventPlace.Api.Controllers
             }
         }
         [HttpGet(nameof(GetDetailedEvent))]
-        public async Task<ActionResult<EventHostResponseDTO>> GetDetailedEvent(int id)
+        public async Task<ActionResult<EventDetailedResponse>> GetDetailedEvent(int id)
         {
             try
             {

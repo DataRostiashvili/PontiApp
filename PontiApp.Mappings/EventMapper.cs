@@ -45,13 +45,13 @@ namespace PontiApp.Mappings
                 .ForMember(response => response.Review, config => config
                 .MapFrom(e => new ReviewResponse
                 {
-                    AverageReviewRanking = e.Reviews.Average(review => review.ReviewRanking),
+                    AverageReviewRanking = e.Reviews.Count == 0 ? 0 : e.Reviews.Average(review => review.ReviewRanking) ,
                     TotalReviewCount = e.Reviews.Count
                 }))
-                .ForMember(response => response.Pictures, config => config.MapFrom(entity => new PictureCollectionResponse
-                {
-                    Pictures = entity.Pictures.Select(pic => Helpers.ConvertToPictureUri(pic.MongoKey))
-                }))
+                .ForMember(response => response.Pictures, config => config.MapFrom(entity => 
+                
+                     entity.Pictures.Select(pic => Helpers.ConvertToPictureUri(pic.MongoKey))
+                ))
                 .ForMember(response => response.PlaceId, config=> config.MapFrom(entity => entity.PlaceEntityId))
                 .ReverseMap();
 

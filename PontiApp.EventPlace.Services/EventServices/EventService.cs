@@ -104,7 +104,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         }
         public async Task<EventDetailedResponse> GetDetailedEvent(int eventId)
         {
-            var @event = await _eventRepo.GetByID(eventId);
+            var @event = await _eventRepo.GetDetailedEventAsync(eventId);
             return _mapper.Map<EventDetailedResponse>(@event);
         }
 

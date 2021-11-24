@@ -27,7 +27,7 @@ namespace PontiApp.Models.Response
 
         public int? PlaceId { get; set; }
 
-        public PictureCollectionResponse Pictures { get; set; }
+        public IEnumerable<string> Pictures { get; set; }
         public ReviewResponse Review { get; set; }
 
         public List<CategoryResponse> Categories { get; set; }

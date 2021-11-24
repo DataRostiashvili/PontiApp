@@ -66,8 +66,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository
                 ReviewRanking = placeReviewDTO.ReviewRanking,
                 PlaceEntity = currPlace,
                 PlaceEntityId = placeReviewDTO.PlaceEntityId,
-                UserEntityId = placeReviewDTO.UserEntityId,
-                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == placeReviewDTO.UserEntityId)
+                //UserEntityId = placeReviewDTO.UserEntityId,
+                //UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == placeReviewDTO.UserEntityId)
             };
 
             if (currPlace.Reviews.Contains(currReview))
