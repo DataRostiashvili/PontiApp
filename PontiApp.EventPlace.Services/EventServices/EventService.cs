@@ -34,6 +34,9 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task AddHostingEvent(EventHostRequestDTO newEventDTO)
         {
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
+            var existingEvent = _eventRepo.GetByPredicate(ev => ev.UserEntityId == newEvent.UserEntityId && ev.PlaceEntityId == newEvent.PlaceEntityId && ev.Name == newEvent.Name).SingleOrDefault();
+            if (existingEvent != null)
+                throw new AlreadyExistsException("Such Event Already Exists!");
             await _eventRepo.Insert(newEvent);
         }
 
@@ -54,6 +57,8 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task DeleteHostingEvent(int hostEventId)
         {
             EventEntity currEvent = await _eventRepo.GetByID(hostEventId);
+            if (currEvent == null)
+                throw new DoesNotExistsException();
             await _eventRepo.Delete(currEvent);
         }
 

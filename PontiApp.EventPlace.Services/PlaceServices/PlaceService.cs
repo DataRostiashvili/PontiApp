@@ -37,7 +37,9 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         public async Task AddHostingPlace(PlaceRequest newPlaceDTO)
         {
             var newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
-
+            var existingPlace = _placeRepo.GetByPredicate(plc => plc.UserEntityId == newPlace.UserEntityId && plc.Name == newPlace.Name && plc.Address == newPlace.Address).SingleOrDefault();
+            if (existingPlace != null)
+                throw new AlreadyExistsException("This Place Is Already Registered!");
             await _placeRepo.Insert(newPlace);
         }
 
@@ -50,6 +52,8 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         public async Task DeleteHostingPlace(int hostPlaceId)
         {
             PlaceEntity currPlace = await _placeRepo.GetByID(hostPlaceId);
+            if (currPlace == null)
+                throw new DoesNotExistsException();
             await _placeRepo.Delete(currPlace);
         }
 

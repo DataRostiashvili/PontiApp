@@ -30,13 +30,13 @@ namespace PontiApp.EventPlace.Services.WeekDayServices
 
         public async Task UpdateWeekDays(List<WeekScheduleRequest> weekSchedule)
         {
-            var  weekDays = _mapper.Map<List<WeekEntity>>(weekSchedule);
+            var weekDays = _mapper.Map<List<WeekEntity>>(weekSchedule);
             await _weekDayRepository.UpdateRange(weekDays);
         }
 
         public async Task<List<WeekScheduleResponse>> GetWeekSchedules()
         {
-             var weekDays = await _weekDayRepository.GetAll();
+            var weekDays = await _weekDayRepository.GetAll();
             return _mapper.Map<List<WeekScheduleResponse>>(weekDays);
         }
     }
