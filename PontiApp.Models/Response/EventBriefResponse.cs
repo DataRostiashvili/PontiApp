@@ -8,6 +8,7 @@ namespace PontiApp.Models.Response
 {
     public class EventBriefResponse :GenericResponse
     {
+        public int EventId { get; set; } 
         public string Name { get; set; }
 
         public string Address { get; set; }

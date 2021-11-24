@@ -23,6 +23,13 @@ namespace PontiApp.Data.DatabaseSeeder
             FillPlaceCategoriesTable();
             FillEventCategoriesTable();
             FillWeekScheduleTable();
+            FillImages();
+        }
+
+        private void FillImages()
+        {
+            var mongoSeeder = new MongoSeeder();
+            mongoSeeder.Seed();
         }
 
         private void FillUsersTable()
