@@ -94,7 +94,6 @@ namespace PontiApp.MessageSender
             var body = dict.GetJsonBytes();
             Channel.BasicPublish(RabbitMQConsts.EXCHANGE, RabbitMQConsts.ADD_Q, null, body);
             _logger.LogInformation($"Sent Image to the Add command at {DateTime.Now}");
-
         }
 
 
