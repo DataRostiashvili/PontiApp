@@ -2,6 +2,7 @@ using System;
 using PontiApp.Data.DbContexts;
 using System.Linq;
 using System.IO;
+using System.Threading.Tasks
 using Microsoft.EntityFrameworkCore;
 
 namespace PontiApp.Data.DatabaseSeeder
@@ -14,8 +15,10 @@ namespace PontiApp.Data.DatabaseSeeder
             _appDbContext = appDbContext;
         }
 
-        public void SeedDatabase()
+        public async Task SeedDatabase()
         {
+            await _appDbContext.Database.EnsureDeletedAsync();
+            await _appDbContext.Database.EnsureCreatedAsync();
             FillUsersTable();
             FillPlacesTable();
             FillEventsTable();

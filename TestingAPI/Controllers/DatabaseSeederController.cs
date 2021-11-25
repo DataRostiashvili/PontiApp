@@ -18,9 +18,9 @@ namespace TestingAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult SeedDatabase()
+        public async Task<IActionResult> SeedDatabase()
         {
-            _seeder.SeedDatabase();
+            await _seeder.SeedDatabase();
             return Ok();
         } 
 

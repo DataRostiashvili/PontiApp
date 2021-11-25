@@ -16,6 +16,8 @@ namespace PontiApp.Models.Entities
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
+        public string PicturesId { get; set; }
+
         //One to many references
 
         public PlaceEntity PlaceEntity { get; set; }

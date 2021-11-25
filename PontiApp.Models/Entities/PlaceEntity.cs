@@ -12,6 +12,8 @@ namespace PontiApp.Models.Entities
         public string Mail { get; set; }
         public string TicketBuyUrl { get; set; }
 
+        public string  PicturesId { get; set; }
+
         public UserEntity HostUser { get; set; }
         public int UserEntityId { get; set; }
 
