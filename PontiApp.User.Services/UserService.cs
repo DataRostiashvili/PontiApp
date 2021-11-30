@@ -16,12 +16,11 @@ using PontiApp.GraphAPICalls;
 using PontiApp.AuthService;
 using PontiApp.Exceptions;
 
-namespace PontiApp.EventPlace.Services.UserServices
+namespace PontiApp.User.Services
 {
    
 
     public class UserService : IUserService
-    // : IUserService
     {
         private readonly IHttpClientFactory _factory;
         private readonly BaseRepository<UserEntity> _userRepository;

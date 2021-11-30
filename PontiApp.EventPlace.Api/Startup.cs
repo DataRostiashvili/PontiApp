@@ -13,7 +13,6 @@ using PontiApp.EventEvent.Services.EventCategoryServices;
 using PontiApp.EventPlace.Services.CategoryServices;
 using PontiApp.EventPlace.Services.EventServices;
 using PontiApp.EventPlace.Services.PlaceCategoryServices;
-using PontiApp.EventPlace.Services.UserServices;
 using PontiApp.EventPlace.Services.WeekDayServices;
 using PontiApp.Mappings;
 using PontiApp.Models;
@@ -73,7 +72,6 @@ namespace PontiApp.EventPlace.Api
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IPlaceService, PlaceService>();
             services.AddScoped<IPlaceCategoryService, PlaceCategoryService>();

@@ -5,7 +5,7 @@ using PontiApp.Models.Response;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PontiApp.EventPlace.Services.UserServices
+namespace PontiApp.User.Services
 {
     public interface IUserService
     {

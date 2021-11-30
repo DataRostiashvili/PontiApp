@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PontiApp.AuthService;
-using PontiApp.EventPlace.Services.UserServices;
+using PontiApp.User;
 using PontiApp.GraphAPICalls;
 using PontiApp.MessageSender;
 using PontiApp.Models.DTOs;
@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PontiApp.User.Services;
 
 namespace PontiApp.EventPlace.Api.Controllers
 {
@@ -60,18 +61,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
 
-        [HttpGet("GetAllUser")]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUser()
-        {
-            try
-            {
-                return Ok(await _userService.GetAllUser());
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
+        //}
 
         [HttpPost]
         [AllowAnonymous]
@@ -82,13 +72,8 @@ namespace PontiApp.EventPlace.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        [Route("Test")]
-        public ActionResult Test(string guid)
-        {
-            _userService.DeleteImage(guid);
-            return Ok();
-        }
+
+
         [HttpPost]
         [Route("UploadImages")]
         public async Task<ActionResult> Upload(int id, IFormFileCollection files)
