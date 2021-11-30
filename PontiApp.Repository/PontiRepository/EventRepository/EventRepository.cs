@@ -58,7 +58,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
 
         public async Task<List<EventEntity>> GetAllHosting(long hostFbId)
         {
-            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostEvents).SingleAsync(u => u.FbKey == hostFbId);
+            //change FirstOrDefaultAsync to SingleOrDefaultAsync 
+            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostEvents).FirstOrDefaultAsync(u => u.FbKey == hostFbId);
 
             return currUser.UserHostEvents;
         }
@@ -107,10 +108,10 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             return events;
         }
 
-        private bool EventHasCategories(IEnumerable<int> eventCategoryIds, IEnumerable<int> searchEventCategoryIds)
-        {
-            return !searchEventCategoryIds.Except(eventCategoryIds).Any();
-        }
+        //private bool EventHasCategories(IEnumerable<int> eventCategoryIds, IEnumerable<int> searchEventCategoryIds)
+        //{
+        //    return !searchEventCategoryIds.Except(eventCategoryIds).Any();
+        //}
 
         private DateTime GetDeadline(TimeFilterEnum searchedEventTime)
         {
@@ -142,13 +143,12 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
         }
         public async Task<EventEntity> GetDetailedEventAsync(int eventId)
         {
-            var query =  _applicationDbContext.Events.Include(e => e.PlaceEntity).Include(e => e.UserEntity).Include(e => e.Reviews).Include(e => e.Pictures);
-            return await _applicationDbContext.Events
+            //var query =  _applicationDbContext.Events.Include(e => e.PlaceEntity).Include(e => e.UserEntity).Include(e => e.Reviews).Include(e => e.Pictures);
+            return await _applicationDbContext.Events.Where(ev => ev.Id == eventId)
                 .Include(e=>e.PlaceEntity)
                 .Include(e => e.UserEntity)
                 .Include(e=>e.Reviews)
-                .Include(e=>e.Pictures)
-                .SingleAsync(e => e.Id == eventId);
+                .SingleAsync();
         }
     }
 }

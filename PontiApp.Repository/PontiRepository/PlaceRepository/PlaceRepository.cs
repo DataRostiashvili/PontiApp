@@ -60,7 +60,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task<List<PlaceEntity>> GetAllHosting(long hostFbId)
         {
-            var currUser = await _applicationDbContext.Users.Where(user => user.FbKey == hostFbId).Include(u => u.UserHostPlaces).SingleAsync();
+            //change FirstOrDefaultAsync to SingleOrDefaultAsync 
+            var currUser = await _applicationDbContext.Users.Where(user => user.FbKey == hostFbId).Include(u => u.UserHostPlaces).FirstOrDefaultAsync();
             return currUser.UserHostPlaces;
         }
 
@@ -91,7 +92,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         public async Task<List<PlaceEntity>> GetPlaceSearchResult(SearchFilter searchBaseDTO)
         {
             //prepare input
-            var rawCategories = searchBaseDTO.Categories.Select(cat=> cat.Category).ToList();
+            var rawCategories = searchBaseDTO.Categories.Select(cat => cat.Category).ToList();
             var categoryEntities = _applicationDbContext.Categories.Where(cat => rawCategories.Contains(cat.Category))
                 .AsEnumerable();
 
@@ -101,9 +102,9 @@ namespace PontiApp.Ponti.Repository.PontiRepository
             var places = (await (from place in _applicationDbContext.Places
                                  where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
                                  let searchCategoryIds = categoryEntities.Select(searchCat => searchCat.Id)
-                                 let testCategories= _applicationDbContext.Places
-                                 .Select(s=>s.PlaceCategories
-                                    .Where(pc=>searchCategoryIds.Contains(pc.CategoryEntityId))).AsEnumerable()                                
+                                 let testCategories = _applicationDbContext.Places
+                                 .Select(s => s.PlaceCategories
+                                    .Where(pc => searchCategoryIds.Contains(pc.CategoryEntityId))).AsEnumerable()
                                  select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
 
             if (places.Count() == 0 || places == null)
@@ -123,7 +124,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
             if (searchedPlaceTime == TimeFilterEnum.today)
                 return weekScheduleList[(int)currentDate.DayOfWeek].IsWorking;
-            else if(searchedPlaceTime == TimeFilterEnum.tomorrow)
+            else if (searchedPlaceTime == TimeFilterEnum.tomorrow)
                 return weekScheduleList[(int)currentDate.AddDays(1).DayOfWeek].IsWorking;
             else
             {
@@ -144,6 +145,17 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         public async Task<IEnumerable<PlaceEntity>> GetAllPlaceAsync()
         {
             return await _applicationDbContext.Places.Include(place => place.HostUser).ToListAsync();
+        }
+
+        public async Task<PlaceEntity> GetDetaildPlaceAsync(int placeId)
+        {
+            return await _applicationDbContext.Places.Where(pl => pl.Id == placeId)
+                .Include(pl => pl.PlaceCategories)
+                .Include(pl => pl.PlaceEvents)
+                .Include(pl => pl.WeekSchedule)
+                .Include(pl => pl.Reviews)
+                .SingleAsync();
+
         }
     }
 }

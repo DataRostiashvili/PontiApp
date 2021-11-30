@@ -88,6 +88,11 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             return allPlaceDTOs;
         }
 
+        public Task<PlaceHostResponseDTO> GetDetailedPlace(int placeId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchFilter searchFilter)
         {
             var searchResult = await _placeRepo.GetPlaceSearchResult(searchFilter);
@@ -103,20 +108,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             return searchResultDto;
         }
 
-        public async Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId)
-        {
-            PlaceEntity currPlace = await _placeRepo.GetByID(placeId);
-            if (currPlace == null)
-                throw new DoesNotExistsException();
-            return _mapper.Map<PlaceHostResponseDTO>(currPlace);
-        }
 
-        
-        public async Task<PlaceGuestResponseDTO> GetDetailedGuestingPlace(PlaceGuestRequestDTO placeGuest)
-        {
-            throw new NotImplementedException();
-        }
-        
         public async Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO)
         {
             await _placeRepo.UpdateGuestingPlace(placeReviewDTO);

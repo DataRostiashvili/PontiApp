@@ -17,9 +17,7 @@ namespace PontiApp.Data.DatabaseSeeder
 
         public async Task SeedDatabase()
         {
-           // await _appDbContext.Database.EnsureDeletedAsync();
-           
-            //await _appDbContext.Database.EnsureCreatedAsync();
+            
             await _appDbContext.Database.MigrateAsync();
 
             FillUsersTable();

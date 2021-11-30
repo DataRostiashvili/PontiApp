@@ -19,7 +19,6 @@ namespace PontiApp.Models.Entities
 
         public ICollection<EventEntity> PlaceEvents { get; set; }
         public List<WeekEntity> WeekSchedule { get; set; }
-        public List<PlacePicEntity> Pictures { get; set; }
         public ICollection<PlaceReviewEntity> Reviews { get; set; }
 
         public ICollection<UserGuestPlace> UserGuests { get; set; }
