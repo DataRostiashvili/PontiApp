@@ -151,11 +151,9 @@ namespace PontiApp.Ponti.Repository.PontiRepository
         {
             return await _applicationDbContext.Places.Where(pl => pl.Id == placeId)
                 .Include(pl => pl.PlaceCategories)
-                .Include(pl => pl.PlaceEvents)
                 .Include(pl => pl.WeekSchedule)
                 .Include(pl => pl.Reviews)
                 .SingleAsync();
-
         }
     }
 }
