@@ -31,63 +31,32 @@ namespace PontiApp.EventPlace.Api.Controllers
             _fbClient = fbClient;
         }
 
-        [HttpPost]
-        [Route(nameof(Create))]
-        public async Task<ActionResult> Create(UserCreationDTO user)
-        {
-            try
-            {
-                await _userService.Add(user);
-                await _service.SendAddMessage(user.MongoKey, user.PictureUrl);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
-
         [HttpPut]
         [Route(nameof(UpdateUser))]
         public async Task<ActionResult> UpdateUser([FromBody] UserRequest userDTO)
         {
-            try
-            {
-                await _userService.Update(userDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _userService.Update(userRequest);
+            return Ok();
+
         }
 
         [HttpDelete]
         [Route(nameof(DeleteUser))]
         public async Task<ActionResult> DeleteUser([FromBody] int userId)
         {
-            try
-            {
-                await _userService.Delete(userId);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _userService.Delete(fbId);
+            return Ok();
+
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDTO>> GetEvent(int id)
         {
-            try
-            {
-                return Ok(await _userService.Get(id));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _userService.Get(FbId));
+
         }
 
 
@@ -106,22 +75,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("Process-User")]
-        public async Task<ActionResult> ProcessUser(long fbkey, string accessToken)
+        [Route(nameof(CreateUser))]
+        public async Task<ActionResult> CreateUser(long fbkey, string accessToken)
         {
-            UserCreationDTO user = new UserCreationDTO();
-            if (!_userService.UserExists(fbkey))
-            {
-                user = await _fbClient.GetUser(accessToken, fbkey);
-                user.MongoKey = Guid.NewGuid().ToString();
-                await _service.SendAddMessage(user.MongoKey, user.PictureUrl);
-                await _userService.Add(user);
-            }
-            return Ok(new
-            {
-                Token = _jwtProcessor.GenerateJwt(fbkey, accessToken),
-                Data = _userService.GetUser(fbkey)
-            });
+            var result = await _userService.AddUser(fbkey, accessToken);
+            return Ok(result);
         }
 
         [HttpGet]

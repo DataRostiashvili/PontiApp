@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PontiApp.Exceptions;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Models.Request;
@@ -30,7 +31,8 @@ namespace PontiApp.EventPlace.Services.CategoryServices
         public async Task Delete(CategoryRequest category)
         {
             var entity = GetEntity(category);
-
+            if (entity == null)
+                throw new DoesNotExistsException();
             await _categoryRepository.Delete(entity);
         }
 
@@ -39,6 +41,10 @@ namespace PontiApp.EventPlace.Services.CategoryServices
         public async Task<List<CategoryResponse>> GetAll()
         {
             var allCategory = await _categoryRepository.GetAll();
+
+            if (allCategory.Count == 0 || allCategory == null)
+                throw new DoesNotExistsException();
+
             var allCategoryDTOs = _mapper.Map<List<CategoryEntity>, List<CategoryResponse>>(allCategory);
 
             return allCategoryDTOs;

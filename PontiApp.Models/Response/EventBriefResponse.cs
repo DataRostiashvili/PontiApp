@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Response
 {
-    public  class PlaceListingResponse
+    public class EventBriefResponse :GenericResponse
     {
-
+        public int EventId { get; set; } 
         public string Name { get; set; }
 
         public string Address { get; set; }
 
-        public UserListingResponse UserEntity { get; set; }
-        public List<WeekScheduleResponse> WeekSchedules { get; set; }
-        public int AverageRanking { get; set; }
+        public HostResponse Host { get; set; }
 
+        public DateTime StartTime { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using PontiApp.Exceptions;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using PontiApp.PlacePlace.Services.PlaceServices;
 using PontiApp.Ponti.Repository.PontiRepository;
 using PontiApp.Validators.EntityValidators;
@@ -35,7 +37,9 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         public async Task AddHostingPlace(PlaceRequest newPlaceDTO)
         {
             var newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
-
+            var existingPlace = _placeRepo.GetByPredicate(plc => plc.UserEntityId == newPlace.UserEntityId && plc.Name == newPlace.Name && plc.Address == newPlace.Address).SingleOrDefault();
+            if (existingPlace != null)
+                throw new AlreadyExistsException("This Place Is Already Registered!");
             await _placeRepo.Insert(newPlace);
         }
 
@@ -48,29 +52,38 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         public async Task DeleteHostingPlace(int hostPlaceId)
         {
             PlaceEntity currPlace = await _placeRepo.GetByID(hostPlaceId);
+            if (currPlace == null)
+                throw new DoesNotExistsException();
             await _placeRepo.Delete(currPlace);
         }
 
         public async Task<List<PlaceListingResponseDTO>> GetAllGuestingPlace(int userGuestId)
         {
             List<PlaceEntity> guestingPlaces = await _placeRepo.GetAllGuesting(userGuestId);
+
+            if (guestingPlaces.Count == 0 || guestingPlaces == null)
+                throw new DoesNotExistsException();
+
             List<PlaceListingResponseDTO> guestingPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(guestingPlaces);
 
             return guestingPlaceDTOs;
         }
 
-        public async Task<List<PlaceListingResponseDTO>> GetAllHsotingPlace(int userHostId)
+        public async Task<List<PlaceBriefResponse>> GetAllHsotingPlace(long hostFbId)
         {
-            List<PlaceEntity> hostingPlaces = await _placeRepo.GetAllHosting(userHostId);
-            List<PlaceListingResponseDTO> hostingPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(hostingPlaces);
+            var hostingPlaces = await _placeRepo.GetAllHosting(hostFbId);
+            var hostingPlacesResponse = _mapper.Map<List<PlaceBriefResponse>>(hostingPlaces);
 
-            return hostingPlaceDTOs;
+            return hostingPlacesResponse;
         }
 
-        public async Task<List<PlaceListingResponseDTO>> GetAllPlace()
+        public async Task<List<PlaceBriefResponse>> GetAllPlace()
         {
-            List<PlaceEntity> allPlace = await _placeRepo.GetAll();
-            List<PlaceListingResponseDTO> allPlaceDTOs = _mapper.Map<List<PlaceListingResponseDTO>>(allPlace);
+            var  allPlace = await _placeRepo.GetAllPlaceAsync();
+            if (allPlace == null || allPlace.Count() == 0)
+                throw new DoesNotExistsException("No Place Exists!");
+
+            var allPlaceDTOs = _mapper.Map<List<PlaceBriefResponse>>(allPlace);
 
             return allPlaceDTOs;
         }
@@ -79,7 +92,9 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         {
             var searchResult = await _placeRepo.GetPlaceSearchResult(searchFilter);
 
-
+            if (searchResult.Count == 0 || searchResult == null)
+                throw new DoesNotExistsException();
+            
             var searchResultDto = _mapper.Map<List<PlaceListingResponseDTO>>(searchResult);
             foreach(var place in searchResultDto)
             {
@@ -91,6 +106,8 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         public async Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId)
         {
             PlaceEntity currPlace = await _placeRepo.GetByID(placeId);
+            if (currPlace == null)
+                throw new DoesNotExistsException();
             return _mapper.Map<PlaceHostResponseDTO>(currPlace);
         }
 

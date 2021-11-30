@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PontiApp.Models.Response
+namespace PontiApp.Models.Entities.Interfaces
 {
-    public class CategoryResponse :GenericResponse
+    public interface IReviewEntity
     {
-        public string Category { get; set; }
+        public float ReviewRanking { get; set; }
     }
 }

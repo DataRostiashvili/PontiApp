@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using PontiApp.MessageSender;
 using PontiApp.Models.Request;
 using PontiApp.Models.Response;
+using PontiApp.GraphAPICalls;
+using PontiApp.AuthService;
+using PontiApp.Exceptions;
 
 namespace PontiApp.EventPlace.Services.UserServices
 {
@@ -24,44 +27,75 @@ namespace PontiApp.EventPlace.Services.UserServices
         private readonly BaseRepository<UserEntity> _userRepository;
         private readonly IMapper _mapper;
         private readonly MessagingService _service;
+        private readonly IFbClient _fbClient;
+        private readonly IJwtProcessor _jwtProcessor;
 
-        public UserService(IMapper mapper, BaseRepository<UserEntity> userRepository, IHttpClientFactory factory, MessagingService service)
+        public UserService(IMapper mapper, BaseRepository<UserEntity> userRepository, IHttpClientFactory factory, MessagingService service,
+            IFbClient fbClient, IJwtProcessor jwtProcessor)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _factory = factory;
             _service = service;
+            _fbClient = fbClient;
+            _jwtProcessor = jwtProcessor;
         }
-        public async Task Add(UserCreationDTO newUserDTO)
-        {
-            UserEntity user = _mapper.Map<UserCreationDTO, UserEntity>(newUserDTO);
-            if (!UserExists(user.FbKey))
-            {
+        //public async Task Add(UserCreationDTO newUserDTO)
+        //{
+        //    UserEntity user = _mapper.Map<UserCreationDTO, UserEntity>(newUserDTO);
+        //    if (!UserExists(user.FbKey))
+        //    {
+        //        await _userRepository.Insert(user);
+        //    }
+        //    else return;
+        //}
 
-                await _userRepository.Insert(user);
+        public async Task<(string, UserCreationDTO)> AddUser(long fbkey, string accessToken)
+        {
+            UserCreationDTO user = new UserCreationDTO();
+            if (!UserExists(fbkey))
+            {
+                user = await _fbClient.GetUser(accessToken, fbkey);
+                user.MongoKey = Guid.NewGuid().ToString();
+                await _service.SendAddMessage(user.MongoKey, user.PictureUrl);
+                await _userRepository.Insert(_mapper.Map<UserCreationDTO, UserEntity>(user));
             }
-            else return;
+            var token = _jwtProcessor.GenerateJwt(fbkey, accessToken);
+            user = _mapper.Map< UserEntity, UserCreationDTO>(await _userRepository.GetByFbKey(fbkey));
+            return  (token, user);
+            
+
         }
 
         public async Task Delete(long id)
         {
             var user = _userRepository.GetByPredicate(user => user.FbKey == id).FirstOrDefault();
+            if (user == null)
+                throw new DoesNotExistsException();
             await _userRepository.Delete(user);
         }
 
         public async Task<UserResponse> Get(long FbId)
         {
-            return _mapper.Map<UserResponse>(_userRepository.GetByPredicate(user => user.FbKey == FbId).FirstOrDefault());
+            var user = _userRepository.GetByPredicate(user => user.FbKey == FbId).FirstOrDefault();
+            if (user == null)
+                throw new DoesNotExistsException("Such User Does Not Exists!");
+            return _mapper.Map<UserResponse>(user);
         }
 
         public async Task<List<UserResponse>> GetAllUser()
         {
-            return _mapper.Map<List<UserResponse>>(await _userRepository.GetAll());
+            var allUsers = await _userRepository.GetAll();
+            if (allUsers.Count == 0 || allUsers == null)
+                throw new DoesNotExistsException("No User Exists!");
+            return _mapper.Map<List<UserResponse>>(allUsers);
         }
 
         public async Task Update(UserRequest userRequest)
         {
-            var user = _userRepository.GetByPredicate(user => user.FbKey == userRequest.fbId).First(); 
+            var user = _userRepository.GetByPredicate(user => user.FbKey == userRequest.fbId).First();
+            if (user == null)
+                throw new DoesNotExistsException("Such User Does Not Exists!");
             user.Address = userRequest.Address;
             user.AverageRanking = userRequest.AverageRanking;
             user.Mail = userRequest.Mail;
@@ -74,10 +108,20 @@ namespace PontiApp.EventPlace.Services.UserServices
 
         public bool UserExists(long FbKey) => _userRepository.GetByPredicate(user => user.FbKey == FbKey).Any();
 
-        public async Task<bool> UserExists(int id) => await _userRepository.GetByID(id) is null;
+        public async Task<bool> UserExists(int id) => await _userRepository.GetByID(id) is not null;
 
-        public async Task<UserEntity> GetUser(int id) => await _userRepository.GetByID(id);
-        public UserCreationDTO GetUser(long fbId) => _mapper.Map<UserCreationDTO>(_userRepository.GetByPredicate(f => f.FbKey == fbId).FirstOrDefault());
+        public async Task<UserEntity> GetUser(int id) {
+            var user = await _userRepository.GetByID(id);
+            if(user == null)
+                throw new DoesNotExistsException("Such User Does Not Exists!");
+            return user;
+        }
+        public UserCreationDTO GetUser(long fbId) {
+            var user = _userRepository.GetByPredicate(f => f.FbKey == fbId).FirstOrDefault();
+            if (user == null)
+                throw new DoesNotExistsException("Such User Does Not Exists!");
+           return _mapper.Map<UserCreationDTO>(user);
+        }
         public void DeleteImage(string guid) => _service.SendDeleteMessage(guid);
 
 

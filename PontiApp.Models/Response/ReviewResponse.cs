@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Response
 {
-    public class UserListingResponse
+    public class ReviewResponse
     {
-        public string Name { get; set; }
-        public string Surename { get; set; }
+        public float AverageReviewRanking { get; set; }
+        public int TotalReviewCount { get; set; }
     }
 }

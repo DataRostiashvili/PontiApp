@@ -15,8 +15,10 @@ namespace PontiApp.Data.DatabaseSeeder
             _appDbContext = appDbContext;
         }
 
-        public void SeedDatabase()
+        public async Task SeedDatabase()
         {
+            await _appDbContext.Database.EnsureDeletedAsync();
+            await _appDbContext.Database.EnsureCreatedAsync();
             FillUsersTable();
             FillPlacesTable();
             FillEventsTable();
@@ -24,6 +26,13 @@ namespace PontiApp.Data.DatabaseSeeder
             FillPlaceCategoriesTable();
             FillEventCategoriesTable();
             FillWeekScheduleTable();
+            FillImages();
+        }
+
+        private void FillImages()
+        {
+            var mongoSeeder = new MongoSeeder();
+            mongoSeeder.Seed();
         }
 
         private void FillUsersTable()

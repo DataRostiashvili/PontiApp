@@ -27,44 +27,29 @@ namespace PontiApp.EventPlace.Api.Controllers
         [Route(nameof(AddWeekDay))]
         public async Task<ActionResult> AddWeekDay([FromBody] List<WeekScheduleRequest> weekSchedule)
         {
-            try
-            {
-                await _weekDayService.AddWeekDays(weekSchedule);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _weekDayService.AddWeekDays(weekSchedule);
+            return Ok();
+
         }
 
         [HttpPut]
         [Route(nameof(UpdateWeekDay))]
         public async Task<ActionResult> UpdateWeekDay([FromBody] List<WeekScheduleRequest> weekSchedule)
         {
-            try
-            {
-                await _weekDayService.UpdateWeekDays(weekSchedule);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _weekDayService.UpdateWeekDays(weekSchedule);
+            return Ok();
+
         }
 
         [HttpGet("GetAllWeekDays")]
         public async Task<ActionResult<IEnumerable<WeekScheduleResponse>>> GetAllWeekDays()
         {
-            try
-            {
-                var weekDays = await _weekDayService.GetWeekSchedules();
-                return Ok(weekDays);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            var weekDays = await _weekDayService.GetWeekSchedules();
+            return Ok(weekDays);
+
         }
     }
 }

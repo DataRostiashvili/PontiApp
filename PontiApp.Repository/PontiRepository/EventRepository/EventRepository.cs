@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PontiApp.Data.DbContexts;
+using PontiApp.Exceptions;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.DTOs.Enums;
 using PontiApp.Models.Entities;
@@ -55,9 +56,9 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
             return await _applicationDbContext.UserGuestEvents.Where(ug => ug.UserEntityId == currUser.Id).Select(e => e.EventEntity).ToListAsync();
         }
 
-        public async Task<List<EventEntity>> GetAllHosting(int userId)
+        public async Task<List<EventEntity>> GetAllHosting(long hostFbId)
         {
-            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostEvents).SingleAsync(u => u.Id == userId);
+            var currUser = await _applicationDbContext.Users.Include(u => u.UserHostEvents).SingleAsync(u => u.FbKey == hostFbId);
 
             return currUser.UserHostEvents;
         }
@@ -70,8 +71,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
                 ReviewRanking = eventReviewDTO.ReviewRanking,
                 EventEntity = currEvent,
                 EventEntityId = eventReviewDTO.EventEntityId,
-                UserEntityId = eventReviewDTO.UserEntityId,
-                UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == eventReviewDTO.UserEntityId)
+                //UserEntityId = eventReviewDTO.UserEntityId,
+                //UserEntity = await _applicationDbContext.Users.SingleAsync(u => u.Id == eventReviewDTO.UserEntityId)
             };
 
             if (currEvent.Reviews.Contains(currReview))
@@ -133,6 +134,21 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
                     break;
             }
             return deadline;
+        }
+
+        public async Task<IEnumerable<EventEntity>> GetAllEvent()
+        {
+            return await _applicationDbContext.Events.Include(e => e.UserEntity).ToListAsync();
+        }
+        public async Task<EventEntity> GetDetailedEventAsync(int eventId)
+        {
+            var query =  _applicationDbContext.Events.Include(e => e.PlaceEntity).Include(e => e.UserEntity).Include(e => e.Reviews).Include(e => e.Pictures);
+            return await _applicationDbContext.Events
+                .Include(e=>e.PlaceEntity)
+                .Include(e => e.UserEntity)
+                .Include(e=>e.Reviews)
+                .Include(e=>e.Pictures)
+                .SingleAsync(e => e.Id == eventId);
         }
     }
 }

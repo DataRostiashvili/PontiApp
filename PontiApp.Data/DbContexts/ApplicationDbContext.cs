@@ -28,6 +28,7 @@ namespace PontiApp.Data.DbContexts
 
         public DbSet<CategoryEntity> Categories { get; set; }
 
+
         public DbSet<UserGuestEvent> UserGuestEvents { get; set; }
         public DbSet<UserGuestPlace> UserGuestPlaces { get; set; }
 

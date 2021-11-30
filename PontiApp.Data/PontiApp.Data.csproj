@@ -18,7 +18,10 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
   </ItemGroup>
-
+	<ItemGroup>
+		<PackageReference Include="MongoDB.Driver" Version="2.13.2" />
+		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PontiApp.Models\PontiApp.Models.csproj" />
   </ItemGroup>

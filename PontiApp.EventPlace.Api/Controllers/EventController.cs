@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using PontiApp.Models.Response;
 
 namespace PontiApp.EventPlace.Api.Controllers
 {
@@ -28,161 +29,113 @@ namespace PontiApp.EventPlace.Api.Controllers
         [Route(nameof(CreateEvent))]
         public async Task<ActionResult> CreateEvent([FromBody] EventHostRequestDTO eventDTO)
         {
-            try
-            {
-                await _eventService.AddHostingEvent(eventDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _eventService.AddHostingEvent(eventDTO);
+            return Ok();
+
         }
 
         [HttpPut]
         [Route(nameof(UpdateEvent))]
         public async Task<ActionResult> UpdateEvent([FromBody] EventHostRequestDTO hostEventDTO)
         {
-            try
-            {
-                await _eventService.UpdateHostingEvent(hostEventDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _eventService.UpdateHostingEvent(hostEventDTO);
+            return Ok();
+
         }
 
         [HttpDelete]
         [Route(nameof(DeleteEvent))]
         public async Task<ActionResult> DeleteEvent(int hostEventId)
         {
-            try
-            {
-                await _eventService.DeleteHostingEvent(hostEventId);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _eventService.DeleteHostingEvent(hostEventId);
+            return Ok();
+
         }
 
         [HttpGet("GetDetailedHostingEvent/{id}")]
         public async Task<ActionResult<EventHostResponseDTO>> GetDetailedHostingEvent(int id)
         {
-            try
-            {
-                return Ok(await _eventService.GetDetailedHostingEvent(id));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _eventService.GetDetailedHostingEvent(id));
+
+        }
+        [HttpGet(nameof(GetDetailedEvent))]
+        public async Task<ActionResult<EventDetailedResponse>> GetDetailedEvent(int id)
+        {
+
+            return Ok(await _eventService.GetDetailedEvent(id));
+
         }
 
         [HttpGet("GetGuestingEvent/{eventId}/{guestId}")]
         public async Task<ActionResult<EventGuestResponseDTO>> GetGuestingEvent(int eventId, int guestId)
         {
-            try
+
+            EventGuestRequestDTO guestRequestDTO = new EventGuestRequestDTO()
             {
-                EventGuestRequestDTO guestRequestDTO = new EventGuestRequestDTO()
-                {
-                    EventId = eventId,
-                    UserGuestId = guestId
-                };
-                return Ok(await _eventService.GetDetailedGuestingEvent(guestRequestDTO));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+                EventId = eventId,
+                UserGuestId = guestId
+            };
+            return Ok(await _eventService.GetDetailedGuestingEvent(guestRequestDTO));
+
         }
 
-        [HttpGet("GetHostingEvents/{userHostId}")]
-        public async Task<ActionResult<IEnumerable<EventListingResponseDTO>>> GetHostingEvents(int userHostId)
+        [HttpGet(nameof(GetHostingEvents))]
+        public async Task<ActionResult<IEnumerable<EventBriefResponse>>> GetHostingEvents(long hostFbId)
         {
-            try
-            {
-                return Ok(await _eventService.GetAllHsotingEvent(userHostId));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _eventService.GetAllHsotingEvent(hostFbId));
+
         }
 
         [HttpPost]
         [Route(nameof(AddInGuestingEvents))]
         public async Task<ActionResult> AddInGuestingEvents([FromBody] EventGuestRequestDTO guestEventDTO)
         {
-            try
-            {
-                await _eventService.AddGusestingEvent(guestEventDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _eventService.AddGusestingEvent(guestEventDTO);
+            return Ok();
+
         }
 
         [HttpPut]
         [Route(nameof(UpdateInGuestingEvents))]
         public async Task<ActionResult> UpdateInGuestingEvents([FromBody] EventReviewDTO eventReviewDTO)
         {
-            try
-            {
-                await _eventService.UpdateGuestingEvent(eventReviewDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _eventService.UpdateGuestingEvent(eventReviewDTO);
+            return Ok();
+
         }
 
         [HttpPut]
         [Route(nameof(RemoveFromGuestingEvents))]
         public async Task<ActionResult> RemoveFromGuestingEvents([FromBody] EventGuestRequestDTO guestEventDTO)
         {
-            try
-            {
-                await _eventService.DeleteGuestingEvent(guestEventDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _eventService.DeleteGuestingEvent(guestEventDTO);
+            return Ok();
+
         }
 
         [HttpGet("GetGuestingEvents/{userGuestId}")]
         public async Task<ActionResult<IEnumerable<EventListingResponseDTO>>> GetGuestingEvents(int userGuestId)
         {
-            try
-            {
-                return Ok(await _eventService.GetAllGuestingEvent(userGuestId));
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _eventService.GetAllGuestingEvent(userGuestId));
+
         }
 
         [HttpGet("GetAllEvent")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<EventListingResponseDTO>>> GetAllEvent()
+        public async Task<ActionResult<IEnumerable<EventBriefResponse>>> GetAllEvent()
         {
-            try
-            {
-                return Ok(await _eventService.GetAllEvent());
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Ok(await _eventService.GetAllEvent());
+
         }
 
         [HttpPost("SearchEvent")]
@@ -201,12 +154,12 @@ namespace PontiApp.EventPlace.Api.Controllers
             };
 
             searchDto.Categories = new();
-            foreach(var cat in Categories)
+            foreach (var cat in Categories)
             {
                 searchDto.Categories.Add(cat);
             }
 
-        
+
             var searchResult = await _eventService.GetSearchedEvents(searchDto);
 
             return Ok(searchResult);
