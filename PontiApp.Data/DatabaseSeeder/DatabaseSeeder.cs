@@ -17,8 +17,11 @@ namespace PontiApp.Data.DatabaseSeeder
 
         public async Task SeedDatabase()
         {
-            await _appDbContext.Database.EnsureDeletedAsync();
-            await _appDbContext.Database.EnsureCreatedAsync();
+           // await _appDbContext.Database.EnsureDeletedAsync();
+           
+            //await _appDbContext.Database.EnsureCreatedAsync();
+            await _appDbContext.Database.MigrateAsync();
+
             FillUsersTable();
             FillPlacesTable();
             FillEventsTable();
@@ -26,7 +29,7 @@ namespace PontiApp.Data.DatabaseSeeder
             FillPlaceCategoriesTable();
             FillEventCategoriesTable();
             FillWeekScheduleTable();
-            FillImages();
+           // FillImages();
         }
 
         private void FillImages()
