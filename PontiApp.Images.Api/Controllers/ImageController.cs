@@ -43,9 +43,10 @@ namespace PontiApp.Images.Api.Controllers
 
         public async Task<ActionResult> Get(string guid)
         {
-            var cacheKey = "Get_Profile_Pic";
+            
             var image = await _service.GetImage(guid);
             return File(image[0], "image/jpeg");
+            //
         }
 
         [HttpGet]

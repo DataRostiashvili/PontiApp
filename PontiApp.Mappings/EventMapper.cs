@@ -48,10 +48,10 @@ namespace PontiApp.Mappings
                     AverageReviewRanking = e.Reviews.Count == 0 ? 0 : e.Reviews.Average(review => review.ReviewRanking) ,
                     TotalReviewCount = e.Reviews.Count
                 }))
-                .ForMember(response => response.Pictures, config => config.MapFrom(entity => 
+                //.ForMember(response => response.Pictures, config => config.MapFrom(entity => 
                 
-                     entity.Pictures.Select(pic => Helpers.ConvertToPictureUri(pic.MongoKey))
-                ))
+                //     entity.Pictures.Select(pic => Helpers.ConvertToPictureUri(pic.MongoKey))
+                //))
                 .ForMember(response => response.PlaceId, config=> config.MapFrom(entity => entity.PlaceEntityId))
                 .ReverseMap();
 

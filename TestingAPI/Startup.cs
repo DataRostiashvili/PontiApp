@@ -46,8 +46,7 @@ namespace TestingAPI
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DbConnection"));
             });
-            services.AddScoped<ConnectionFactory,ConnectionFactory>();
-            services.AddScoped<MessagingService,MessagingService>();
+            
             services.AddScoped<DatabaseSeeder>();
             
 

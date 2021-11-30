@@ -7,7 +7,6 @@ using PontiApp.GraphAPICalls;
 using PontiApp.MessageSender;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Request;
-using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,33 +34,34 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateUser))]
-        public async Task<ActionResult> UpdateUser([FromBody] UserRequest userRequest)
+        public async Task<ActionResult> UpdateUser([FromBody] UserRequest userDTO)
         {
 
-            await _userService.Update(userRequest);
+            await _userService.Update(userDTO);
             return Ok();
 
         }
 
         [HttpDelete]
         [Route(nameof(DeleteUser))]
-        public async Task<ActionResult> DeleteUser(long fbId)
+        public async Task<ActionResult> DeleteUser([FromBody] int userId)
         {
 
-            await _userService.Delete(fbId);
+            await _userService.Delete(userId);
             return Ok();
 
         }
 
-        [HttpGet(nameof(GetUser))]
-        public async Task<ActionResult<UserResponse>> GetUser(long FbId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDTO>> GetEvent(int id)
         {
 
-            return Ok(await _userService.Get(FbId));
+            return Ok(await _userService.Get(id));
 
         }
 
 
+        //}
 
         [HttpPost]
         [AllowAnonymous]
@@ -76,9 +76,9 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route("UploadImages")]
-        public async Task<ActionResult> Upload(long fbId, IFormFileCollection files)
+        public async Task<ActionResult> Upload(int id, IFormFileCollection files)
         {
-            var user = _userService.GetUser(fbId);
+            var user = await _userService.GetUser(id);
             await _service.SendUpdateMessage(user.MongoKey, files);
             return Ok();
         }

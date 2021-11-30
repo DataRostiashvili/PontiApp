@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PontiApp.Exceptions;
+using PontiApp.Images.Services.Generic_Services;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Models.Request;
@@ -17,13 +18,14 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 {
     public class PlaceService : IPlaceService
     {
-
+        private readonly IMongoService _mongoService;
         private readonly IMapper _mapper;
         private readonly PlaceDTOValidator _validator;
         private readonly PlaceRepository _placeRepo;
 
-        public PlaceService(IMapper mapper, PlaceDTOValidator validator, PlaceRepository placeRepo)
+        public PlaceService(IMongoService mongoService,IMapper mapper, PlaceDTOValidator validator, PlaceRepository placeRepo)
         {
+            _mongoService = mongoService;
             _mapper = mapper;
             _validator = validator;
             _placeRepo = placeRepo;
@@ -88,9 +90,15 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             return allPlaceDTOs;
         }
 
-        public Task<PlaceHostResponseDTO> GetDetailedPlace(int placeId)
+        public async Task<PlaceDetailedResponse> GetDetailedPlace(int placeId)
         {
-            throw new NotImplementedException();
+            var place = await _placeRepo.GetDetaildPlaceAsync(placeId);
+            var doc = await _mongoService.GetImage(place.PicturesId);
+            var picAmnt = doc.Count;
+            var picList = Enumerable.Range(0, doc.Count).Select(s => $"https://localhost:5005/{place.PicturesId}/{s}");
+            var placeMap = _mapper.Map<PlaceDetailedResponse>(place);
+            placeMap.Pictures = picList;
+            return placeMap;
         }
 
         public async Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchFilter searchFilter)
