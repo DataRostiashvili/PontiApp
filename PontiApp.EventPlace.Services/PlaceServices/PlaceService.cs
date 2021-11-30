@@ -116,7 +116,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         {
             throw new NotImplementedException();
         }
-
+        
         public async Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO)
         {
             await _placeRepo.UpdateGuestingPlace(placeReviewDTO);
