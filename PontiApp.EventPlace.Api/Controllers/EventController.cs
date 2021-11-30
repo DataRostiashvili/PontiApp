@@ -164,5 +164,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
             return Ok(searchResult);
         }
+
+        //add photos
+
+        //remove photos
+
+        //update photos
     }
 }
