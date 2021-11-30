@@ -2,6 +2,7 @@ using System;
 using PontiApp.Data.DbContexts;
 using System.Linq;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace PontiApp.Data.DatabaseSeeder
