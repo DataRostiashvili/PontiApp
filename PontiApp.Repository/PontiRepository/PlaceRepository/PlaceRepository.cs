@@ -90,6 +90,19 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task<List<PlaceEntity>> GetPlaceSearchResult(SearchFilter searchBaseDTO)
         {
+            //var searchForEveryTitle = String.IsNullOrWhiteSpace(searchBaseDTO.SearchKeyWord);
+            //var searchForEveryCategory = searchBaseDTO.Categories.Count < 1;
+
+            //var places = (await (from place in _applicationDbContext.Places
+            //                     where searchForEveryTitle ? true : place.Name.Contains(searchBaseDTO.SearchKeyWord)
+            //                     let searchCategoryIds = searchBaseDTO.Categories.Select(searchCat => searchCat.Id)
+            //                     let testCategories = _applicationDbContext.Places
+            //                     .Select(s => s.PlaceCategories
+            //                        .Where(pc => searchCategoryIds.Contains(pc.CategoryEntityId))).AsEnumerable()
+            //                     select place).ToListAsync()).Where(place => IsWorkingInTimeRange(place.WeekSchedule, searchBaseDTO.Time));
+
+            //return places.ToList();
+
             //prepare input
             var rawCategories = searchBaseDTO.Categories.Select(cat=> cat.Category).ToList();
             var categoryEntities = _applicationDbContext.Categories.Where(cat => rawCategories.Contains(cat.Category))
