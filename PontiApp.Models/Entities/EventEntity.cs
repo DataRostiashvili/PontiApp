@@ -25,7 +25,6 @@ namespace PontiApp.Models.Entities
 
         public UserEntity UserEntity { get; set; }
         public int UserEntityId { get; set; }
-        public List<EventPicEntity> Pictures { get; set; }
         public List<EventReviewEntity> Reviews { get; set; }
 
         //Many to many

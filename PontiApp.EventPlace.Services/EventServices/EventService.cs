@@ -111,23 +111,24 @@ namespace PontiApp.EventPlace.Services.EventServices
             return searchResultDto;
         }
 
-        public async Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId)
-        {
-            EventEntity currEvent = await _eventRepo.GetByID(eventId);
-            if (currEvent == null)
-                throw new DoesNotExistsException();
-            return _mapper.Map<EventHostResponseDTO>(currEvent);
-        }
+        //public async Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId)
+        //{
+        //    EventEntity currEvent = await _eventRepo.GetByID(eventId);
+        //    if (currEvent == null)
+        //        throw new DoesNotExistsException();
+        //    return _mapper.Map<EventHostResponseDTO>(currEvent);
+        //}
         public async Task<EventDetailedResponse> GetDetailedEvent(int eventId)
         {
             var @event = await _eventRepo.GetDetailedEventAsync(eventId);
             return _mapper.Map<EventDetailedResponse>(@event);
         }
 
-        public async Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest)
+        //{
+
+        //    throw new NotImplementedException();
+        //}
 
         public async Task UpdateGuestingEvent(EventReviewDTO eventReviewDTO)
         {

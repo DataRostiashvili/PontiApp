@@ -103,15 +103,6 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             return searchResultDto;
         }
 
-        public async Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId)
-        {
-            PlaceEntity currPlace = await _placeRepo.GetByID(placeId);
-            if (currPlace == null)
-                throw new DoesNotExistsException();
-            return _mapper.Map<PlaceHostResponseDTO>(currPlace);
-        }
-
-        
         public async Task<PlaceGuestResponseDTO> GetDetailedGuestingPlace(PlaceGuestRequestDTO placeGuest)
         {
             throw new NotImplementedException();
