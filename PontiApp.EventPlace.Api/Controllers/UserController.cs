@@ -36,7 +36,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         public async Task<ActionResult> UpdateUser([FromBody] UserRequest userDTO)
         {
 
-            await _userService.Update(userRequest);
+            await _userService.Update(userDTO);
             return Ok();
 
         }
@@ -46,7 +46,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         public async Task<ActionResult> DeleteUser([FromBody] int userId)
         {
 
-            await _userService.Delete(fbId);
+            await _userService.Delete(userId);
             return Ok();
 
         }
@@ -55,7 +55,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         public async Task<ActionResult<UserDTO>> GetEvent(int id)
         {
 
-            return Ok(await _userService.Get(FbId));
+            return Ok(await _userService.Get(id));
 
         }
 
