@@ -16,10 +16,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         Task UpdateGuestingEvent(EventReviewDTO eventReviewDTO);
         Task DeleteHostingEvent(int hostEventId);
         Task DeleteGuestingEvent(EventGuestRequestDTO currEventGuestDTO);
-        Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId);
         Task<EventDetailedResponse> GetDetailedEvent(int eventId);
-
-        Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest);
         Task<List<EventBriefResponse>> GetAllEvent();
         Task<List<EventListingResponseDTO>> GetSearchedEvents(SearchFilter searchBaseDTO);
         Task<List<EventBriefResponse>> GetAllHsotingEvent(long userHostId);
