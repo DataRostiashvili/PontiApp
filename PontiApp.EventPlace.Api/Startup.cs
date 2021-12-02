@@ -39,6 +39,7 @@ using PontiApp.GraphAPICalls;
 using PontiApp.Images.Services.Generic_Services;
 using PontiApp.Images.Repository;
 using MongoDB.Driver;
+using PontiApp.EventPlace.Api.Utils;
 
 namespace PontiApp.EventPlace.Api
 {
@@ -64,7 +65,6 @@ namespace PontiApp.EventPlace.Api
                   .AllowAnyHeader());
             });
 
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -74,45 +74,12 @@ namespace PontiApp.EventPlace.Api
 
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<IEventService, EventService>();
-            services.AddTransient<IPlaceService, PlaceService>();
-            services.AddTransient<IPlaceCategoryService, PlaceCategoryService>();
-            services.AddTransient<IEventCategoryService, EventCategoryService>();
-            services.AddTransient<IWeekDayService, WeekDayService>();
-            services.AddTransient<BaseRepository<UserEntity>>();
-            services.AddTransient<BaseRepository<CategoryEntity>>();
-            services.AddTransient<BaseRepository<PlaceCategory>>();
-            services.AddTransient<BaseRepository<EventCategory>>();
-            services.AddTransient<BaseRepository<WeekEntity>>();
-            services.AddTransient<EventRepository>();
-            services.AddTransient<PlaceRepository>();
-            services.AddTransient<EventDTOValidator>();
-            services.AddTransient<PlaceDTOValidator>();
-            services.AddSingleton<ConnectionFactory>();
-            services.AddSingleton<MessagingService>();
-            services.AddTransient<IJwtProcessor,JwtProcessor>();
-            services.AddSingleton<JwtConfig>();
-            services.AddTransient<IFbClient,FbClient>();
-            services.AddHttpClient();
-            services.AddTransient(_ => new MongoClient(Configuration.GetConnectionString("MongoDb"))); 
-            services.AddTransient<IMongoService, MongoService>();
-            services.AddTransient<IMongoRepository, MongoRepository>();
-            services.AddTransient<MessagingService>();
+            services.AddEventPlaceRegistration(Configuration);
 
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseNpgsql(Configuration.GetConnectionString("DbConnection"));
-            });
 
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddAutoMapper(typeof(UserMapper));
-            services.AddAutoMapper(typeof(EventMapper));
-            services.AddAutoMapper(typeof(PlaceMapper));
-            services.AddAutoMapper(typeof(CategoryMapper));
-            services.AddAutoMapper(typeof(WeekDayMapper));
-            services.AddAutoMapper(typeof(ReviewMapper));
+            
+            services.AddMappers();
             //services.AddCustomAuth();
 
         }

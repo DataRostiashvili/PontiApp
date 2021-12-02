@@ -26,6 +26,7 @@ using PontiApp.Images.Repository;
 using PontiApp.Images.Services.Generic_Services;
 using PontiApp.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using PontiApp.User.Api.Utils;
 
 namespace PontiApp.User.Api
 {
@@ -42,25 +43,7 @@ namespace PontiApp.User.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<BaseRepository<UserEntity>>();
-            services.AddControllers();
-            services.AddSingleton<ConnectionFactory>();
-            services.AddSingleton<MessagingService>();
-            services.AddTransient<IJwtProcessor, JwtProcessor>();
-            services.AddSingleton<JwtConfig>();
-            services.AddTransient<IFbClient, FbClient>();
-            services.AddHttpClient();
-            services.AddTransient(_ => new MongoClient(Configuration.GetConnectionString("MongoDb")));
-            services.AddTransient<IMongoService, MongoService>();
-            services.AddTransient<IMongoRepository, MongoRepository>();
-            services.AddTransient<MessagingService>();
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseNpgsql(Configuration.GetConnectionString("DbConnection"));
-            });
-
-            services.AddAutoMapper(typeof(UserMapper));
+            services.AddUserServiceRegistration(Configuration);
 
             services.AddSwaggerGen(c =>
             {

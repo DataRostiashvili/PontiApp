@@ -65,8 +65,8 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route(nameof(CreateUser))]
-        public async Task<ActionResult> CreateUser(long fbkey, string accessToken)
+        [Route(nameof(Login))]
+        public async Task<ActionResult> Login(long fbkey, string accessToken)
         {
             var result = await _userService.AddUser(fbkey, accessToken);
             return Ok(result);
