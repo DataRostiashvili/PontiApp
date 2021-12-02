@@ -23,7 +23,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         private readonly PlaceDTOValidator _validator;
         private readonly PlaceRepository _placeRepo;
 
-        public PlaceService(IMongoService mongoService,IMapper mapper, PlaceDTOValidator validator, PlaceRepository placeRepo)
+        public PlaceService(IMongoService mongoService, IMapper mapper, PlaceDTOValidator validator, PlaceRepository placeRepo)
         {
             _mongoService = mongoService;
             _mapper = mapper;
@@ -81,7 +81,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 
         public async Task<List<PlaceBriefResponse>> GetAllPlace()
         {
-            var  allPlace = await _placeRepo.GetAllPlaceAsync();
+            var allPlace = await _placeRepo.GetAllPlaceAsync();
             if (allPlace == null || allPlace.Count() == 0)
                 throw new DoesNotExistsException("No Place Exists!");
 
@@ -107,9 +107,9 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 
             if (searchResult.Count == 0 || searchResult == null)
                 throw new DoesNotExistsException();
-            
+
             var searchResultDto = _mapper.Map<List<PlaceListingResponseDTO>>(searchResult);
-            foreach(var place in searchResultDto)
+            foreach (var place in searchResultDto)
             {
                 place.WeekSchedules = _mapper.Map<List<WeekEntity>, List<WeekScheduleDTO>>(searchResult.Select(place => place.WeekSchedule).FirstOrDefault());
             }
@@ -124,8 +124,13 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 
         public async Task UpdateHostingPlace(PlaceHostRequestDTO currPlaceDTO)
         {
-            PlaceEntity currPlace =  _mapper.Map<PlaceEntity>(currPlaceDTO);
+            PlaceEntity currPlace = _mapper.Map<PlaceEntity>(currPlaceDTO);
             await _placeRepo.Update(currPlace);
+        }
+
+        Task<PlaceHostResponseDTO> IPlaceService.GetDetailedPlace(int placeId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

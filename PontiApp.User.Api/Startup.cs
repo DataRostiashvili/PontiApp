@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PontiApp.AuthService;
+using PontiApp.GraphAPICalls;
+using PontiApp.Mappings;
+using PontiApp.MessageSender;
+using PontiApp.Models.Entities;
+using PontiApp.Models.Entities.AuthEntities;
+using PontiApp.Ponti.Repository.BaseRepository;
+using PontiApp.User.Services;
+using RabbitMQ.Client;
 
 namespace PontiApp.User.Api
 {
@@ -27,7 +37,18 @@ namespace PontiApp.User.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<BaseRepository<UserEntity>>();
             services.AddControllers();
+            services.AddScoped<IFbClient, FbClient>();
+            services.AddScoped<IJwtProcessor, JwtProcessor>();
+            services.AddScoped<MessagingService>();
+            services.AddScoped<ConnectionFactory>();
+            services.AddHttpClient();
+            services.AddSingleton<JwtConfig>();
+
+            services.AddAutoMapper(typeof(UserMapper));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.User.Api", Version = "v1" });

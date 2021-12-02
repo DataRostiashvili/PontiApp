@@ -66,7 +66,7 @@ namespace PontiApp.EventPlace.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.EventPlace.Api", Version = "v1" });
-                
+
             });
 
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -88,9 +88,9 @@ namespace PontiApp.EventPlace.Api
             services.AddScoped<PlaceDTOValidator>();
             services.AddSingleton<ConnectionFactory>();
             services.AddSingleton<MessagingService>();
-            services.AddScoped<IJwtProcessor,JwtProcessor>();
+            services.AddScoped<IJwtProcessor, JwtProcessor>();
             services.AddSingleton<JwtConfig>();
-            services.AddScoped<IFbClient,FbClient>();
+            services.AddScoped<IFbClient, FbClient>();
             services.AddHttpClient();
 
 
@@ -127,7 +127,7 @@ namespace PontiApp.EventPlace.Api
             app.UseHttpsRedirection();
             app.UseRouting();
 
-           
+
 
 
             app.UseAuthentication();
