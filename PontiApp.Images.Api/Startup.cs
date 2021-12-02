@@ -33,6 +33,7 @@ namespace PontiApp.Images.Api
             services.AddScoped<IMongoService,MongoService>();
             services.AddSingleton<ConnectionFactory>();
             services.AddControllers();
+            services.AddHttpClient();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",new OpenApiInfo { Title = "PontiApp.Images.Api",Version = "v1" });

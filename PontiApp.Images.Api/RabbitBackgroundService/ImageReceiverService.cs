@@ -24,8 +24,9 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
         private readonly IModel _channel;
         private readonly IMongoService mongoService;
         private readonly ConnectionFactory _cFac;
-        public ImageReceiverService(IServiceProvider service, ILogger<ImageReceiverService> logger,ConnectionFactory cFac,IConfiguration config)
+        public ImageReceiverService(IServiceProvider service, ILogger<ImageReceiverService> logger, ConnectionFactory cFac, IConfiguration config)
         {
+
             _logger = logger;
             _service = service;
             _config = config;
@@ -34,6 +35,7 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
                 mongoService = scope.ServiceProvider.GetRequiredService<IMongoService>();
                 _cFac = scope.ServiceProvider.GetRequiredService<ConnectionFactory>();
             }
+
 #if DOCKER_COMPOSE
                    _cFac.HostName = _config.GetSection("RabbitMQ_DockerCompose").GetSection("HostName").Value;
             _cFac.UserName = _config.GetSection("RabbitMQ_DockerCompose").GetSection("UserName").Value;
@@ -41,7 +43,9 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             _cFac.Port = Convert.ToInt32(_config.GetSection("RabbitMQ_DockerCompose").GetSection("Port").Value);
             _cFac.VirtualHost = _config.GetSection("RabbitMQ_DockerCompose").GetSection("VirtualHost").Value;
             _logger.LogInformation($"\n\n\n\n\n\n\n\n\n\n\n\n\n\n{_cFac.HostName}\n\n\n\n\n\n");
+
 #elif DOCKER_COMPOSE_MINIMAL
+
             _cFac.HostName = _config.GetSection("RabbitMQ").GetSection("HostName").Value;
             _cFac.UserName = _config.GetSection("RabbitMQ").GetSection("UserName").Value;
             _cFac.Password = _config.GetSection("RabbitMQ").GetSection("PassWord").Value;
@@ -52,6 +56,8 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
 #endif
 
 
+
+            _logger.LogInformation($"Message Receiver Service Started At {DateTime.Now}!");
 
             _conn = _cFac.CreateConnection();
             _channel = _conn.CreateModel();
@@ -76,11 +82,11 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
 
         private async void Consumer_Received(object sender, BasicDeliverEventArgs e)
         {
-           
+
             var body = e.Body.ToArray();
             var jsonStr = Encoding.UTF8.GetString(body);
             var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonStr);
-           // _logger.LogInformation($"Message is {Convert.ToString(dict[RabbitMQConsts.LIST])} ///debug ");
+
             switch (e.RoutingKey)
             {
                 case RabbitMQConsts.UPDATE_ADD_Q:
@@ -93,7 +99,7 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
                     break;
                 case RabbitMQConsts.ADD_Q:
                     await mongoService.PostImage((string)dict[RabbitMQConsts.GUID], JsonConvert.DeserializeObject<List<byte[]>>(dict[RabbitMQConsts.LIST].ToString()));
-                    _logger.LogInformation($"\n\n\n\n\n\n\n\nMessage Sent\n\n\n\n\n\n\n");
+                    _logger.LogInformation($"Message consummed from {RabbitMQConsts.ADD_Q} queue at {DateTime.Now}");
                     break;
                 case RabbitMQConsts.DELETE_Q:
                     await mongoService.DeleteImage((string)dict[RabbitMQConsts.GUID]);

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PontiApp.Data.DbContexts;
@@ -9,9 +10,10 @@ using PontiApp.Data.DbContexts;
 namespace PontiApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211119065618_UniqueFbKey")]
+    partial class UniqueFbKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,9 +66,6 @@ namespace PontiApp.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PicturesId")
                         .HasColumnType("text");
 
                     b.Property<int?>("PlaceEntityId")
@@ -126,13 +125,16 @@ namespace PontiApp.Data.Migrations
                     b.Property<int>("EventEntityId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("EventReviewEntityId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<float>("ReviewRanking")
                         .HasColumnType("real");
 
-                    b.Property<int?>("UserEntityId")
+                    b.Property<int>("UserEntityId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -193,9 +195,6 @@ namespace PontiApp.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<string>("PicturesId")
-                        .HasColumnType("text");
-
                     b.Property<string>("TicketBuyUrl")
                         .HasColumnType("text");
 
@@ -251,7 +250,7 @@ namespace PontiApp.Data.Migrations
                     b.Property<float>("ReviewRanking")
                         .HasColumnType("real");
 
-                    b.Property<int?>("UserEntityId")
+                    b.Property<int>("UserEntityId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -449,11 +448,15 @@ namespace PontiApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PontiApp.Models.Entities.UserEntity", null)
+                    b.HasOne("PontiApp.Models.Entities.UserEntity", "UserEntity")
                         .WithMany("GuestingEventReviews")
-                        .HasForeignKey("UserEntityId");
+                        .HasForeignKey("UserEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EventEntity");
+
+                    b.Navigation("UserEntity");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.PlaceCategory", b =>
@@ -505,11 +508,15 @@ namespace PontiApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PontiApp.Models.Entities.UserEntity", null)
+                    b.HasOne("PontiApp.Models.Entities.UserEntity", "UserEntity")
                         .WithMany("GuestingPlaceReviews")
-                        .HasForeignKey("UserEntityId");
+                        .HasForeignKey("UserEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("PlaceEntity");
+
+                    b.Navigation("UserEntity");
                 });
 
             modelBuilder.Entity("PontiApp.Models.Entities.UserGuestEvent", b =>

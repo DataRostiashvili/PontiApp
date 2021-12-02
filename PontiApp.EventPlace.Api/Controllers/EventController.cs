@@ -55,13 +55,13 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         }
 
-        [HttpGet("GetDetailedHostingEvent/{id}")]
-        public async Task<ActionResult<EventHostResponseDTO>> GetDetailedHostingEvent(int id)
-        {
+        //[HttpGet("GetDetailedHostingEvent/{id}")]
+        //public async Task<ActionResult<EventHostResponseDTO>> GetDetailedHostingEvent(int id)
+        //{
 
-            return Ok(await _eventService.GetDetailedHostingEvent(id));
+        //    return Ok(await _eventService.GetDetailedHostingEvent(id));
 
-        }
+        //}
         [HttpGet(nameof(GetDetailedEvent))]
         public async Task<ActionResult<EventDetailedResponse>> GetDetailedEvent(int id)
         {
@@ -70,18 +70,18 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         }
 
-        [HttpGet("GetGuestingEvent/{eventId}/{guestId}")]
-        public async Task<ActionResult<EventGuestResponseDTO>> GetGuestingEvent(int eventId, int guestId)
-        {
+        //[HttpGet("GetGuestingEvent/{eventId}/{guestId}")]
+        //public async Task<ActionResult<EventGuestResponseDTO>> GetGuestingEvent(int eventId, int guestId)
+        //{
 
-            EventGuestRequestDTO guestRequestDTO = new EventGuestRequestDTO()
-            {
-                EventId = eventId,
-                UserGuestId = guestId
-            };
-            return Ok(await _eventService.GetDetailedGuestingEvent(guestRequestDTO));
+        //    EventGuestRequestDTO guestRequestDTO = new EventGuestRequestDTO()
+        //    {
+        //        EventId = eventId,
+        //        UserGuestId = guestId
+        //    };
+        //    return Ok(await _eventService.GetDetailedGuestingEvent(guestRequestDTO));
 
-        }
+        //}
 
         [HttpGet(nameof(GetHostingEvents))]
         public async Task<ActionResult<IEnumerable<EventBriefResponse>>> GetHostingEvents(long hostFbId)
@@ -164,5 +164,11 @@ namespace PontiApp.EventPlace.Api.Controllers
 
             return Ok(searchResult);
         }
+
+        //add photos
+
+        //remove photos
+
+        //update photos
     }
 }

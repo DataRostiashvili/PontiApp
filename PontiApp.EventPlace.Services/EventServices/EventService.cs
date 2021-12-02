@@ -2,6 +2,7 @@
 using PontiApp.Data.DbContexts;
 using PontiApp.EventEvent.Services.EventCategoryServices;
 using PontiApp.Exceptions;
+using PontiApp.Images.Services.Generic_Services;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Models.Response;
@@ -18,13 +19,15 @@ namespace PontiApp.EventPlace.Services.EventServices
 {
     public class EventService : IEventService
     {
+        private readonly IMongoService _mongoService;
         private readonly IMapper _mapper;
         private readonly EventDTOValidator _validator;
         private readonly EventRepository _eventRepo;
         private readonly IEventCategoryService _eventCategoryService;
 
-        public EventService(IMapper mapper, EventDTOValidator validator, EventRepository eventRepo, IEventCategoryService eventCategoryService)
+        public EventService(IMongoService mongoService,IMapper mapper, EventDTOValidator validator, EventRepository eventRepo, IEventCategoryService eventCategoryService)
         {
+            _mongoService = mongoService;
             _mapper = mapper;
             _validator = validator;
             _eventRepo = eventRepo;
@@ -111,23 +114,29 @@ namespace PontiApp.EventPlace.Services.EventServices
             return searchResultDto;
         }
 
-        public async Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId)
-        {
-            EventEntity currEvent = await _eventRepo.GetByID(eventId);
-            if (currEvent == null)
-                throw new DoesNotExistsException();
-            return _mapper.Map<EventHostResponseDTO>(currEvent);
-        }
+        //public async Task<EventHostResponseDTO> GetDetailedHostingEvent(int eventId)
+        //{
+        //    EventEntity currEvent = await _eventRepo.GetByID(eventId);
+        //    if (currEvent == null)
+        //        throw new DoesNotExistsException();
+        //    return _mapper.Map<EventHostResponseDTO>(currEvent);
+        //}
         public async Task<EventDetailedResponse> GetDetailedEvent(int eventId)
         {
             var @event = await _eventRepo.GetDetailedEventAsync(eventId);
-            return _mapper.Map<EventDetailedResponse>(@event);
+            var doc =await _mongoService.GetImage(@event.PicturesId);
+            var picAmnt = doc.Count;
+            var picList = Enumerable.Range(0,doc.Count).Select(s=>$"https://localhost:5005/{@event.PicturesId}/{s}");
+            var eventMap = _mapper.Map<EventDetailedResponse>(@event);
+            eventMap.Pictures = picList;
+            return eventMap;
         }
 
-        public async Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<EventGuestResponseDTO> GetDetailedGuestingEvent(EventGuestRequestDTO eventGuest)
+        //{
+
+        //    throw new NotImplementedException();
+        //}
 
         public async Task UpdateGuestingEvent(EventReviewDTO eventReviewDTO)
         {
@@ -138,7 +147,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         {
             EventEntity currEvent = _mapper.Map<EventEntity>(currEventDTO);
             if (currEvent == null)
-                throw new DoesNotExistsException("Coudn't Find Such Event!");
+                throw new DoesNotExistsException("Couldn't Find Such Event!");
             await _eventRepo.Update(currEvent);
         }
     }
