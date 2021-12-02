@@ -60,11 +60,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.Exceptions", "Pont
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.FluentValidator", "PontiApp.FluentValidator\PontiApp.FluentValidator.csproj", "{CC4115A5-E5E0-46DE-83E8-05541AA2CA89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.User.Api", "PontiApp.User.Api\PontiApp.User.Api.csproj", "{3B817F27-A028-4943-997A-18CDDF68A3D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.User.Api", "PontiApp.User.Api\PontiApp.User.Api.csproj", "{3B817F27-A028-4943-997A-18CDDF68A3D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PontiApp.User.Services", "PontiApp.User.Services\PontiApp.User.Services.csproj", "{1274154D-1C3B-440A-B9D8-1F2A57861D80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PontiApp.User.Services", "PontiApp.User.Services\PontiApp.User.Services.csproj", "{1274154D-1C3B-440A-B9D8-1F2A57861D80}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9D290A29-D41A-4DCE-9750-F9EA85C63591}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gatewayTest", "gatewayTest\gatewayTest.csproj", "{220EDC71-F7B9-43D8-8084-2A2D23DAB487}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -164,6 +166,10 @@ Global
 		{1274154D-1C3B-440A-B9D8-1F2A57861D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1274154D-1C3B-440A-B9D8-1F2A57861D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1274154D-1C3B-440A-B9D8-1F2A57861D80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{220EDC71-F7B9-43D8-8084-2A2D23DAB487}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{220EDC71-F7B9-43D8-8084-2A2D23DAB487}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{220EDC71-F7B9-43D8-8084-2A2D23DAB487}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{220EDC71-F7B9-43D8-8084-2A2D23DAB487}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -188,6 +194,7 @@ Global
 		{3B817F27-A028-4943-997A-18CDDF68A3D2} = {59278BAA-FC7D-4C5B-943D-645353F3DDAB}
 		{1274154D-1C3B-440A-B9D8-1F2A57861D80} = {9D290A29-D41A-4DCE-9750-F9EA85C63591}
 		{9D290A29-D41A-4DCE-9750-F9EA85C63591} = {D90FF853-BC55-4808-B213-2FA4C8F28E2D}
+		{220EDC71-F7B9-43D8-8084-2A2D23DAB487} = {59278BAA-FC7D-4C5B-943D-645353F3DDAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {582527E1-7735-487F-A959-BB99FEF4FE80}
