@@ -9,32 +9,32 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5001
+          "Port": 5011
         }
       ],
       "UpstreamPathTemplate": "/api/e/{everything}",
-      "UpstreamHttpMethod": [],
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "IdentityApiKey",
-      //  "AllowedScopes": []
-      //}
-    },
-
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5003
-        }
-      ],
-      "UpstreamPathTemplate": "/api/u/{everything}",
-      "UpstreamHttpMethod": [],
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET" , "DELETE" ]
       //"AuthenticationOptions": {
       //  "AuthenticationProviderKey": "IdentityApiKey",
       //  "AllowedScopes": []
       //}
     }
+
+    //{
+    //  "DownstreamPathTemplate": "/api/{everything}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 5003
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/api/u/{everything}",
+    //  "UpstreamHttpMethod": [],
+    //  //"AuthenticationOptions": {
+    //  //  "AuthenticationProviderKey": "IdentityApiKey",
+    //  //  "AllowedScopes": []
+    //  //}
+    //}
   ]
 }
