@@ -52,28 +52,15 @@ namespace PontiApp.PlacePlace.Api.Controllers
         }
 
         //Should be separated
-        [HttpGet("GetDetailedHostingPlace/{id}")]
-        public async Task<ActionResult<PlaceHostResponseDTO>> GetDetailedHostingPlace(int id)
+        [HttpGet("GetDetailedPlace/{id}")]
+        public async Task<ActionResult<PlaceHostResponseDTO>> GetDetailedPlace(int id)
         {
 
-
-            return Ok(await _placeService.GetDetailedHostingPlace(id));
+            return Ok(await _placeService.GetDetailedPlace(id));
 
         }
 
-        [HttpGet("GetGuestingPlace/{place}/{guestId}")]
-        public async Task<ActionResult<PlaceGuestResponseDTO>> GetGuestingPlace(int placeId, int guestId)
-        {
-
-            PlaceGuestRequestDTO guestRequestDTO = new PlaceGuestRequestDTO()
-            {
-                PlaceId = placeId,
-                UserGuestId = guestId
-            };
-
-            return Ok(await _placeService.GetDetailedGuestingPlace(guestRequestDTO));
-
-        }
+        
 
         [HttpGet("GetHostingPlaces")]
         public async Task<ActionResult<IEnumerable<PlaceBriefResponse>>> GetHostingPlaces(long hostFbId)

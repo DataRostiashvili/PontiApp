@@ -36,6 +36,9 @@ using PontiApp.AuthService;
 using PontiApp.Models.Entities.AuthEntities;
 using System.Net.Http;
 using PontiApp.GraphAPICalls;
+using PontiApp.Images.Services.Generic_Services;
+using PontiApp.Images.Repository;
+using MongoDB.Driver;
 
 namespace PontiApp.EventPlace.Api
 {
@@ -71,27 +74,31 @@ namespace PontiApp.EventPlace.Api
 
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IEventService, EventService>();
-            services.AddScoped<IPlaceService, PlaceService>();
-            services.AddScoped<IPlaceCategoryService, PlaceCategoryService>();
-            services.AddScoped<IEventCategoryService, EventCategoryService>();
-            services.AddScoped<IWeekDayService, WeekDayService>();
-            services.AddScoped<BaseRepository<UserEntity>>();
-            services.AddScoped<BaseRepository<CategoryEntity>>();
-            services.AddScoped<BaseRepository<PlaceCategory>>();
-            services.AddScoped<BaseRepository<EventCategory>>();
-            services.AddScoped<BaseRepository<WeekEntity>>();
-            services.AddScoped<EventRepository>();
-            services.AddScoped<PlaceRepository>();
-            services.AddScoped<EventDTOValidator>();
-            services.AddScoped<PlaceDTOValidator>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IEventService, EventService>();
+            services.AddTransient<IPlaceService, PlaceService>();
+            services.AddTransient<IPlaceCategoryService, PlaceCategoryService>();
+            services.AddTransient<IEventCategoryService, EventCategoryService>();
+            services.AddTransient<IWeekDayService, WeekDayService>();
+            services.AddTransient<BaseRepository<UserEntity>>();
+            services.AddTransient<BaseRepository<CategoryEntity>>();
+            services.AddTransient<BaseRepository<PlaceCategory>>();
+            services.AddTransient<BaseRepository<EventCategory>>();
+            services.AddTransient<BaseRepository<WeekEntity>>();
+            services.AddTransient<EventRepository>();
+            services.AddTransient<PlaceRepository>();
+            services.AddTransient<EventDTOValidator>();
+            services.AddTransient<PlaceDTOValidator>();
             services.AddSingleton<ConnectionFactory>();
             services.AddSingleton<MessagingService>();
-            services.AddScoped<IJwtProcessor, JwtProcessor>();
+            services.AddTransient<IJwtProcessor,JwtProcessor>();
             services.AddSingleton<JwtConfig>();
-            services.AddScoped<IFbClient, FbClient>();
+            services.AddTransient<IFbClient,FbClient>();
             services.AddHttpClient();
+            services.AddTransient(_ => new MongoClient(Configuration.GetConnectionString("MongoDb"))); 
+            services.AddTransient<IMongoService, MongoService>();
+            services.AddTransient<IMongoRepository, MongoRepository>();
+            services.AddTransient<MessagingService>();
 
 
             services.AddDbContext<ApplicationDbContext>(options =>

@@ -1,37 +1,48 @@
-﻿{
+{
   "Routes": [
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5012
-        }
-      ],
-      "UpstreamPathTemplate": "/api/e/{everything}",
-      "UpstreamHttpMethod": []
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "IdentityApiKey",
-      //  "AllowedScopes": []
-      //}
+  ],
+  "DynamicRoutes": [
+  ],
+  "Aggregates": [
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": null,
+    "ServiceDiscoveryProvider": {
+      "Scheme": null,
+      "Host": null,
+      "Port": 0,
+      "Type": null,
+      "Token": null,
+      "ConfigurationKey": null,
+      "PollingInterval": 0,
+      "Namespace": null
     },
-
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5003
-        }
-      ],
-      "UpstreamPathTemplate": "/api/u/{everything}",
-      "UpstreamHttpMethod": []
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "IdentityApiKey",
-      //  "AllowedScopes": []
-      //}
-    }
-  ]
+    "RateLimitOptions": {
+      "ClientIdHeader": "ClientId",
+      "QuotaExceededMessage": null,
+      "RateLimitCounterPrefix": "ocelot",
+      "DisableRateLimitHeaders": false,
+      "HttpStatusCode": 429
+    },
+    "QoSOptions": {
+      "ExceptionsAllowedBeforeBreaking": 0,
+      "DurationOfBreak": 0,
+      "TimeoutValue": 0
+    },
+    "BaseUrl": null,
+    "LoadBalancerOptions": {
+      "Type": null,
+      "Key": null,
+      "Expiry": 0
+    },
+    "DownstreamScheme": null,
+    "HttpHandlerOptions": {
+      "AllowAutoRedirect": false,
+      "UseCookieContainer": false,
+      "UseTracing": false,
+      "UseProxy": true,
+      "MaxConnectionsPerServer": 2147483647
+    },
+    "DownstreamHttpVersion": null
+  }
 }

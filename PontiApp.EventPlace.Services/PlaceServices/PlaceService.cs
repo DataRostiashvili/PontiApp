@@ -128,9 +128,6 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.Update(currPlace);
         }
 
-        Task<PlaceHostResponseDTO> IPlaceService.GetDetailedPlace(int placeId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

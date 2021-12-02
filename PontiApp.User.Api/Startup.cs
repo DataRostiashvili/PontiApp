@@ -21,6 +21,11 @@ using PontiApp.Models.Entities.AuthEntities;
 using PontiApp.Ponti.Repository.BaseRepository;
 using PontiApp.User.Services;
 using RabbitMQ.Client;
+using MongoDB.Driver;
+using PontiApp.Images.Repository;
+using PontiApp.Images.Services.Generic_Services;
+using PontiApp.Data.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace PontiApp.User.Api
 {
@@ -40,12 +45,20 @@ namespace PontiApp.User.Api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<BaseRepository<UserEntity>>();
             services.AddControllers();
-            services.AddScoped<IFbClient, FbClient>();
-            services.AddScoped<IJwtProcessor, JwtProcessor>();
-            services.AddScoped<MessagingService>();
-            services.AddScoped<ConnectionFactory>();
-            services.AddHttpClient();
+            services.AddSingleton<ConnectionFactory>();
+            services.AddSingleton<MessagingService>();
+            services.AddTransient<IJwtProcessor, JwtProcessor>();
             services.AddSingleton<JwtConfig>();
+            services.AddTransient<IFbClient, FbClient>();
+            services.AddHttpClient();
+            services.AddTransient(_ => new MongoClient(Configuration.GetConnectionString("MongoDb")));
+            services.AddTransient<IMongoService, MongoService>();
+            services.AddTransient<IMongoRepository, MongoRepository>();
+            services.AddTransient<MessagingService>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("DbConnection"));
+            });
 
             services.AddAutoMapper(typeof(UserMapper));
 

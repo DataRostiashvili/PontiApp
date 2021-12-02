@@ -13,10 +13,6 @@ namespace PontiApp.Data.EntityConfiguration
                     .WithOne(w => w.Place)
                     .OnDelete(DeleteBehavior.Cascade);
 
-            //builder.HasMany(pl => pl.Pictures)
-            //        .WithOne(pic => pic.PlaceEntity)
-            //        .OnDelete(DeleteBehavior.Cascade);
-
             builder.HasMany(pl => pl.Reviews)
                     .WithOne(r => r.PlaceEntity)
                     .OnDelete(DeleteBehavior.Cascade);
