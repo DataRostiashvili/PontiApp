@@ -82,5 +82,9 @@ namespace PontiApp.EventPlace.Api.Controllers
             await _service.SendUpdateMessage(user.MongoKey, files);
             return Ok();
         }
+
+        [HttpGet]
+        [Route(nameof(IsHosting))]
+        public async Task<ActionResult> IsHosting(int id) => Ok(await _userService.IsUserHosting(id));
     }
 }

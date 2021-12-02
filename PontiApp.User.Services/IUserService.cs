@@ -20,5 +20,6 @@ namespace PontiApp.User.Services
         Task<bool> UserExists(int id);
         bool UserExists(long FbKey);
         Task<(string, UserCreationDTO)> AddUser(long fbkey, string accessToken);
+        Task<bool> IsUserHosting(int id);
     }
 }

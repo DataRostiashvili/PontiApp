@@ -18,7 +18,7 @@ using PontiApp.Exceptions;
 
 namespace PontiApp.User.Services
 {
-   
+
 
     public class UserService : IUserService
     {
@@ -60,9 +60,9 @@ namespace PontiApp.User.Services
                 await _userRepository.Insert(_mapper.Map<UserCreationDTO, UserEntity>(user));
             }
             var token = _jwtProcessor.GenerateJwt(fbkey, accessToken);
-            user = _mapper.Map< UserEntity, UserCreationDTO>(await _userRepository.GetByFbKey(fbkey));
-            return  (token, user);
-            
+            user = _mapper.Map<UserEntity, UserCreationDTO>(await _userRepository.GetByFbKey(fbkey));
+            return (token, user);
+
 
         }
 
@@ -109,18 +109,21 @@ namespace PontiApp.User.Services
 
         public async Task<bool> UserExists(int id) => await _userRepository.GetByID(id) is not null;
 
-        public async Task<UserEntity> GetUser(int id) {
+        public async Task<UserEntity> GetUser(int id)
+        {
             var user = await _userRepository.GetByID(id);
-            if(user == null)
+            if (user == null)
                 throw new DoesNotExistsException("Such User Does Not Exists!");
             return user;
         }
-        public UserCreationDTO GetUser(long fbId) {
+        public UserCreationDTO GetUser(long fbId)
+        {
             var user = _userRepository.GetByPredicate(f => f.FbKey == fbId).FirstOrDefault();
             if (user == null)
                 throw new DoesNotExistsException("Such User Does Not Exists!");
-           return _mapper.Map<UserCreationDTO>(user);
+            return _mapper.Map<UserCreationDTO>(user);
         }
+        public async Task<bool> IsUserHosting(int id) => ((await _userRepository.GetByID(id)).UserHostEvents.Count > 0 || (await _userRepository.GetByID(id)).UserHostPlaces.Count > 0);
         public void DeleteImage(string guid) => _service.SendDeleteMessage(guid);
 
 
