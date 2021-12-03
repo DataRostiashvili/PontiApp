@@ -13,17 +13,10 @@ namespace PontiApp.Data.DatabaseSeeder
 {
     public class MongoSeeder
     {
-        class MongoDoc
-        {
-            public ObjectId _id { get; set; }
-            public string Guid { get; set; }
-            public List<byte[]> BytesList { get; set; }
-        }
 
         public void Seed()
         {
             var strList = GetMongoKeys("./users.json", "MongoKey");
-            List<MongoDoc> docs = new List<MongoDoc>();
             var client = new MongoClient("mongodb://localhost:27017");
             var dir = Directory.GetFiles("./Images");
             var DB = client.GetDatabase("PontiAppDB");
@@ -57,13 +50,12 @@ namespace PontiApp.Data.DatabaseSeeder
         {
             var strList = GetMongoKeys("./events.json", "PicturesId");
             var rand = new Random();
-            List<MongoDoc> docs = new List<MongoDoc>();
             var client = new MongoClient("mongodb://localhost:27017");
             var dir = Directory.GetFiles("./Images");
             var DB = client.GetDatabase("PontiAppDB");
             var Coll = DB.GetCollection<BsonDocument>("PicRepo");
-            
-            for (int i = 1; i <= 100; i++)
+
+            for (int i = 1; i < 80; i++)
             {
                 var list = new List<byte[]>();
                 dir = dir.Where(x => x.Contains(".jpg") || x.Contains(".jfif") || x.Contains(".png")).ToArray();
@@ -84,12 +76,10 @@ namespace PontiApp.Data.DatabaseSeeder
         {
             var strList = GetMongoKeys("./places.json", "PicturesId");
             var rand = new Random();
-            List<MongoDoc> docs = new List<MongoDoc>();
             var client = new MongoClient("mongodb://localhost:27017");
             var dir = Directory.GetFiles("./Images");
             var DB = client.GetDatabase("PontiAppDB");
             var Coll = DB.GetCollection<BsonDocument>("PicRepo");
-            DB.DropCollection("PicRepo");
             for (int i = 1; i < 100; i++)
             {
                 var list = new List<byte[]>();
