@@ -11,9 +11,15 @@
           "Port": 44354
         }
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
       "UpstreamPathTemplate": "/api/e/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "RouteIsCaseSensitive": false
     },
+
     {
       "DownstreamPathTemplate": "/api/Place/{everything}",
       "DownstreamScheme": "https",
@@ -23,6 +29,10 @@
           "Port": 44354
         }
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
       "UpstreamPathTemplate": "/api/p/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
     },
@@ -35,6 +45,10 @@
           "Port": 44354
         }
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
       "UpstreamPathTemplate": "/api/w/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
     },
@@ -47,6 +61,10 @@
           "Port": 44354
         }
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
       "UpstreamPathTemplate": "/api/c/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
     },
@@ -60,6 +78,10 @@
           "Port": 44389
         }
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
       "UpstreamPathTemplate": "/api/i/{everything}",
       "UpstreamHttpMethod": [ "GET" ]
     },
@@ -74,6 +96,10 @@
           "Port": 44301
         }
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
       "UpstreamPathTemplate": "/api/u/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
     }

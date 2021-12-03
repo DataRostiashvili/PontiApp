@@ -27,6 +27,7 @@ using PontiApp.Images.Services.Generic_Services;
 using PontiApp.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using PontiApp.User.Api.Utils;
+using PontiApp.Utilities;
 
 namespace PontiApp.User.Api
 {
@@ -56,11 +57,11 @@ namespace PontiApp.User.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PontiApp.User.Api v1"));
             }
-
+            app.UseMiddleware<ErrorHandlerMiddlware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();

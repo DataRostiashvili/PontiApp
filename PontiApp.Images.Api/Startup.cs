@@ -41,7 +41,7 @@ namespace PontiApp.Images.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Images.Api", Version = "v1" });
             });
-            services.AddCustomAuth(Configuration);
+            //services.AddCustomAuth(Configuration);
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetConnectionString("Redis");
@@ -53,10 +53,11 @@ namespace PontiApp.Images.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PontiApp.Auth v1"));
             }
+            app.UseMiddleware<ErrorHandlerMiddlware>();
             app.UseHttpsRedirection();
             app.UseRouting();
 

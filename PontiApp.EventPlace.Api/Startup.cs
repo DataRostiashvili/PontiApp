@@ -80,7 +80,7 @@ namespace PontiApp.EventPlace.Api
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
             services.AddMappers();
-            //services.AddCustomAuth();
+            services.AddCustomAuth();
 
         }
 
