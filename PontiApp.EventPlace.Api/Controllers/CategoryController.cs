@@ -46,7 +46,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         {
 
             var categoryDTOs = await _categoryService.GetAll();
-            return Ok(categoryDTOs);
+            return Ok(new { isSuccess = true, categories = categoryDTOs });
 
         }
     }
