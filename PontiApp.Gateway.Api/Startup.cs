@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using PontiApp.Utilities;
 
 namespace PontiApp.Gateway.Api
 {
@@ -27,7 +28,7 @@ namespace PontiApp.Gateway.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
             });
-
+            services.AddCustomAuth();
             services.AddOcelot();
             //services.AddSwaggerForOcelot(Configuration);
         }
@@ -35,17 +36,15 @@ namespace PontiApp.Gateway.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-               
-            }
+            app.UseMiddleware<ErrorHandlerMiddlware>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-          //  app.UseAuthorization();
+            //  app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -56,8 +55,10 @@ namespace PontiApp.Gateway.Api
             //{
             //    opt.PathToSwaggerGenerator = "/swagger/docs";
             //});
+            
 
             app.UseOcelot().Wait();
+
         }
     }
 }

@@ -15,7 +15,6 @@ namespace PontiApp.EventPlace.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
@@ -130,7 +129,8 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetAllEvent")]
-        [AllowAnonymous]
+        //[Authorize(AuthenticationSchemes ="Bearer")]
+        
         public async Task<ActionResult<IEnumerable<EventBriefResponse>>> GetAllEvent()
         {
 

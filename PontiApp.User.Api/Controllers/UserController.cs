@@ -69,7 +69,11 @@ namespace PontiApp.EventPlace.Api.Controllers
         public async Task<ActionResult> Login(long fbkey, string accessToken)
         {
             var result = await _userService.AddUser(fbkey, accessToken);
-            return Ok(result);
+            return Ok(new
+            {
+                token = result.Item1,
+                data = result.Item2
+            });
         }
 
 
