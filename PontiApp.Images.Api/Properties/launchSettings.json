@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PontiApp.Images.Api": {
+    "TestingAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

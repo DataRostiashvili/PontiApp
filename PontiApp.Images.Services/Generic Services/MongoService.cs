@@ -9,7 +9,7 @@ using PontiApp.Models.MongoSchema;
 
 namespace PontiApp.Images.Services.Generic_Services
 {
-    public class MongoService:IMongoService 
+    public class MongoService : IMongoService
     {
         private readonly IMongoRepository _repo;
         public MongoService(IMongoRepository repo)
@@ -53,13 +53,14 @@ namespace PontiApp.Images.Services.Generic_Services
             var doc = new BsonDocument(dict);
             await _repo.PostImage(doc);
         }
+
         public async Task UpdateImage(string guid, int[] indices)
         {
             var doc = await _repo.GetImage(guid);
             var schema = BsonSerializer.Deserialize<ImageSchema>(doc);
             var list = schema.BytesList;
             List<byte[]> listToRemove = new List<byte[]>();
-            foreach(var item in indices.Distinct())
+            foreach (var item in indices.Distinct())
             {
                 listToRemove.Add(list[item]);
             }

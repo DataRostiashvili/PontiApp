@@ -51,7 +51,6 @@ namespace PontiApp.Images.Api.RabbitBackgroundService
             _cFac.Password = _config.GetSection("RabbitMQ").GetSection("PassWord").Value;
             _cFac.Port = Convert.ToInt32(_config.GetSection("RabbitMQ").GetSection("Port").Value);
             _cFac.VirtualHost = _config.GetSection("RabbitMQ").GetSection("VirtualHost").Value;
-            _logger.LogInformation($"\n\n\n\n\n\n\n\n\n\n\n\n\n\n{_cFac.HostName}\n\n\n\n\n\n");
 
 #endif
 

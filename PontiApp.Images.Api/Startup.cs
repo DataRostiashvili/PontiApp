@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 using PontiApp.Images.Api.RabbitBackgroundService;
 using PontiApp.Images.Api.Utils;
 using PontiApp.Images.Cache.Caching_service;
@@ -28,7 +29,24 @@ namespace PontiApp.Images.Api
         public void ConfigureServices (IServiceCollection services)
         {
 
-            services.AddImageServiceConfiguration(Configuration);
+            //services.AddImageServiceConfiguration(Configuration);
+            services.AddHostedService<ImageReceiverService>();
+            services.AddScoped<IMongoService, MongoService>();
+            services.AddScoped<IMongoRepository, MongoRepository>();
+            services.AddSingleton<ConnectionFactory>();
+            services.AddScoped(_ => new MongoClient(Configuration.GetConnectionString("MongoDB")));
+            services.AddControllers();
+            services.AddHttpClient();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Images.Api", Version = "v1" });
+            });
+            services.AddCustomAuth(Configuration);
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetConnectionString("Redis");
+            });
+            services.AddScoped<ICachingService, CachingService>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure (IApplicationBuilder app,IWebHostEnvironment env)

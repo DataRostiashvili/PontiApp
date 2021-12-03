@@ -1,40 +1,84 @@
 ﻿{
-  "GlobalConfiguration": {
-   // "BaseUrl": "https://localhost:5021"
-  },
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/{everything}",
+
+      //Event place services
+      "DownstreamPathTemplate": "/api/Event/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5011
+          "Port": 44354
         }
       ],
       "UpstreamPathTemplate": "/api/e/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET" , "DELETE" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "IdentityApiKey",
-      //  "AllowedScopes": []
-      //}
-    }
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Place/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44354
+        }
+      ],
+      "UpstreamPathTemplate": "/api/p/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/WeekDay/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44354
+        }
+      ],
+      "UpstreamPathTemplate": "/api/w/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Category/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44354
+        }
+      ],
+      "UpstreamPathTemplate": "/api/c/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+    },
+    //Image
+    {
+      "DownstreamPathTemplate": "/api/Image/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44389
+        }
+      ],
+      "UpstreamPathTemplate": "/api/i/{everything}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
 
-    //{
-    //  "DownstreamPathTemplate": "/api/{everything}",
-    //  "DownstreamScheme": "https",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "localhost",
-    //      "Port": 5003
-    //    }
-    //  ],
-    //  "UpstreamPathTemplate": "/api/u/{everything}",
-    //  "UpstreamHttpMethod": [],
-    //  //"AuthenticationOptions": {
-    //  //  "AuthenticationProviderKey": "IdentityApiKey",
-    //  //  "AllowedScopes": []
-    //  //}
-    //}
-  ]
+    //User
+    {
+      "DownstreamPathTemplate": "/api/User/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44301
+        }
+      ],
+      "UpstreamPathTemplate": "/api/u/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5051"
+  }
 }
