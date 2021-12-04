@@ -17,6 +17,7 @@
       },
       "UpstreamPathTemplate": "/api/e/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "EventPlace",
       "RouteIsCaseSensitive": false
     },
 
@@ -34,7 +35,8 @@
         "AllowedScopes": []
       },
       "UpstreamPathTemplate": "/api/p/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "EventPlace"
     },
     {
       "DownstreamPathTemplate": "/api/WeekDay/{everything}",
@@ -50,7 +52,8 @@
         "AllowedScopes": []
       },
       "UpstreamPathTemplate": "/api/w/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "EventPlace"
     },
     {
       "DownstreamPathTemplate": "/api/Category/{everything}",
@@ -66,7 +69,8 @@
         "AllowedScopes": []
       },
       "UpstreamPathTemplate": "/api/c/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "EventPlace"
     },
     //Image
     {
@@ -83,7 +87,8 @@
         "AllowedScopes": []
       },
       "UpstreamPathTemplate": "/api/i/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "Images"
     },
 
     //User
@@ -101,7 +106,41 @@
         "AllowedScopes": []
       },
       "UpstreamPathTemplate": "/api/u/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "User"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "EventPlace",
+      "Config": [
+        {
+          "Name": "Event Place API",
+          "Version": "v1",
+          "Url": "https://localhost:44354/swagger/v1/swagger.json"
+          //
+        }
+      ]
+    },
+    {
+      "Key": "Images",
+      "Config": [
+        {
+          "Name": "Images API",
+          "Version": "v1",
+          "Url": "https://localhost:44389/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "User",
+      "Config": [
+        {
+          "Name": "User API",
+          "Version": "v1",
+          "Url": "https://localhost:44301/swagger/v1/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {
