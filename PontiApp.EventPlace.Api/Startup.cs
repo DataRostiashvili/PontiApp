@@ -78,7 +78,7 @@ namespace PontiApp.EventPlace.Api
 
 
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
+
             services.AddMappers();
             services.AddCustomAuth();
 
@@ -95,7 +95,7 @@ namespace PontiApp.EventPlace.Api
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PontiApp.Auth v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PontiApp.EventPlace v1"));
             }
             app.UseHttpsRedirection();
             app.UseRouting();

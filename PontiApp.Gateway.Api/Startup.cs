@@ -24,19 +24,24 @@ namespace PontiApp.Gateway.Api
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
+            //});
             services.AddCustomAuth();
             services.AddOcelot();
-            //services.AddSwaggerForOcelot(Configuration);
+            services.AddSwaggerForOcelot(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<ErrorHandlerMiddlware>();
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PontiApp.Gateway.Api v1"));
+            //}
 
             app.UseHttpsRedirection();
 
@@ -51,11 +56,10 @@ namespace PontiApp.Gateway.Api
                 endpoints.MapControllers();
             });
 
-            //app.UseSwaggerForOcelotUI(opt =>
-            //{
-            //    opt.PathToSwaggerGenerator = "/swagger/docs";
-            //});
-            
+            app.UseSwaggerForOcelotUI(opt =>
+            {
+                opt.PathToSwaggerGenerator = "/swagger/docs";
+            });
 
             app.UseOcelot().Wait();
 
