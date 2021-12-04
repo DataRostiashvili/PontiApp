@@ -149,7 +149,8 @@ namespace PontiApp.Ponti.Repository.PontiRepository
 
         public async Task<PlaceEntity> GetDetaildPlaceAsync(int placeId)
         {
-            return await _applicationDbContext.Places.Where(pl => pl.Id == placeId)
+            return await _applicationDbContext.Places
+                .Where(pl => pl.Id == placeId)
                 .Include(pl => pl.PlaceCategories)
                 .Include(pl => pl.WeekSchedule)
                 .Include(pl => pl.Reviews)

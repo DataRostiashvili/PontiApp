@@ -25,7 +25,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         private readonly EventRepository _eventRepo;
         private readonly IEventCategoryService _eventCategoryService;
 
-        public EventService(IMongoService mongoService,IMapper mapper, EventDTOValidator validator, EventRepository eventRepo, IEventCategoryService eventCategoryService)
+        public EventService(IMongoService mongoService, IMapper mapper, EventDTOValidator validator, EventRepository eventRepo, IEventCategoryService eventCategoryService)
         {
             _mongoService = mongoService;
             _mapper = mapper;
@@ -66,7 +66,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         }
 
         public async Task AddGusestingEvent(EventGuestRequestDTO currEventGuestDTO)
-        { 
+        {
             await _eventRepo.InsertGuesting(currEventGuestDTO);
         }
 
@@ -124,9 +124,9 @@ namespace PontiApp.EventPlace.Services.EventServices
         public async Task<EventDetailedResponse> GetDetailedEvent(int eventId)
         {
             var @event = await _eventRepo.GetDetailedEventAsync(eventId);
-            var doc =await _mongoService.GetImage(@event.PicturesId);
+            var doc = await _mongoService.GetImage(@event.PicturesId);
             var picAmnt = doc.Count;
-            var picList = Enumerable.Range(0,doc.Count).Select(s=>$"https://localhost:5005/{@event.PicturesId}/{s}");
+            var picList = Enumerable.Range(0, doc.Count).Select(s => $"https://localhost:44389/api/Image/{@event.PicturesId}/{s}");
             var eventMap = _mapper.Map<EventDetailedResponse>(@event);
             eventMap.Pictures = picList;
             return eventMap;

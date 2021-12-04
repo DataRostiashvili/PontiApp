@@ -19,6 +19,7 @@ namespace PontiApp.Mappings
             CreateMap<PlaceEntity, PlaceHostResponseDTO>();
             CreateMap<PlaceEntity, PlaceGuestResponseDTO>();
             CreateMap<PlaceEntity, PlaceListingResponseDTO>();
+            CreateMap<PlaceEntity, PlaceDetailedResponse>().ReverseMap();
 
             CreateMap<PlaceRequest, PlaceEntity>().ReverseMap();
             CreateMap<PlaceEntity, PlaceBriefResponse>()
@@ -33,8 +34,8 @@ namespace PontiApp.Mappings
                     ProfilePictureUri = Helpers.ConvertToPictureUri(e.HostUser.MongoKey),
                     Surename = e.HostUser.Surename
                 }))
-                .ForMember(response => response.PlaceId, entity => entity.MapFrom(e=> e.Id))
-            .ReverseMap(); 
+                .ForMember(response => response.PlaceId, entity => entity.MapFrom(e => e.Id))
+            .ReverseMap();
         }
     }
 }

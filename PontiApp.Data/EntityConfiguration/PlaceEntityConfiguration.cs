@@ -22,7 +22,7 @@ namespace PontiApp.Data.EntityConfiguration
             builder.Navigation(x => x.Reviews).AutoInclude();
 
             builder.Property<bool>("IsDeleted");
-            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+            //builder.HasQueryFilter(m=>m.IsDeleted);
 
         }
     }

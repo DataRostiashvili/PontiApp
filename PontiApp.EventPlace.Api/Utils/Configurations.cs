@@ -55,7 +55,7 @@ namespace PontiApp.EventPlace.Api.Utils
             services.AddSingleton<JwtConfig>();
             services.AddTransient<IFbClient, FbClient>();
             services.AddHttpClient();
-            services.AddTransient(_ => new MongoClient(Configuration.GetConnectionString("MongoDb")));
+            services.AddSingleton(_ => new MongoClient(Configuration.GetConnectionString("MongoDB")));
             services.AddTransient<IMongoService, MongoService>();
             services.AddTransient<IMongoRepository, MongoRepository>();
             services.AddTransient<MessagingService>();

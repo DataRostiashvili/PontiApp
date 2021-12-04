@@ -95,7 +95,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             var place = await _placeRepo.GetDetaildPlaceAsync(placeId);
             var doc = await _mongoService.GetImage(place.PicturesId);
             var picAmnt = doc.Count;
-            var picList = Enumerable.Range(0, doc.Count).Select(s => $"https://localhost:5005/{place.PicturesId}/{s}");
+            var picList = Enumerable.Range(0, doc.Count).Select(s => $"https://localhost:44389/api/Image/{place.PicturesId}/{s}");
             var placeMap = _mapper.Map<PlaceDetailedResponse>(place);
             placeMap.Pictures = picList;
             return placeMap;

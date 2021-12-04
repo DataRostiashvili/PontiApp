@@ -19,7 +19,7 @@ namespace PontiApp.Mappings
             CreateMap<EventEntity, EventHostResponseDTO>();
             CreateMap<EventEntity, EventGuestResponseDTO>();
             CreateMap<EventEntity, EventListingResponseDTO>();
-
+            CreateMap<EventEntity, EventDetailedResponse>().ReverseMap();
             CreateMap<EventEntity, EventBriefResponse>()
                  .ForMember(response => response.Host, config => config
                                                           .MapFrom(e => new HostResponse

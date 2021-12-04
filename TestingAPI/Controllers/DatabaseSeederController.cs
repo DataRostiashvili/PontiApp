@@ -23,6 +23,13 @@ namespace TestingAPI.Controllers
             await _seeder.SeedDatabase();
             return Ok();
         } 
+        [HttpGet]
+        [Route("Clear-Database")]
+        public async Task<IActionResult> ClearDatabase()
+        {
+            await _seeder.DeleteData();
+            return Ok();
+        }
 
     }
 }

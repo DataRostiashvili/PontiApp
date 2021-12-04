@@ -37,12 +37,21 @@ namespace PontiApp.Data.DatabaseSeeder
             mongoSeeder.SeedEventImages();
             mongoSeeder.SeedPlaceImages();
         }
+        public async Task DeleteData()
+        {
+           await _appDbContext.Database.ExecuteSqlRawAsync("DROP SCHEMA public CASCADE; CREATE SCHEMA public");
 
+        }
         private void FillUsersTable()
         {
+            
             if (!_appDbContext.Users.Any())
             {
-                var userSqlData = File.ReadAllText(@"../PontiApp.Data/DatabaseSeeder/InsertUsers.sql");
+                var rand = new Random();
+                var userSqlData = String.Join("",File.ReadAllText(@"../PontiApp.Data/DatabaseSeeder/InsertUsers.sql")
+                    .Split('\n').Select(s => s.Replace("2008810342610546", rand.Next(1, int.MaxValue).ToString())).ToArray());
+                    
+
                 _appDbContext.Database.ExecuteSqlRaw(userSqlData);
             }
         }

@@ -100,7 +100,7 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
                                 where searchForEveryTitle ? true : @event.Name.Contains(searchBaseDTO.SearchKeyWord)
                                 let searchCategoryIds = categoryEntities.Select(searchCat => searchCat.Id)
                                 let testCategories = _applicationDbContext.Events
-                                .Select(e => e.EventCategories 
+                                .Select(e => e.EventCategories
                                         .Where(ct => searchCategoryIds.Contains(ct.CategoryEntityId))).AsEnumerable()
                                 where @event.EndTime < GetDeadline(searchBaseDTO.Time)
                                 select @event).ToListAsync();
@@ -143,11 +143,11 @@ namespace PontiApp.Ponti.Repository.PontiRepository.EventRepository
         }
         public async Task<EventEntity> GetDetailedEventAsync(int eventId)
         {
-            //var query =  _applicationDbContext.Events.Include(e => e.PlaceEntity).Include(e => e.UserEntity).Include(e => e.Reviews).Include(e => e.Pictures);
-            return await _applicationDbContext.Events.Where(ev => ev.Id == eventId)
-                .Include(e=>e.PlaceEntity)
+            return await _applicationDbContext.Events
+                .Where(e=>e.Id==eventId)
+                .Include(e => e.PlaceEntity)
                 .Include(e => e.UserEntity)
-                .Include(e=>e.Reviews)
+                .Include(e => e.Reviews)
                 .SingleAsync();
         }
     }

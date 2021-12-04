@@ -61,7 +61,8 @@ namespace PontiApp.EventPlace.Api.Controllers
         //    return Ok(await _eventService.GetDetailedHostingEvent(id));
 
         //}
-        [HttpGet(nameof(GetDetailedEvent))]
+        [HttpGet]
+        [Route("GetDetailedEvent/{id}")]
         public async Task<ActionResult<EventDetailedResponse>> GetDetailedEvent(int id)
         {
 
