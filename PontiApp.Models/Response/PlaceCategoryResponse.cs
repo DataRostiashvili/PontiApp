@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Response
 {
-    public class PlaceCategoryResponse : GenericResponse 
+    public class PlaceCategoryResponse 
     {
         public int CategoryEntityId { get; set; }
         public string Category { get; set; }

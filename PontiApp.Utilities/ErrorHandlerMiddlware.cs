@@ -35,7 +35,7 @@ namespace PontiApp.Utilities
                 else
                     response.StatusCode = (int)HttpStatusCode.NotFound;
 
-                var result = JsonSerializer.Serialize(new { isSuccess = false, message = exception.Message }); ;
+                var result = JsonSerializer.Serialize(exception.Message); 
                 await response.WriteAsync(result);
             }
         }

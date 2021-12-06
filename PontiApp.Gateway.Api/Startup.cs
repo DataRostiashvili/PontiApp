@@ -24,10 +24,10 @@ namespace PontiApp.Gateway.Api
         {
 
             services.AddControllers();
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
-            //});
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
+            });
             services.AddCustomAuth();
             services.AddOcelot();
             services.AddSwaggerForOcelot(Configuration);
@@ -47,7 +47,7 @@ namespace PontiApp.Gateway.Api
 
             app.UseRouting();
 
-            //  app.UseAuthorization();
+            app.UseAuthorization();
             app.UseAuthentication();
             app.UseAuthorization();
 
