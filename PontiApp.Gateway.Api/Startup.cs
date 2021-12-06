@@ -29,6 +29,7 @@ namespace PontiApp.Gateway.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
             });
             services.AddCustomAuth();
+            services.AddOcelot();
             services.AddSwaggerForOcelot(Configuration);
             
         }
