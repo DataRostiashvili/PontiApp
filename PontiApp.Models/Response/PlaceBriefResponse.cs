@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PontiApp.Models.Response
 {
    
-        public class PlaceBriefResponse : GenericResponse 
+        public class PlaceBriefResponse 
         {
             public int PlaceId { get; set; }
             public string Name { get; set; }

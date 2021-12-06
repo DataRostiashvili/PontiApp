@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.Response
 {
-    public class HostResponse :GenericResponse
+    public class HostResponse
     {
 
         public long fbId { get; set; }

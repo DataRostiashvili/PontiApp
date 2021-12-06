@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Exceptions
 {
-    public class BaseCustomException :Exception, IGenericResponse
+    public class BaseCustomException :Exception
     {
         public BaseCustomException() : base()
         {
@@ -19,6 +19,5 @@ namespace PontiApp.Exceptions
 
         }
 
-        public bool IsSuccess { get; set; } 
     }
 }
