@@ -3,6 +3,7 @@ using PontiApp.Data.DbContexts;
 using PontiApp.EventEvent.Services.EventCategoryServices;
 using PontiApp.Exceptions;
 using PontiApp.Images.Services.Generic_Services;
+using PontiApp.MessageSender;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Models.Response;
@@ -24,19 +25,25 @@ namespace PontiApp.EventPlace.Services.EventServices
         private readonly EventDTOValidator _validator;
         private readonly EventRepository _eventRepo;
         private readonly IEventCategoryService _eventCategoryService;
-
-        public EventService(IMongoService mongoService, IMapper mapper, EventDTOValidator validator, EventRepository eventRepo, IEventCategoryService eventCategoryService)
+        private readonly MessagingService _msgService;
+        public EventService(IMongoService mongoService, IMapper mapper, EventDTOValidator validator, EventRepository eventRepo, IEventCategoryService eventCategoryService,MessagingService msgService)
         {
             _mongoService = mongoService;
             _mapper = mapper;
             _validator = validator;
             _eventRepo = eventRepo;
             _eventCategoryService = eventCategoryService;
+            _msgService = msgService;
         }
 
-        public async Task AddHostingEvent(EventHostRequestDTO newEventDTO)
+        public async Task AddHostingEvent(CompositeObj<EventHostRequestDTO> eventFiles)
         {
+            var newEventDTO = eventFiles.Entity;
+            var files = eventFiles.Files;
+            var guid = Guid.NewGuid().ToString();
             EventEntity newEvent = _mapper.Map<EventEntity>(newEventDTO);
+            newEvent.PicturesId = guid;
+            await _msgService.SendAddMessage(guid, files);
             var existingEvent = _eventRepo.GetByPredicate(ev => ev.UserEntityId == newEvent.UserEntityId && ev.PlaceEntityId == newEvent.PlaceEntityId && ev.Name == newEvent.Name).SingleOrDefault();
             if (existingEvent != null)
                 throw new AlreadyExistsException("Such Event Already Exists!");

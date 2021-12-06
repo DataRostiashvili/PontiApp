@@ -23,7 +23,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreatePlace))]
-        public async Task<ActionResult> CreatePlace([FromBody] PlaceRequest placeRequest)
+        public async Task<ActionResult> CreatePlace([FromForm] CompositeObj<PlaceHostRequestDTO> placeRequest)
         {
 
             await _placeService.AddHostingPlace(placeRequest);

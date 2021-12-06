@@ -11,7 +11,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 {
     public interface IPlaceService
     {
-        Task AddHostingPlace(PlaceRequest newPlaceDTO);
+        Task AddHostingPlace(CompositeObj<PlaceHostRequestDTO> newPlaceDTO);
         Task AddGusestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO);
         Task UpdateHostingPlace(PlaceHostRequestDTO currPlaceHostDTO);
         Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO);

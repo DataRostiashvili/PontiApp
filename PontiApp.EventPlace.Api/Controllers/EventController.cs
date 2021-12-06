@@ -26,7 +26,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreateEvent))]
-        public async Task<ActionResult> CreateEvent([FromBody] EventHostRequestDTO eventDTO)
+        public async Task<ActionResult> CreateEvent([FromForm]CompositeObj<EventHostRequestDTO> eventDTO)
         {
             await _eventService.AddHostingEvent(eventDTO);
             return Ok();
@@ -128,8 +128,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetAllEvent")]
-        [AllowAnonymous]
-
+        
         public async Task<ActionResult<IEnumerable<EventBriefResponse>>> GetAllEvent()
         {
 

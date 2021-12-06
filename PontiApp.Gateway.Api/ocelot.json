@@ -118,7 +118,6 @@
           "Name": "Event Place API",
           "Version": "v1",
           "Url": "https://localhost:44354/swagger/v1/swagger.json"
-          //
         }
       ]
     },

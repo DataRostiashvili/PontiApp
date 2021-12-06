@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PontiApp.Exceptions;
 using PontiApp.Images.Services.Generic_Services;
+using PontiApp.MessageSender;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
 using PontiApp.Models.Request;
@@ -22,6 +23,8 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         private readonly IMapper _mapper;
         private readonly PlaceDTOValidator _validator;
         private readonly PlaceRepository _placeRepo;
+        private readonly MessagingService _msgService;
+
 
         public PlaceService(IMongoService mongoService, IMapper mapper, PlaceDTOValidator validator, PlaceRepository placeRepo)
         {
@@ -36,15 +39,18 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.InsertGuesting(currPlaceGuestDTO);
         }
 
-        public async Task AddHostingPlace(PlaceRequest newPlaceDTO)
+        public async Task AddHostingPlace(CompositeObj<PlaceHostRequestDTO> placeFile)
         {
+            var newPlaceDTO = placeFile.Entity;
+            var files = placeFile.Files;
             var newPlace = _mapper.Map<PlaceEntity>(newPlaceDTO);
+            var guid = Guid.NewGuid().ToString();
+            await _msgService.SendAddMessage(guid, files);
             var existingPlace = _placeRepo.GetByPredicate(plc => plc.UserEntityId == newPlace.UserEntityId && plc.Name == newPlace.Name && plc.Address == newPlace.Address).SingleOrDefault();
             if (existingPlace != null)
                 throw new AlreadyExistsException("This Place Is Already Registered!");
             await _placeRepo.Insert(newPlace);
         }
-
 
         public async Task DeleteGuestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO)
         {
@@ -128,6 +134,6 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.Update(currPlace);
         }
 
-        
+
     }
 }

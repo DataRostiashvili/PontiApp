@@ -58,7 +58,7 @@ namespace PontiApp.EventPlace.Api.Utils
             services.AddSingleton(_ => new MongoClient(Configuration.GetConnectionString("MongoDB")));
             services.AddTransient<IMongoService, MongoService>();
             services.AddTransient<IMongoRepository, MongoRepository>();
-            services.AddTransient<MessagingService>();
+            services.AddScoped<MessagingService>();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DbConnection"));

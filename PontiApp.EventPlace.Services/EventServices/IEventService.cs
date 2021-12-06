@@ -10,7 +10,7 @@ namespace PontiApp.EventPlace.Services.EventServices
 {
     public interface IEventService
     {
-        Task AddHostingEvent(EventHostRequestDTO newEventDTO);
+        Task AddHostingEvent(CompositeObj<EventHostRequestDTO> newEventDTO);
         Task AddGusestingEvent(EventGuestRequestDTO currEventGuestDTO);
         Task UpdateHostingEvent(EventHostRequestDTO currEventHostDTO);
         Task UpdateGuestingEvent(EventReviewDTO eventReviewDTO);
