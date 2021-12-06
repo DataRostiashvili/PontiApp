@@ -25,7 +25,7 @@ namespace PontiApp.GraphAPICalls
             var json = await client.GetStringAsync(requestUrl);
             var parsedUser = JsonConvert.DeserializeObject<UserParseModel>(json);
             var pictureUrl = $"https://graph.facebook.com/{userID}/picture?type=large&access_token={accessToken}";
-            File.WriteAllText("./PicLog.txt", pictureUrl);
+            //File.WriteAllText("./PicLog.txt", pictureUrl);
             var user = new UserCreationDTO()
             {
                 Name = parsedUser.FirstName,
