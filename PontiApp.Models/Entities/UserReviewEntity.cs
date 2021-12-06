@@ -11,7 +11,8 @@ namespace PontiApp.Models.Entities
     {
         public float ReviewRanking { get; set; }
 
-
+        public int UserGuestId { get; set; }
+        public UserEntity UserGuest { get; set; }
         public int UserEntityId { get; set; }
         public UserEntity UserEntity { get; set; }
     }
