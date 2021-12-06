@@ -34,6 +34,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateEvent))]
+        
         public async Task<ActionResult> UpdateEvent([FromBody] EventHostRequestDTO hostEventDTO)
         {
 
@@ -61,6 +62,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         //}
         [HttpGet]
         [Route("GetDetailedEvent/{id}")]
+        
         public async Task<ActionResult<EventDetailedResponse>> GetDetailedEvent(int id)
         {
 
@@ -137,6 +139,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpPost("SearchEvent")]
+        
         public async Task<IActionResult> SearchEvent(PontiTypeEnum PontiType, List<CategoryRequest> Categories, TimeFilterEnum Time, string SearchKeyWord)
         {
             if (PontiType != PontiTypeEnum.Event)

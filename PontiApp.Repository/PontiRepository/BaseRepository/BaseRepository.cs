@@ -46,6 +46,11 @@ namespace PontiApp.Ponti.Repository.BaseRepository
             return await entities.Where(e => e.Id == Id).FirstOrDefaultAsync();
         }
 
+        public  T GetEntityByPredicate(Func<T, bool> predicate)
+        {
+            return entities.Where(predicate).FirstOrDefault();
+        }
+
         public IEnumerable<T> GetByPredicate(Func<T, bool> predicate)
         {
             return entities.Where(predicate);

@@ -60,9 +60,8 @@ namespace PontiApp.User.Services
                 await _userRepository.Insert(_mapper.Map<UserCreationDTO, UserEntity>(user));
             }
             var token = _jwtProcessor.GenerateJwt(fbkey, accessToken);
-            user = _mapper.Map<UserEntity, UserCreationDTO>(await _userRepository.GetByFbKey(fbkey));
+            user = _mapper.Map<UserEntity, UserCreationDTO>( _userRepository.GetEntityByPredicate(user=>user.FbKey==fbkey));
             return (token, user);
-
 
         }
 

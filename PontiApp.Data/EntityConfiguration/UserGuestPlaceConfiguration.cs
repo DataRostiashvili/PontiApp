@@ -11,7 +11,7 @@ namespace PontiApp.Data.EntityConfiguration
 {
     public class UserGuestPlaceConfiguration : IEntityTypeConfiguration<UserGuestPlace>
     {
-        
+
 
         public void Configure(EntityTypeBuilder<UserGuestPlace> builder)
         {

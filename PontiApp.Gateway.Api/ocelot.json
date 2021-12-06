@@ -11,10 +11,6 @@
           "Port": 44354
         }
       ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
       "UpstreamPathTemplate": "/api/e/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
       "SwaggerKey": "EventPlace",
@@ -38,6 +34,7 @@
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
       "SwaggerKey": "EventPlace"
     },
+
     {
       "DownstreamPathTemplate": "/api/WeekDay/{everything}",
       "DownstreamScheme": "https",
@@ -110,6 +107,7 @@
       "SwaggerKey": "User"
     }
   ],
+
   "SwaggerEndPoints": [
     {
       "Key": "EventPlace",
