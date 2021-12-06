@@ -9,7 +9,7 @@ namespace TestingAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DatabaseSeederController :ControllerBase
+    public class DatabaseSeederController : ControllerBase
     {
         private readonly DatabaseSeeder _seeder;
         public DatabaseSeederController(DatabaseSeeder seeder)
@@ -22,7 +22,7 @@ namespace TestingAPI.Controllers
         {
             await _seeder.SeedDatabase();
             return Ok();
-        } 
+        }
         [HttpGet]
         [Route("Clear-Database")]
         public async Task<IActionResult> ClearDatabase()
@@ -30,6 +30,5 @@ namespace TestingAPI.Controllers
             await _seeder.DeleteData();
             return Ok();
         }
-
     }
 }

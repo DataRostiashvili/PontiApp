@@ -28,10 +28,8 @@ namespace PontiApp.EventPlace.Api.Controllers
         [Route(nameof(CreateEvent))]
         public async Task<ActionResult> CreateEvent([FromBody] EventHostRequestDTO eventDTO)
         {
-
             await _eventService.AddHostingEvent(eventDTO);
             return Ok();
-
         }
 
         [HttpPut]
@@ -130,8 +128,8 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetAllEvent")]
-        //[Authorize(AuthenticationSchemes ="Bearer")]
-        
+        [AllowAnonymous]
+
         public async Task<ActionResult<IEnumerable<EventBriefResponse>>> GetAllEvent()
         {
 

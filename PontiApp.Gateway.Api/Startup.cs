@@ -29,8 +29,8 @@ namespace PontiApp.Gateway.Api
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
             //});
             services.AddCustomAuth();
-            services.AddOcelot();
             services.AddSwaggerForOcelot(Configuration);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +47,7 @@ namespace PontiApp.Gateway.Api
 
             app.UseRouting();
 
-            //  app.UseAuthorization();
+            app.UseAuthorization();
             app.UseAuthentication();
             app.UseAuthorization();
 
