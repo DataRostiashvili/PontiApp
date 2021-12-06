@@ -26,10 +26,7 @@
           "Port": 44354
         }
       ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
+
       "UpstreamPathTemplate": "/api/p/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
       "SwaggerKey": "EventPlace"
@@ -44,10 +41,7 @@
           "Port": 44354
         }
       ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
+
       "UpstreamPathTemplate": "/api/w/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
       "SwaggerKey": "EventPlace"
@@ -61,10 +55,7 @@
           "Port": 44354
         }
       ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
+
       "UpstreamPathTemplate": "/api/c/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
       "SwaggerKey": "EventPlace"
@@ -79,10 +70,7 @@
           "Port": 44389
         }
       ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
+
       "UpstreamPathTemplate": "/api/i/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
       "SwaggerKey": "Images"
@@ -98,10 +86,7 @@
           "Port": 44301
         }
       ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
+
       "UpstreamPathTemplate": "/api/u/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
       "SwaggerKey": "User"
