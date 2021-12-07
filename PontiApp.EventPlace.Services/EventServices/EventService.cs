@@ -170,15 +170,14 @@ namespace PontiApp.EventPlace.Services.EventServices
             {
                 using (var str = new MemoryStream())
                 {
-
-                    str.CopyTo(img.OpenReadStream());
+                    img.CopyTo(str);
                     var byteArr = str.ToArray();
                     imgList.Add(byteArr);
                 }
             }
             await _mongoService.UpdateImage(mongoKey, imgList);
         }
-        public async Task RemoveFromHostingImages(int eventId,int[] indices)
+        public async Task RemoveFromHostingImages(int eventId, int[] indices)
         {
             var currEvent = await _eventRepo.GetByID(eventId);
             var mongoKey = currEvent.PicturesId;

@@ -146,7 +146,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
                 using (var str = new MemoryStream())
                 {
 
-                    str.CopyTo(img.OpenReadStream());
+                    img.CopyTo(str);
                     var byteArr = str.ToArray();
                     imgList.Add(byteArr);
                 }
