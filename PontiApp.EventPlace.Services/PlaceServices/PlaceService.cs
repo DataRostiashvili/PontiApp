@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using PontiApp.Exceptions;
 using PontiApp.Images.Services.Generic_Services;
 using PontiApp.MessageSender;
@@ -11,6 +12,7 @@ using PontiApp.Ponti.Repository.PontiRepository;
 using PontiApp.Validators.EntityValidators;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,12 +28,13 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         private readonly MessagingService _msgService;
 
 
-        public PlaceService(IMongoService mongoService, IMapper mapper, PlaceDTOValidator validator, PlaceRepository placeRepo)
+        public PlaceService(IMongoService mongoService, IMapper mapper, PlaceDTOValidator validator, PlaceRepository placeRepo, MessagingService msgService)
         {
             _mongoService = mongoService;
             _mapper = mapper;
             _validator = validator;
             _placeRepo = placeRepo;
+            _msgService = msgService;
         }
 
         public async Task AddGusestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO)
@@ -39,7 +42,7 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
             await _placeRepo.InsertGuesting(currPlaceGuestDTO);
         }
 
-        public async Task AddHostingPlace(CompositeObj<PlaceHostRequestDTO> placeFile)
+        public async Task AddHostingPlace(CompositeObj<PlaceHostRequestDTO, IFormFileCollection> placeFile)
         {
             var newPlaceDTO = placeFile.Entity;
             var files = placeFile.Files;
@@ -132,6 +135,29 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
         {
             PlaceEntity currPlace = _mapper.Map<PlaceEntity>(currPlaceDTO);
             await _placeRepo.Update(currPlace);
+        }
+        public async Task AddToHostingImages(int placeId, IFormFileCollection files)
+        {
+            var currPlace = await _placeRepo.GetByID(placeId);
+            var mongoKey = currPlace.PicturesId;
+            List<byte[]> imgList = new List<byte[]>();
+            foreach (var img in files)
+            {
+                using (var str = new MemoryStream())
+                {
+
+                    str.CopyTo(img.OpenReadStream());
+                    var byteArr = str.ToArray();
+                    imgList.Add(byteArr);
+                }
+            }
+            await _mongoService.UpdateImage(mongoKey, imgList);
+        }
+        public async Task RemoveFromHostingImages(int placeId, int[] indices)
+        {
+            var currPlace = await _placeRepo.GetByID(placeId);
+            var mongoKey = currPlace.PicturesId;
+            await _mongoService.UpdateImage(mongoKey, indices);
         }
 
 

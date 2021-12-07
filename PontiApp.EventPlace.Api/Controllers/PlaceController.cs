@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PontiApp.Models.Response;
+using Microsoft.AspNetCore.Http;
 
 namespace PontiApp.PlacePlace.Api.Controllers
 {
@@ -23,7 +24,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreatePlace))]
-        public async Task<ActionResult> CreatePlace([FromForm] CompositeObj<PlaceHostRequestDTO> placeRequest)
+        public async Task<ActionResult> CreatePlace([FromForm] CompositeObj<PlaceHostRequestDTO, IFormFileCollection> placeRequest)
         {
 
             await _placeService.AddHostingPlace(placeRequest);
@@ -60,7 +61,7 @@ namespace PontiApp.PlacePlace.Api.Controllers
 
         }
 
-        
+
 
         [HttpGet("GetHostingPlaces")]
         public async Task<ActionResult<IEnumerable<PlaceBriefResponse>>> GetHostingPlaces(long hostFbId)
@@ -142,6 +143,20 @@ namespace PontiApp.PlacePlace.Api.Controllers
             var searchResult = await _placeService.GetSearchedPlaces(searchDto);
 
             return Ok(searchResult);
+        }
+        [HttpPost(nameof(UpdateImages))]
+        public async Task<ActionResult> UpdateImages(int placeId, IFormFileCollection files)
+        {
+            await _placeService.AddToHostingImages(placeId, files);
+            return Ok();
+        }
+
+
+        [HttpPost(nameof(RemoveImages))]
+        public async Task<ActionResult> RemoveImages(int placeId, int[] indices)
+        {
+            await _placeService.RemoveFromHostingImages(placeId, indices);
+            return Ok();
         }
     }
 }

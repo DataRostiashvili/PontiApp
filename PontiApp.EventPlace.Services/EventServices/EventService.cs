@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using PontiApp.Data.DbContexts;
 using PontiApp.EventEvent.Services.EventCategoryServices;
 using PontiApp.Exceptions;
@@ -12,6 +13,7 @@ using PontiApp.Ponti.Repository.PontiRepository.EventRepository;
 using PontiApp.Validators.EntityValidators;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +28,7 @@ namespace PontiApp.EventPlace.Services.EventServices
         private readonly EventRepository _eventRepo;
         private readonly IEventCategoryService _eventCategoryService;
         private readonly MessagingService _msgService;
-        public EventService(IMongoService mongoService, IMapper mapper, EventDTOValidator validator, EventRepository eventRepo, IEventCategoryService eventCategoryService,MessagingService msgService)
+        public EventService(IMongoService mongoService, IMapper mapper, EventDTOValidator validator, EventRepository eventRepo, IEventCategoryService eventCategoryService, MessagingService msgService)
         {
             _mongoService = mongoService;
             _mapper = mapper;
@@ -36,7 +38,7 @@ namespace PontiApp.EventPlace.Services.EventServices
             _msgService = msgService;
         }
 
-        public async Task AddHostingEvent(CompositeObj<EventHostRequestDTO> eventFiles)
+        public async Task AddHostingEvent(CompositeObj<EventHostRequestDTO, IFormFileCollection> eventFiles)
         {
             var newEventDTO = eventFiles.Entity;
             var files = eventFiles.Files;
@@ -156,6 +158,31 @@ namespace PontiApp.EventPlace.Services.EventServices
             if (currEvent == null)
                 throw new DoesNotExistsException("Couldn't Find Such Event!");
             await _eventRepo.Update(currEvent);
+        }
+
+
+        public async Task AddToHostingImages(int eventId, IFormFileCollection files)
+        {
+            var currEvent = await _eventRepo.GetByID(eventId);
+            var mongoKey = currEvent.PicturesId;
+            List<byte[]> imgList = new List<byte[]>();
+            foreach (var img in files)
+            {
+                using (var str = new MemoryStream())
+                {
+
+                    str.CopyTo(img.OpenReadStream());
+                    var byteArr = str.ToArray();
+                    imgList.Add(byteArr);
+                }
+            }
+            await _mongoService.UpdateImage(mongoKey, imgList);
+        }
+        public async Task RemoveFromHostingImages(int eventId,int[] indices)
+        {
+            var currEvent = await _eventRepo.GetByID(eventId);
+            var mongoKey = currEvent.PicturesId;
+            await _mongoService.UpdateImage(mongoKey, indices);
         }
     }
 }

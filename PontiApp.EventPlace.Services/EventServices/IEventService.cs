@@ -1,4 +1,5 @@
-﻿using PontiApp.Models.DTOs;
+﻿using Microsoft.AspNetCore.Http;
+using PontiApp.Models.DTOs;
 using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace PontiApp.EventPlace.Services.EventServices
 {
     public interface IEventService
     {
-        Task AddHostingEvent(CompositeObj<EventHostRequestDTO> newEventDTO);
+        Task AddHostingEvent(CompositeObj<EventHostRequestDTO, IFormFileCollection> eventFiles);
         Task AddGusestingEvent(EventGuestRequestDTO currEventGuestDTO);
         Task UpdateHostingEvent(EventHostRequestDTO currEventHostDTO);
         Task UpdateGuestingEvent(EventReviewDTO eventReviewDTO);
@@ -21,6 +22,8 @@ namespace PontiApp.EventPlace.Services.EventServices
         Task<List<EventListingResponseDTO>> GetSearchedEvents(SearchFilter searchBaseDTO);
         Task<List<EventBriefResponse>> GetAllHsotingEvent(long userHostId);
         Task<List<EventListingResponseDTO>> GetAllGuestingEvent(int userGuestId);
+        Task RemoveFromHostingImages(int placeId, int[] indices);
+        Task AddToHostingImages(int placeId, IFormFileCollection files);
 
     }
 }

@@ -26,7 +26,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreateEvent))]
-        public async Task<ActionResult> CreateEvent([FromForm]CompositeObj<EventHostRequestDTO> eventDTO)
+        public async Task<ActionResult> CreateEvent([FromForm] CompositeObj<EventHostRequestDTO, IFormFileCollection> eventDTO)
         {
             await _eventService.AddHostingEvent(eventDTO);
             return Ok();
@@ -34,7 +34,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPut]
         [Route(nameof(UpdateEvent))]
-        
+
         public async Task<ActionResult> UpdateEvent([FromBody] EventHostRequestDTO hostEventDTO)
         {
 
@@ -62,7 +62,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         //}
         [HttpGet]
         [Route("GetDetailedEvent/{id}")]
-        
+
         public async Task<ActionResult<EventDetailedResponse>> GetDetailedEvent(int id)
         {
 
@@ -130,7 +130,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpGet("GetAllEvent")]
-        
+
         public async Task<ActionResult<IEnumerable<EventBriefResponse>>> GetAllEvent()
         {
 
@@ -139,7 +139,7 @@ namespace PontiApp.EventPlace.Api.Controllers
         }
 
         [HttpPost("SearchEvent")]
-        
+
         public async Task<IActionResult> SearchEvent(PontiTypeEnum PontiType, List<CategoryRequest> Categories, TimeFilterEnum Time, string SearchKeyWord)
         {
             if (PontiType != PontiTypeEnum.Event)
@@ -166,10 +166,25 @@ namespace PontiApp.EventPlace.Api.Controllers
             return Ok(searchResult);
         }
 
-        //add photos
+
 
         //remove photos
 
         //update photos
+        [HttpPost(nameof(UpdateImages))]
+        public async Task<ActionResult> UpdateImages(int eventId, IFormFileCollection files)
+        {
+            await _eventService.AddToHostingImages(eventId, files);
+            return Ok();
+        }
+        
+
+        [HttpPost(nameof(RemoveImages))]
+        public async Task<ActionResult> RemoveImages(int eventId,int[] indices)
+        {
+            await _eventService.RemoveFromHostingImages(eventId, indices);
+            return Ok();
+        }
     }
+
 }

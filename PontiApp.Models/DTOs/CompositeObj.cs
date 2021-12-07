@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace PontiApp.Models.DTOs
 {
-    public class CompositeObj<T> 
+    public class CompositeObj<T,G> 
     {
         public T Entity { get; set; }
-        public IFormFileCollection Files { get; set; }
+        public G Files { get; set; }
     }
 }
