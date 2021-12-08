@@ -22,6 +22,7 @@ namespace PontiApp.Data.EntityConfiguration
             builder.Property<bool>("IsDeleted");
 
             builder.HasQueryFilter(m=>!m.IsDeleted);
+
         }
     }
 }
