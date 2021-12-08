@@ -18,8 +18,6 @@ using PontiApp.Exceptions;
 
 namespace PontiApp.User.Services
 {
-
-
     public class UserService : IUserService
     {
         private readonly IHttpClientFactory _factory;
@@ -60,7 +58,7 @@ namespace PontiApp.User.Services
                 await _userRepository.Insert(_mapper.Map<UserCreationDTO, UserEntity>(user));
             }
             var token = _jwtProcessor.GenerateJwt(fbkey, accessToken);
-            user = _mapper.Map<UserEntity, UserCreationDTO>( _userRepository.GetEntityByPredicate(user=>user.FbKey==fbkey));
+            user = _mapper.Map<UserEntity, UserCreationDTO>(_userRepository.GetEntityByPredicate(user => user.FbKey == fbkey));
             return (token, user);
 
         }

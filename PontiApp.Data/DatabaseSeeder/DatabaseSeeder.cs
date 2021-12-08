@@ -24,6 +24,10 @@ namespace PontiApp.Data.DatabaseSeeder
             FillPlacesTable();
             FillEventsTable();
             FillCategoriesTable();
+            FillEventReviews();
+            FillPlaceReviews();
+            FillUserGuestEvents();
+            FIllUserGuestPlaces();
             FillPlaceCategoriesTable();
             FillEventCategoriesTable();
             FillWeekScheduleTable();
@@ -39,18 +43,39 @@ namespace PontiApp.Data.DatabaseSeeder
         }
         public async Task DeleteData()
         {
-           await _appDbContext.Database.ExecuteSqlRawAsync("DROP SCHEMA public CASCADE; CREATE SCHEMA public");
+            await _appDbContext.Database.ExecuteSqlRawAsync("DROP SCHEMA public CASCADE; CREATE SCHEMA public");
 
+        }
+
+        public void FillEventReviews()
+        {
+            var eventReview = File.ReadAllText(@"../PontiApp.Data/DatabaseSeeder/InsertEventReviews.sql");
+            _appDbContext.Database.ExecuteSqlRaw(eventReview);
+        }
+        public void FillPlaceReviews()
+        {
+            var eventReview = File.ReadAllText(@"../PontiApp.Data/DatabaseSeeder/InsertPlaceReview.sql");
+            _appDbContext.Database.ExecuteSqlRaw(eventReview);
+        }
+        public void FillUserGuestEvents()
+        {
+            var eventReview = File.ReadAllText(@"../PontiApp.Data/DatabaseSeeder/InsertUserGuestEvents.sql");
+            _appDbContext.Database.ExecuteSqlRaw(eventReview);
+        }
+        public void FIllUserGuestPlaces()
+        {
+            var eventReview = File.ReadAllText(@"../PontiApp.Data/DatabaseSeeder/InsertUserGuestPlace.sql");
+            _appDbContext.Database.ExecuteSqlRaw(eventReview);
         }
         private void FillUsersTable()
         {
-            
+
             if (!_appDbContext.Users.Any())
             {
                 var rand = new Random();
-                var userSqlData = String.Join("",File.ReadAllText(@"../PontiApp.Data/DatabaseSeeder/InsertUsers.sql")
+                var userSqlData = String.Join("", File.ReadAllText(@"../PontiApp.Data/DatabaseSeeder/InsertUsers.sql")
                     .Split('\n').Select(s => s.Replace("2008810342610546", rand.Next(1, int.MaxValue).ToString())).ToArray());
-                    
+
 
                 _appDbContext.Database.ExecuteSqlRaw(userSqlData);
             }

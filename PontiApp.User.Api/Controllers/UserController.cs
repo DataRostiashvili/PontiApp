@@ -44,7 +44,7 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpDelete]
         [Route(nameof(DeleteUser))]
-        public async Task<ActionResult> DeleteUser([FromBody] int userId)
+        public async Task<ActionResult> DeleteUser(int userId)
         {
 
             await _userService.Delete(userId);
