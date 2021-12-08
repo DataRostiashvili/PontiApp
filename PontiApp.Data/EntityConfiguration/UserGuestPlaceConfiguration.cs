@@ -17,6 +17,8 @@ namespace PontiApp.Data.EntityConfiguration
         {
             builder.HasKey(o => new { o.PlaceEntityId, o.UserEntityId });
 
+            builder.Property(o => o.Id).ValueGeneratedOnAdd();
+
             builder.HasOne(o => o.UserEntity)
                     .WithMany(u => u.UserGuestPlaces)
                     .HasForeignKey(o => o.UserEntityId)
