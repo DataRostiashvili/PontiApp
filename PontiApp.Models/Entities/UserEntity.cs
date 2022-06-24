@@ -20,6 +20,7 @@ namespace PontiApp.Models.Entities
 
         public bool IsVerifiedUser { get; set; }
         public string MongoKey { get; set; }
+        public long FbKey { get; set; }
 
         public bool IsActive { get; set; }
 

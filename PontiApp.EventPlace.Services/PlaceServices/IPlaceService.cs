@@ -1,4 +1,7 @@
-﻿using PontiApp.Models.DTOs;
+﻿using Microsoft.AspNetCore.Http;
+using PontiApp.Models.DTOs;
+using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +12,18 @@ namespace PontiApp.PlacePlace.Services.PlaceServices
 {
     public interface IPlaceService
     {
-        Task AddHostingPlace(PlaceHostRequestDTO newPlaceDTO);
+        Task AddHostingPlace(CompositeObj<PlaceHostRequestDTO,IFormFileCollection> newPlaceDTO);
         Task AddGusestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO);
         Task UpdateHostingPlace(PlaceHostRequestDTO currPlaceHostDTO);
         Task UpdateGuestingPlace(PlaceReviewDTO placeReviewDTO);
         Task DeleteHostingPlace(int hostPlaceId);
         Task DeleteGuestingPlace(PlaceGuestRequestDTO currPlaceGuestDTO);
-        Task<PlaceHostResponseDTO> GetDetailedHostingPlace(int placeId);
-        Task<PlaceGuestResponseDTO> GetDetailedGuestingPlace(PlaceGuestRequestDTO placeGuest);
-        Task<List<PlaceListingResponseDTO>> GetAllPlace();
-        Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchBaseDTO searchBaseDTO);
-        Task<List<PlaceListingResponseDTO>> GetAllHsotingPlace(int userHostId);
+        Task<PlaceDetailedResponse> GetDetailedPlace(int placeId);
+        Task<List<PlaceBriefResponse>> GetAllPlace();
+        Task<List<PlaceListingResponseDTO>> GetSearchedPlaces(SearchFilter searchBaseDTO);
+        Task<List<PlaceBriefResponse>> GetAllHsotingPlace(long userHostfbId);
         Task<List<PlaceListingResponseDTO>> GetAllGuestingPlace(int userGuestId);
+        Task RemoveFromHostingImages(int placeId, int[] indices);
+        Task AddToHostingImages(int placeId, IFormFileCollection files);
     }
 }

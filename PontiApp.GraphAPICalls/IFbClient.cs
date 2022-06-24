@@ -1,4 +1,5 @@
-﻿using PontiApp.Models.Entities.AuthEntities;
+﻿using PontiApp.Models.DTOs;
+using PontiApp.Models.Entities.AuthEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace PontiApp.GraphAPICalls
 {
     public interface IFbClient
     {
-        Task<LoginResponse> GetUser (long userID,string accessToken);
+        Task<UserCreationDTO> GetUser (string accessToken,long userID);
     }
 }

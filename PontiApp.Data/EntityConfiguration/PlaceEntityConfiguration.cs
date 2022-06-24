@@ -13,10 +13,6 @@ namespace PontiApp.Data.EntityConfiguration
                     .WithOne(w => w.Place)
                     .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(pl => pl.Pictures)
-                    .WithOne(pic => pic.PlaceEntity)
-                    .OnDelete(DeleteBehavior.Cascade);
-
             builder.HasMany(pl => pl.Reviews)
                     .WithOne(r => r.PlaceEntity)
                     .OnDelete(DeleteBehavior.Cascade);
@@ -26,7 +22,7 @@ namespace PontiApp.Data.EntityConfiguration
             builder.Navigation(x => x.Reviews).AutoInclude();
 
             builder.Property<bool>("IsDeleted");
-            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+            builder.HasQueryFilter(m=>!m.IsDeleted);
 
         }
     }

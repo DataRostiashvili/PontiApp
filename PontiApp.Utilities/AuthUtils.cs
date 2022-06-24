@@ -19,19 +19,17 @@ namespace PontiApp.Utilities
         
         public static IServiceCollection AddCustomAuth(this IServiceCollection services)
         {
-            IConfiguration config = new ConfigurationBuilder().SetBasePath(@"C:\Users\USER\source\repos\PontiApp\PontiApp.Utilities")
-                .AddJsonFile("appsettings.json")
-                .Build();
-            var jwtConfig = config.GetSection("JwtConfig").Get<JwtConfig>();
+
+            var jwtConfig = new JwtConfig();
 
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-            }).AddJwtBearer(x =>
+            }).AddJwtBearer("Bearer",x =>
             {
-                x.RequireHttpsMetadata = true;
+                x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -43,6 +41,7 @@ namespace PontiApp.Utilities
                     ValidateIssuerSigningKey = true
                 };
             });
+
             return services;
         }
     }

@@ -12,12 +12,13 @@ namespace PontiApp.Models.Entities
         public string Mail { get; set; }
         public string TicketBuyUrl { get; set; }
 
+        public string  PicturesId { get; set; }
+
         public UserEntity HostUser { get; set; }
         public int UserEntityId { get; set; }
 
         public ICollection<EventEntity> PlaceEvents { get; set; }
         public List<WeekEntity> WeekSchedule { get; set; }
-        public List<PlacePicEntity> Pictures { get; set; }
         public ICollection<PlaceReviewEntity> Reviews { get; set; }
 
         public ICollection<UserGuestPlace> UserGuests { get; set; }

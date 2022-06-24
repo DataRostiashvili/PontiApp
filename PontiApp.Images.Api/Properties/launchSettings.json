@@ -4,8 +4,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:8019",
-      "sslPort": 44310
+      "applicationUrl": "http://localhost:54054/",
+      "sslPort": 44389
     }
   },
   "profiles": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PontiApp.Images.Api": {
+    "TestingAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

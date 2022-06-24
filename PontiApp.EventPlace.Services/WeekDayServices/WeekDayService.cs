@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using PontiApp.Models.DTOs;
 using PontiApp.Models.Entities;
+using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using PontiApp.Ponti.Repository.BaseRepository;
 using System;
 using System.Collections.Generic;
@@ -20,22 +22,22 @@ namespace PontiApp.EventPlace.Services.WeekDayServices
             _weekDayRepository = weekDayRepository;
             _mapper = mapper;
         }
-        public async Task AddWeekDays(List<WeekScheduleDTO> weekDaysDTO)
+        public async Task AddWeekDays(List<WeekScheduleRequest> weekSchedule)
         {
-            List<WeekEntity> weekDays = _mapper.Map<List<WeekEntity>>(weekDaysDTO);
+            var weekDays = _mapper.Map<List<WeekEntity>>(weekSchedule);
             await _weekDayRepository.InsertRange(weekDays);
         }
 
-        public async Task UpdateWeekDays(List<WeekScheduleDTO> weekDaysDTO)
+        public async Task UpdateWeekDays(List<WeekScheduleRequest> weekSchedule)
         {
-            List<WeekEntity> weekDays = _mapper.Map<List<WeekEntity>>(weekDaysDTO);
+            var weekDays = _mapper.Map<List<WeekEntity>>(weekSchedule);
             await _weekDayRepository.UpdateRange(weekDays);
         }
 
-        public async Task<List<WeekScheduleDTO>> GetWeekSchedules()
+        public async Task<List<WeekScheduleResponse>> GetWeekSchedules()
         {
-            List<WeekEntity> weekDays = await _weekDayRepository.GetAll();
-            return _mapper.Map<List<WeekScheduleDTO>>(weekDays);
+            var weekDays = await _weekDayRepository.GetAll();
+            return _mapper.Map<List<WeekScheduleResponse>>(weekDays);
         }
     }
 }

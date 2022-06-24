@@ -11,11 +11,13 @@ namespace PontiApp.Data.EntityConfiguration
 {
     public class UserGuestPlaceConfiguration : IEntityTypeConfiguration<UserGuestPlace>
     {
-        
+
 
         public void Configure(EntityTypeBuilder<UserGuestPlace> builder)
         {
             builder.HasKey(o => new { o.PlaceEntityId, o.UserEntityId });
+
+            builder.Property(o => o.Id).ValueGeneratedOnAdd();
 
             builder.HasOne(o => o.UserEntity)
                     .WithMany(u => u.UserGuestPlaces)
@@ -28,7 +30,7 @@ namespace PontiApp.Data.EntityConfiguration
                     .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property<bool>("IsDeleted");
-            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+            builder.HasQueryFilter(m => !m.IsDeleted);
         }
     }
 }

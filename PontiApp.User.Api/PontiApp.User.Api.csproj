@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>04c3db21-8d78-4f5f-826c-8cbd7b063fc0</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PontiApp.AuthService\PontiApp.AuthService.csproj" />
+    <ProjectReference Include="..\PontiApp.GraphAPICalls\PontiApp.GraphAPICalls.csproj" />
+    <ProjectReference Include="..\PontiApp.Images.Repository\PontiApp.Images.Repository.csproj" />
+    <ProjectReference Include="..\PontiApp.Images.Services\PontiApp.Images.Services.csproj" />
+    <ProjectReference Include="..\PontiApp.MessageSender\PontiApp.MessageSender.csproj" />
+    <ProjectReference Include="..\PontiApp.Models\PontiApp.Models.csproj" />
+    <ProjectReference Include="..\PontiApp.User.Services\PontiApp.User.Services.csproj" />
+  </ItemGroup>
+
+</Project>

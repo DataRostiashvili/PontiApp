@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using PontiApp.EventPlace.Services.CategoryServices;
 using PontiApp.Models.DTOs;
+using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,46 +24,30 @@ namespace PontiApp.EventPlace.Api.Controllers
 
         [HttpPost]
         [Route(nameof(CreateCategory))]
-        public async Task<ActionResult> CreateCategory([FromBody] CategoryDTO categoryDTO)
+        public async Task<ActionResult> CreateCategory([FromBody] CategoryRequest categoryRequest)
         {
-            try
-            {
-                await _categoryService.Add(categoryDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            await _categoryService.Add(categoryRequest);
+            return Ok();
         }
 
         [HttpDelete]
         [Route(nameof(DeleteCategory))]
-        public async Task<ActionResult> DeleteCategory([FromBody] CategoryDTO categoryDTO)
+        public async Task<ActionResult> DeleteCategory([FromBody] CategoryRequest categoryRequest)
         {
-            try
-            {
-                await _categoryService.Delete(categoryDTO);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            await _categoryService.Delete(categoryRequest);
+            return Ok();
+
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAllCategory()
+        [Route(nameof(GetAllCategory))]
+        public async Task<ActionResult<IEnumerable<CategoryResponse>>> GetAllCategory()
         {
-            try
-            {
-                List<CategoryDTO> categoryDTOs = await _categoryService.GetAll();
-                return Ok(categoryDTOs);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            var categoryDTOs = await _categoryService.GetAll();
+            return Ok(categoryDTOs);
+
         }
     }
 }

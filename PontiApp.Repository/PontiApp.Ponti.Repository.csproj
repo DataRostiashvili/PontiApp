@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PontiApp.Data\PontiApp.Data.csproj" />
+    <ProjectReference Include="..\PontiApp.Exceptions\PontiApp.Exceptions.csproj" />
     <ProjectReference Include="..\PontiApp.Models\PontiApp.Models.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
 ﻿using PontiApp.Models.DTOs;
+using PontiApp.Models.Request;
+using PontiApp.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,8 @@ namespace PontiApp.EventPlace.Services.WeekDayServices
 {
     public interface IWeekDayService
     {
-        Task AddWeekDays(List<WeekScheduleDTO> weekDaysDTO);
-        Task UpdateWeekDays(List<WeekScheduleDTO> weekDaysDTO);
-        Task<List<WeekScheduleDTO>> GetWeekSchedules();
+        Task AddWeekDays(List<WeekScheduleRequest> weekDaysDTO);
+        Task UpdateWeekDays(List<WeekScheduleRequest> weekDaysDTO);
+        Task<List<WeekScheduleResponse>> GetWeekSchedules();
     }
 }

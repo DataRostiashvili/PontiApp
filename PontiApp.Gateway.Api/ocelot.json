@@ -1,31 +1,131 @@
 ﻿{
-  "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5021"
-  },
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/Category",
-        "DownstreamPathTemplate": "/api/Account",
+
+      //Event place services
+      "DownstreamPathTemplate": "/api/Event/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44329
-                "Port": 44341
+          "Port": 44354
         }
       ],
-      "UpstreamPathTemplate": "/gateway/Category",
-      "UpstreamHttpMethod": [ "DELETE", "POST", "GET" ],
-        "UpstreamPathTemplate": "/gateway/Account",
-        "UpstreamHttpMethod": [ "GET", "POST" ],
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "1s",
-        "PeriodTimespan": 1,
-        "Limit": 1
-      }
+      "UpstreamPathTemplate": "/api/e/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "EventPlace",
+      "RouteIsCaseSensitive": false
+    },
 
+    {
+      "DownstreamPathTemplate": "/api/Place/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44354
+        }
+      ],
+
+      "UpstreamPathTemplate": "/api/p/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "EventPlace"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/WeekDay/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44354
+        }
+      ],
+
+      "UpstreamPathTemplate": "/api/w/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "EventPlace"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Category/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44354
+        }
+      ],
+
+      "UpstreamPathTemplate": "/api/c/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "EventPlace"
+    },
+    //Image
+    {
+      "DownstreamPathTemplate": "/api/Image/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44389
+        }
+      ],
+
+      "UpstreamPathTemplate": "/api/i/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "Images"
+    },
+
+    //User
+    {
+      "DownstreamPathTemplate": "/api/User/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44301
+        }
+      ],
+
+      "UpstreamPathTemplate": "/api/u/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET", "DELETE" ],
+      "SwaggerKey": "User"
     }
-  ]
+  ],
+
+  "SwaggerEndPoints": [
+    {
+      "Key": "EventPlace",
+      "Config": [
+        {
+          "Name": "Event Place API",
+          "Version": "v1",
+          "Url": "https://localhost:44354/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Images",
+      "Config": [
+        {
+          "Name": "Images API",
+          "Version": "v1",
+          "Url": "https://localhost:44389/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "User",
+      "Config": [
+        {
+          "Name": "User API",
+          "Version": "v1",
+          "Url": "https://localhost:44301/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5051"
+  }
 }

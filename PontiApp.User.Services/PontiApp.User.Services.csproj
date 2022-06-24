@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PontiApp.AuthService\PontiApp.AuthService.csproj" />
+    <ProjectReference Include="..\PontiApp.Exceptions\PontiApp.Exceptions.csproj" />
+    <ProjectReference Include="..\PontiApp.GraphAPICalls\PontiApp.GraphAPICalls.csproj" />
+    <ProjectReference Include="..\PontiApp.Mappings\PontiApp.Mappings.csproj" />
+    <ProjectReference Include="..\PontiApp.MessageSender\PontiApp.MessageSender.csproj" />
+    <ProjectReference Include="..\PontiApp.Models\PontiApp.Models.csproj" />
+    <ProjectReference Include="..\PontiApp.Repository\PontiApp.Ponti.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

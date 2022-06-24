@@ -16,13 +16,17 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Ocelot" Version="17.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PontiApp.AuthService\PontiApp.AuthService.csproj" />
     <ProjectReference Include="..\PontiApp.EntityValidators\PontiApp.Validators.csproj" />
     <ProjectReference Include="..\PontiApp.EventPlace.Services\PontiApp.EventPlace.Services.csproj" />
+    <ProjectReference Include="..\PontiApp.GraphAPICalls\PontiApp.GraphAPICalls.csproj" />
     <ProjectReference Include="..\PontiApp.Mappings\PontiApp.Mappings.csproj" />
+    <ProjectReference Include="..\PontiApp.MessageSender\PontiApp.MessageSender.csproj" />
     <ProjectReference Include="..\PontiApp.Repository\PontiApp.Ponti.Repository.csproj" />
   </ItemGroup>
 

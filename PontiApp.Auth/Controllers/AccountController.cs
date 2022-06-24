@@ -7,7 +7,12 @@ using PontiApp.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text.Encodings;
+using System.Text.Json;
+using System.Text;
+using PontiApp.EventPlace.Services.UserServices;
 
 namespace PontiApp.Auth.Controllers
 {
@@ -17,39 +22,30 @@ namespace PontiApp.Auth.Controllers
 
         private readonly IFbClient _client;
 
+        private readonly IHttpClientFactory _factory;
 
-        public AccountController (IFbClient client,IJwtProcessor processor)
+        private readonly IUserService _userService;
+
+
+        public AccountController(IFbClient client, IJwtProcessor processor, IHttpClientFactory factory)
         {
             //_service = service;
             _client = client;
             _processor = processor;
+            _factory = factory;
+            
         }
 
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("login")]
-        public async Task<ActionResult> Login (long id = 2008810342610546,[FromBody] string accessToken = "")
+        [Route("User/Token")]
+        public async Task<ActionResult> Login(long id = 2008810342610546, [FromBody] string accessToken = "EAADm0S0jzhwBAMYmENXA986FfypjUg4bytPN6EbflX6uSSSi6x5WHvDYCrTPpU2G1dfSjO2LWQQ6Xy4LcvY2VLZCdUNCTbT94lNMBlT0PNvlyLW0C9Vfcj9TZAdJilZCJvzMZBgo7NbZAAXegsEqhR1wQcZBQkrZCvB4zZCUhG2nDsrquSdJsumHM0gaJJ7ftytWfxZBVORKpvwZDZD")
         {
-            var userData = await _client.GetUser(id,accessToken);
-            var newUser = new UserCreationDTO()
-            {
-                UserID = userData.UserID,
-                UserName = userData.FullName,
-                UserProfileURL = userData.PictureUrl
-            };
-
-            var data = _processor.GenerateJwt(newUser.UserID,newUser.UserName);
-            return Ok(new { Bearer = data });
-        }
-        [Authorize]
-        [HttpGet("get-data")]
-        public ActionResult getdata ()
-        {
+            var jwt = _processor.GenerateJwt(id, accessToken);
             return Ok(new
             {
-                success = "true",
-                time = DateTime.UtcNow
+                Bearer = jwt,
             });
         }
     }

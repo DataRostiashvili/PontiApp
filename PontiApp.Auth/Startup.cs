@@ -42,12 +42,13 @@ namespace PontiApp.Auth
             services.AddSingleton(jwtConfig);
             services.AddTransient<IJwtProcessor,JwtProcessor>();
             services.AddScoped<IFbClient,FbClient>();
-            services.AddCustomAuth();
+            services.AddCustomAuth(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",new OpenApiInfo { Title = "PontiApp.Auth",Version = "v1" });
             });
+            services.AddHttpClient();
             
         }
 

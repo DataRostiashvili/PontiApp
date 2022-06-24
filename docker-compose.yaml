@@ -1,0 +1,98 @@
+version: '3.4'
+
+services:
+  # pontiapp.gateway.api:
+  #   container_name: pontiapp.gateway.api-container
+  #   image: pontiapp.gateway.api
+  #   build:
+  #     context: .
+  #     dockerfile: ./PontiApp.Gateway.Api/Dockerfile
+  #   environment:
+  #           - ASPNETCORE_ENVIRONMENT=Development
+  #   ports:
+  #     - 5040:80
+  #     # - 5001:443
+  #   networks: 
+  #      - pontiapp-network
+
+  pontiapp.eventplace.api:
+    container_name: pontiapp.eventplace.api-container
+    image: pontiapp.eventplace.api
+    build:
+      context: .
+      dockerfile: ./PontiApp.EventPlace.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - 5000:80
+      # - 5001:443
+    networks:
+      - pontiapp-network
+
+  pontiapp-image:
+    container_name: pontiapp.image-container
+    image: pontiapp.image
+    restart: on-failure
+    ports:
+      - 5030:80
+      # - 5011:443
+    depends_on:
+      - rabbitmq
+    build:
+      context: .
+      dockerfile: ./PontiApp.Images.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - pontiapp-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: ponti_rabbit
+    hostname: rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=pass
+    networks:
+      - pontiapp-network
+
+  mongodb:
+    image: mongo
+    container_name: ponti_mongo
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+    networks:
+      - pontiapp-network
+
+  redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass sOmE_sEcUrE_pAsS
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - pontiapp-network
+
+  postgres:
+    image: postgres:latest
+    container_name: ponti_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    networks:
+      - pontiapp-network
+
+networks:
+  pontiapp-network:
+    driver: "bridge"

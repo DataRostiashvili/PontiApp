@@ -28,6 +28,7 @@ namespace PontiApp.Data.DbContexts
 
         public DbSet<CategoryEntity> Categories { get; set; }
 
+
         public DbSet<UserGuestEvent> UserGuestEvents { get; set; }
         public DbSet<UserGuestPlace> UserGuestPlaces { get; set; }
 
@@ -36,6 +37,7 @@ namespace PontiApp.Data.DbContexts
 
         protected override void OnModelCreating(ModelBuilder options)
         {
+            options.ApplyConfiguration(new CategoryEntityConfiguration());
             options.ApplyConfiguration(new EventEntityConfiguration());
             options.ApplyConfiguration(new UserEntityConfiguration());
             options.ApplyConfiguration(new PlaceEntityConfiguration());

@@ -1,11 +1,16 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using PontiApp.Models.Entities.AuthEntities;
+using PontiApp.Utilities;
+using System.Text;
 
 namespace PontiApp.Gateway.Api
 {
@@ -23,28 +28,40 @@ namespace PontiApp.Gateway.Api
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
-            });
-
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PontiApp.Gateway.Api", Version = "v1" });
+            //});
+            services.AddSwaggerForOcelot(Configuration);
             services.AddOcelot();
-            //services.AddSwaggerForOcelot(Configuration);
+            services.AddCustomAuth();
+            
+
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+
+            app.UseMiddleware<ErrorHandlerMiddlware>();
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PontiApp.Gateway.Api v1"));
+            //}
+            app.UseSwaggerForOcelotUI(opt =>
             {
-                app.UseDeveloperExceptionPage();
-               
-            }
+                opt.PathToSwaggerGenerator = "/swagger/docs";
+            });
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -52,12 +69,9 @@ namespace PontiApp.Gateway.Api
                 endpoints.MapControllers();
             });
 
-            //app.UseSwaggerForOcelotUI(opt =>
-            //{
-            //    opt.PathToSwaggerGenerator = "/swagger/docs";
-            //});
 
             app.UseOcelot().Wait();
+
         }
     }
 }
